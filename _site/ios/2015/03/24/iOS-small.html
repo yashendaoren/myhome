@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- meta information -->
+<meta charset="utf-8">
+<meta name="description" 
+      content="Welcome to wanglizhen 的主页!" >
+<meta name="author" content="">
+
+<!-- Enable responsiveness on mobile devices-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<!-- title -->
+<title>iOS常用小知识 &middot; </title>
+
+<!-- icons -->
+<link rel="shortcut icon" href="/assets/images/favicon.ico">
+
+<!-- stylesheets -->
+<link rel="stylesheet" href="/assets/css/responsive.gs.12col.css">
+<link rel="stylesheet" href="/assets/css/animate.min.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/category.css"/>
+
+
+<!-- Google fonts -->
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic&subset=latin-ext">
+
+
+<!-- font Awesome -->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+
+<!-- feed links -->
+<link rel="alternate" href="http://localhost:4000/feed.xml" type="application/rss+xml" title="">
+
+</head>
+
+<body>
+	<main class="container avocado">
+		
+			<header>
+				
+				<div>
+					<a href="http://localhost:4000" id="logo" title="" style="background-image: url(/assets/images/logo.png);"></a>
+				</div>
+
+				<nav id="main-navigation">
+  
+  
+  <a href="/" title="Home">Home</a>
+  
+  
+  
+  <a href="/category/" title="Category">Category</a>
+  
+  
+  
+  <a href="/about/" title="about">about</a>
+  
+  
+</nav>
+
+
+			</header>
+
+			
+<div class="well article">
+        <h2><a href="/ios/2015/03/24/iOS-small.html">iOS常用小知识</a></h2>
+        <span class="post-date">
+            
+            March-24-2015
+        </span>
+        <hr style="border-top:0px solid #28323C;"/>
+    
+    <div class="post-content">
+    <p>记录一些常用的 易忘的 小的知识点。有自己遇到的，有拷贝网上的，希望加深一下记忆。持续更新中……</p>
+
+<h3 id="uilabel-设定好固定的宽高让文字大小自适应">UIlabel 设定好固定的宽高，让文字大小自适应</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+label.adjustsFontSizeToFitWidth = YES;
+
+</code></pre></div></div>
+
+<h3 id="从图片的二进制格式判断图片类型">从图片的二进制格式判断图片类型</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">
+-</span> (NSString <span class="ge">*)typeForImageData:(NSData *</span>)data
+{
+    uint8_t c;
+    <span class="p">[</span><span class="nv">data getBytes:&amp;c length:1</span><span class="p">]</span>;
+    switch (c)
+    {
+        case 0xFF:
+            return @".jpeg";
+        case 0x89:
+            return @".png";
+        case 0x47:
+            return @".gif";
+        case 0x49:
+            case 0x4D:
+        return @".tiff";
+    }
+    return nil;
+}
+
+</code></pre></div></div>
+
+<h3 id="组头视图悬停">组头视图悬停</h3>
+<p>UITableView有两个headerView：tableHeaderView、和sectionHeaderView（组头视图）。
+tableHeaderView不会悬停。sectionHeaderView可以悬停，由UITableViewStyle控制
+<br />
+UITableViewStylePlain，悬停。
+<br />
+UITableViewStyleGrouped，不悬停。</p>
+
+<h3 id="请求返回的数据类型-texthtml-结果-json-解析失败">请求返回的数据类型 text/html 结果 json 解析失败</h3>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+Error Domain=com.alamofire.error.serialization.response
+Code=-1016 "Request failed: unacceptable content-type: text/html"
+
+修改方法 在 AFURLResponseSerialization.m 中
+
+self.acceptableContentTypes = <span class="err">[</span>NSSet setWithObjects:
+    @"application/json", @"text/json", @"text/javascript",nil
+    ];
+    
+改为
+
+self.acceptableContentTypes = <span class="err">[</span>NSSet setWithObjects:
+    @"application/json", @"text/json", @"text/javascript", @"text/html",nil
+    ];
+
+json解析成功
+
+</code></pre></div></div>
+
+<h3 id="第三方库重复引入">第三方库重复引入</h3>
+<p>大概会报错</p>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+ duplicate symbol __isBackDrop in: XXX.0 XXX.0,
+ ld: 65 duplicate symbols for architecture arm64 clang:
+ error: linker command failed with exit code 1 (use -v to see invocation)
+
+</code></pre></div></div>
+<p>other Linker Flags  把 -all_load去掉，就可以正常运行了。</p>
+
+<h3 id="去除navigationcontroller下面的线">去除navigationController下面的线</h3>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+if (<span class="err">[</span>self.navigationController.navigationBar
+respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)]){
+    //取到navigationBar的子控件数组
+    NSArray <span class="err">*</span>list=self.navigationController.navigationBar.subviews;
+    for (id object in list) {
+        if (<span class="p">[</span><span class="nv">object isKindOfClass:[UIImageView class</span><span class="p">]</span>]) {
+        
+            UIImageView <span class="ge">*imageView=(UIImageView *</span>)obj;
+            NSArray <span class="err">*</span>list2=imageView.subviews;
+            
+            for (id object2 in list2) {
+                if (<span class="p">[</span><span class="nv">object2 isKindOfClass:[UIImageView class</span><span class="p">]</span>]) {
+                    UIImageView <span class="ge">*imageView2=(UIImageView *</span>)object2;
+                    //取到该线，隐藏
+                    imageView2.hidden=YES;
+                }
+            }
+        }
+    }
+}<span class="sb">
+
+
+</span>//设置导航控制器透明
+<span class="err">[</span>self.navigationController.navigationBar
+setBackgroundImage:<span class="p">[</span><span class="nv">[UIImage alloc</span><span class="p">]</span> init] forBarMetrics:UIBarMetricsDefault];<span class="sb">
+
+
+
+</span></code></pre></div></div>
+
+<h3 id="字典转化成字符串">字典转化成字符串</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">
+-</span> (NSString<span class="ge">*)dictionaryToJson:(NSDictionary *</span>)dic
+
+{<span class="sb">
+
+    NSError *parseError = nil;
+
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic
+    options:NSJSONWritingPrettyPrinted error:&amp;parseError];
+
+    return [[NSString alloc] initWithData:jsonData
+    encoding:NSUTF8StringEncoding];
+
+</span>}
+</code></pre></div></div>
+
+<h3 id="统计中英文混合字符串的长度">统计中英文混合字符串的长度</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">
+-</span>  (int)convertToInt:(NSString<span class="err">*</span>)strtemp {
+    int strlength = 0;
+    char<span class="ge">* p = (char*</span>)<span class="p">[</span><span class="nv">strtemp cStringUsingEncoding:NSUnicodeStringEncoding</span><span class="p">]</span>;
+    for (int i=0 ; i&lt;<span class="p">[</span><span class="nv">strtemp lengthOfBytesUsingEncoding:NSUnicodeStringEncoding</span><span class="p">]</span> ;i++) {
+        if (<span class="err">*</span>p) {
+            p++;
+            strlength++;
+        }else {
+            p++;
+        }
+    }
+    return strlength;
+
+}
+
+</code></pre></div></div>
+
+<h3 id="模糊背景实现">模糊背景实现</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+UIBlurEffect <span class="err">*</span>eff = <span class="p">[</span><span class="nv">UIBlurEffect effectWithStyle:UIBlurEffectStyleLight</span><span class="p">]</span>;
+UIVisualEffectView <span class="err">*</span>v = <span class="p">[</span><span class="nv">[UIVisualEffectView alloc</span><span class="p">]</span> initWithEffect:eff];
+UIVisualEffectView <span class="err">*</span>v1 = <span class="p">[</span><span class="nv">[UIVisualEffectView alloc</span><span class="p">]</span> initWithEffect:eff];
+v.frame = self.leftBackgroundView.bounds;
+v1.frame = self.rightbackgroundView.bounds;
+
+//左右侧背景图片
+<span class="p">[</span><span class="nv">self.leftBackgroundView sd_setImageWithURL:[NSURL URLWithString:model.image_url</span><span class="p">]</span>];
+<span class="p">[</span><span class="nv">self.rightbackgroundView sd_setImageWithURL:[NSURL URLWithString:model.image_url</span><span class="p">]</span>];
+<span class="p">[</span><span class="nv">self.rightbackgroundView addSubview:v</span><span class="p">]</span>;
+<span class="p">[</span><span class="nv">self.leftBackgroundView addSubview:v1</span><span class="p">]</span>;
+
+</code></pre></div></div>
+
+<h3 id="kvc修改-uitextfield的placeholder的占位符颜色">KVC修改 UITextField的placeHolder的占位符颜色</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="p">[</span><span class="nv">_textField setValue:[UIColor orangeColor</span><span class="p">]</span> forKeyPath:@"_placeholderLabel.textColor"];
+
+</code></pre></div></div>
+
+
+    <hr style="border-top:0px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/categories.html">
+                iOS <span>(8)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    <!--    -->
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    <a class="btn btn-default" href="/%E9%9A%8F%E7%AC%94/2015/05/01/to-myself.html" class="next">上一篇</a>
+    
+    
+    <a class="btn btn-default" href="/it%E5%85%B6%E4%BB%96/2014/12/24/git.html" class="previous">下一篇</a>
+    
+</div>
+
+			<footer>
+				<p>
+					This work is licensed under a
+					<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/deed.en_US">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+				</p>
+				<p>
+					Powered by
+					<a rel="license" target="_blank" href="https://jekyllrb.com">Jekyll</a> ,
+					<a rel="license" target="_blank" href="https://github.com">Github</a> ,
+					<a rel="license" target="_blank" href="https://yashendaoren.github.io/home/">wanglizhen</a>
+				</p>
+			</footer>
+	</main>
+</body>
+
+</html>

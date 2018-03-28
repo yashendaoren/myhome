@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- meta information -->
+<meta charset="utf-8">
+<meta name="description" 
+      content="Welcome to wanglizhen 的主页!" >
+<meta name="author" content="">
+
+<!-- Enable responsiveness on mobile devices-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<!-- title -->
+<title>gif 动图支持 &middot; </title>
+
+<!-- icons -->
+<link rel="shortcut icon" href="/assets/images/favicon.ico">
+
+<!-- stylesheets -->
+<link rel="stylesheet" href="/assets/css/responsive.gs.12col.css">
+<link rel="stylesheet" href="/assets/css/animate.min.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/category.css"/>
+
+
+<!-- Google fonts -->
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic&subset=latin-ext">
+
+
+<!-- font Awesome -->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+
+<!-- feed links -->
+<link rel="alternate" href="http://localhost:4000/feed.xml" type="application/rss+xml" title="">
+
+</head>
+
+<body>
+	<main class="container avocado">
+		
+			<header>
+				
+				<div>
+					<a href="http://localhost:4000" id="logo" title="" style="background-image: url(/assets/images/logo.png);"></a>
+				</div>
+
+				<nav id="main-navigation">
+  
+  
+  <a href="/" title="Home">Home</a>
+  
+  
+  
+  <a href="/category/" title="Category">Category</a>
+  
+  
+  
+  <a href="/about/" title="about">about</a>
+  
+  
+</nav>
+
+
+			</header>
+
+			
+<div class="well article">
+        <h2><a href="/ios/2017/05/01/iOS_gif.html">gif 动图支持</a></h2>
+        <span class="post-date">
+            
+            May-1-2017
+        </span>
+        <hr style="border-top:0px solid #28323C;"/>
+    
+    <div class="post-content">
+    <p>iOS 9.0之后照片支持gif的展示了，简介一下保存gif图的方法 和加载gif图的方法</p>
+
+<h3 id="保存-gif-图">保存 gif 图</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+//保存图片
+<span class="p">-</span> (void)saveImageWithData:(NSData <span class="err">*</span>)imageData{
+    if (<span class="p">[</span><span class="nv">UIDevice currentDevice</span><span class="p">]</span>.systemVersion.floatValue &gt;= 9.0f) {
+        <span class="p">[</span><span class="nv">[PHPhotoLibrary sharedPhotoLibrary</span><span class="p">]</span> performChanges:^{<span class="sb">
+
+        PHAssetResourceCreationOptions *options = [[PHAssetResourceCreationOptions 
+        alloc] init];
+        [[PHAssetCreationRequest creationRequestForAsset] 
+        addResourceWithType:PHAssetResourceTypePhoto
+         data:[common getNSDataFromUrl:imageUrl] options:options];
+        } completionHandler:^(BOOL success, NSError * _Nullable error) {
+
+            [self image:nil didFinishSavingWithError:error contextInfo:nil];
+
+        }];
+
+    }else {
+        UIImageWriteToSavedPhotosAlbum([UIImage imageWithData:
+        [common getNSDataFromUrl:imageUrl]], 
+        self, 
+        @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    }
+
+</span>}
+
+//保存之后的提示方法
+<span class="p">-</span> (void)image:(UIImage <span class="ge">*)image didFinishSavingWithError:(NSError *</span>)error
+contextInfo:(void <span class="err">*</span>)contextInfo
+{
+    if (error != NULL)
+    {
+    NSString <span class="err">*</span>message;
+    if (error.code ==-3310) {
+        message = @"请到设置隐私开启相册权限";
+    }else{
+        message = @"保存失败";
+    }
+        <span class="p">[</span><span class="nv">NSObject toastMessage:message</span><span class="p">]</span>;
+    }
+    else  // No errors
+    {
+        <span class="p">[</span><span class="nv">NSObject toastMessage:@"已保存至手机相册"</span><span class="p">]</span>;
+    }
+}
+
+</code></pre></div></div>
+
+<h3 id="获取gif图片资源的方法">获取gif图片资源的方法</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">-</span> (void)getImage{
+    PHImageManager <span class="err">*</span> manager =<span class="p">[</span><span class="nv">PHImageManager defaultManager</span><span class="p">]</span>;
+    PHImageRequestOptions <span class="err">*</span> ops =<span class="p">[</span><span class="nv">[PHImageRequestOptions alloc</span><span class="p">]</span>init];<span class="sb">
+
+    PHAsset * asset = [self.dataArray objectAtIndex:indexPath.row];
+    // 下面的回调会返回多次 该属性设置YES 只返回一次，返回的是原图
+    ops.synchronous = YES;
+    ops.resizeMode = PHImageRequestOptionsResizeModeExact;
+
+    [manager requestImageDataForAsset:asset options:ops
+     resultHandler:^(NSData * _Nullable imageData,
+      NSString * _Nullable dataUTI, 
+      UIImageOrientation orientation,
+       NSDictionary * _Nullable info) {
+        if (imageData.length){
+
+        //gif 图片
+        if ([dataUTI isEqualToString:(__bridge NSString *)kUTTypeGIF]) {
+            //这里获取gif图片的NSData数据
+            _gifImageData = imageData;
+        }
+        else {
+            //其他格式的图片
+            returnImage = [UIImage imageWithData:imageData];
+
+        }
+
+    }else{
+        //如果没有获取到imagedata，尝试直接获取图片
+        [manager requestImageForAsset:asset targetSize:AssetGridThumbnailSize 
+        contentMode:PHImageContentModeAspectFill options:ops
+         resultHandler:^(UIImage * result, NSDictionary * info) {
+            if (result) {
+                returnImage = result;
+            }
+        }];
+    }
+</span>}
+
+</code></pre></div></div>
+
+
+    <hr style="border-top:0px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/categories.html">
+                iOS <span>(8)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    <!--    -->
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    <a class="btn btn-default" href="/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%8E%E5%BF%AB%E5%BA%94%E7%94%A8/2017/06/20/js_wx.html" class="next">上一篇</a>
+    
+    
+    <a class="btn btn-default" href="/ios/2016/05/09/iOS.html" class="previous">下一篇</a>
+    
+</div>
+
+			<footer>
+				<p>
+					This work is licensed under a
+					<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/deed.en_US">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+				</p>
+				<p>
+					Powered by
+					<a rel="license" target="_blank" href="https://jekyllrb.com">Jekyll</a> ,
+					<a rel="license" target="_blank" href="https://github.com">Github</a> ,
+					<a rel="license" target="_blank" href="https://yashendaoren.github.io/home/">wanglizhen</a>
+				</p>
+			</footer>
+	</main>
+</body>
+
+</html>

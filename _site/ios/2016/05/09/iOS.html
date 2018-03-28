@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- meta information -->
+<meta charset="utf-8">
+<meta name="description" 
+      content="Welcome to wanglizhen 的主页!" >
+<meta name="author" content="">
+
+<!-- Enable responsiveness on mobile devices-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<!-- title -->
+<title>Xcode快捷键 和 iOS零散bug &middot; </title>
+
+<!-- icons -->
+<link rel="shortcut icon" href="/assets/images/favicon.ico">
+
+<!-- stylesheets -->
+<link rel="stylesheet" href="/assets/css/responsive.gs.12col.css">
+<link rel="stylesheet" href="/assets/css/animate.min.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/category.css"/>
+
+
+<!-- Google fonts -->
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic&subset=latin-ext">
+
+
+<!-- font Awesome -->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+
+<!-- feed links -->
+<link rel="alternate" href="http://localhost:4000/feed.xml" type="application/rss+xml" title="">
+
+</head>
+
+<body>
+	<main class="container avocado">
+		
+			<header>
+				
+				<div>
+					<a href="http://localhost:4000" id="logo" title="" style="background-image: url(/assets/images/logo.png);"></a>
+				</div>
+
+				<nav id="main-navigation">
+  
+  
+  <a href="/" title="Home">Home</a>
+  
+  
+  
+  <a href="/category/" title="Category">Category</a>
+  
+  
+  
+  <a href="/about/" title="about">about</a>
+  
+  
+</nav>
+
+
+			</header>
+
+			
+<div class="well article">
+        <h2><a href="/ios/2016/05/09/iOS.html">Xcode快捷键 和 iOS零散bug</a></h2>
+        <span class="post-date">
+            
+            May-9-2016
+        </span>
+        <hr style="border-top:0px solid #28323C;"/>
+    
+    <div class="post-content">
+    <p>iOS开发多年了 一直只有保存代码的习惯 是时候整合一下了 长时间的开发 最大的遗憾就是没有开刚开始的时候就养成写博客的习惯 以至于当时觉得很有收获或者很有成就感的瞬间 在后来完全不记得了。以后持续更细……</p>
+
+<h3 id="xcode-常用快捷键">Xcode 常用快捷键</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+.h .m 切换：Control + Command + 上箭头
+浏览过的文件快速切换：Control + Command + 左右箭头
+代码上跳：Cmd+Option+<span class="err">[</span>
+代码左移：Cmd+<span class="err">[</span>
+全局搜索：Cmd+Shift+F
+搜索：Cmd+F
+快速打开：Cmd+Shift+O 搜索文件
+定位打开文件：Cmd+Shift+J
+清除工程：Cmd+Shift+K
+暂停运行模拟器：Cmd+.
+文档和参考：Cmd+Shift+0
+工程导航器：Cmd+1
+多行注释：Cmd+Option+/
+
+</code></pre></div></div>
+
+<h3 id="图片扭曲的问题">图片扭曲的问题</h3>
+
+<p>测试突然找来 说线上的app图片全部扭曲了，我下载了发现并没有。经过排查发现，iOS 8 以下的系统，图片真的扭曲了。后来发现扭曲的全部是 Images.xcassets 里面的图片，其他图片和网络图片都是好的。后来确认是苹果自己的锅，Xcode 9.2 之后，打出来的包，iOS 8的系统都有问题。经产品测试和开发商议，这个问题不管了。</p>
+
+<h3 id="获取启动图获取launchimage-中的图片">获取启动图获取LaunchImage 中的图片</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+    if (IS_iPHONE_X) {
+        _guideView.image = <span class="p">[</span><span class="nv">UIImage imageNamed:@"LaunchImage-1100-2436h"</span><span class="p">]</span>;
+    }else if (FUll_VIEW_HEIGHT&gt;480) {
+        _guideView.image = <span class="p">[</span><span class="nv">UIImage imageNamed:@"LaunchImage-800-667h"</span><span class="p">]</span>;
+    }else {
+        _guideView.image = <span class="p">[</span><span class="nv">UIImage imageNamed:@"LaunchImage"</span><span class="p">]</span>;
+    }
+
+</code></pre></div></div>
+
+<h3 id="微信屏蔽了通用链接">微信屏蔽了通用链接</h3>
+
+<p>刚开始还以为只把淘宝的通用链接给屏蔽了，回来测试了一下我们自己的通用链接，也被屏蔽了，以后通过分享微信，刷流量，又少了一条途径。</p>
+
+<h3 id="ios11-uicollectionview滚动条以及放在上面的view被headerview遮盖的问题">iOS11 UICollectionView滚动条以及放在上面的View被headerView遮盖的问题</h3>
+<p>最近写项目在 iOS 11上，UICollectionView的滚动条 以及 放在上面的View被 UICollectionView的 headerView遮盖  ，通过研究发现，需要设置zPosition 才能解决这个问题。具体实施方案如下：</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+.h文件<span class="sb">
+
+
+</span>//添加的代码（因iOS 11以上才有问题，所以提前判定，避免对iOs 10造成新的影响）
+<span class="gh">#ifdef __IPHONE_11_0</span>
+@interface CustomLayer : CALayer
+@end
+<span class="gh">#endif</span>
+
+@interface RecommentTvAndVideoheaderView : UICollectionReusableView
+@end
+
+</code></pre></div></div>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+.m文件<span class="sb">
+
+
+</span>//添加的代码
+<span class="gh">#ifdef __IPHONE_11_0</span>
+@implementation CustomLayer1
+<span class="p">
+-</span> (CGFloat) zPosition {
+    return 0;
+}
+@end
+<span class="gh">#endif</span>
+
+<span class="gh">#ifdef __IPHONE_11_0</span>
+<span class="p">+</span> (Class)layerClass {
+    return <span class="p">[</span><span class="nv">CustomLayer1 class</span><span class="p">]</span>;
+}
+<span class="gh">#endif</span>
+
+对于有多个headerView的情况，需要在每个headerView中单独处理（每个的名称需要不同）
+
+</code></pre></div></div>
+
+
+    <hr style="border-top:0px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/categories.html">
+                iOS <span>(8)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    <!--    -->
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    <a class="btn btn-default" href="/ios/2017/05/01/iOS_gif.html" class="next">上一篇</a>
+    
+    
+    <a class="btn btn-default" href="/web%E5%89%8D%E7%AB%AF/it%E5%85%B6%E4%BB%96/2016/03/24/github-page.html" class="previous">下一篇</a>
+    
+</div>
+
+			<footer>
+				<p>
+					This work is licensed under a
+					<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/deed.en_US">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+				</p>
+				<p>
+					Powered by
+					<a rel="license" target="_blank" href="https://jekyllrb.com">Jekyll</a> ,
+					<a rel="license" target="_blank" href="https://github.com">Github</a> ,
+					<a rel="license" target="_blank" href="https://yashendaoren.github.io/home/">wanglizhen</a>
+				</p>
+			</footer>
+	</main>
+</body>
+
+</html>

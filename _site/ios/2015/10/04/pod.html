@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- meta information -->
+<meta charset="utf-8">
+<meta name="description" 
+      content="Welcome to wanglizhen 的主页!" >
+<meta name="author" content="">
+
+<!-- Enable responsiveness on mobile devices-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<!-- title -->
+<title>CocoaPods 的安装及使用 &middot; </title>
+
+<!-- icons -->
+<link rel="shortcut icon" href="/assets/images/favicon.ico">
+
+<!-- stylesheets -->
+<link rel="stylesheet" href="/assets/css/responsive.gs.12col.css">
+<link rel="stylesheet" href="/assets/css/animate.min.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/category.css"/>
+
+
+<!-- Google fonts -->
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic&subset=latin-ext">
+
+
+<!-- font Awesome -->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+
+<!-- feed links -->
+<link rel="alternate" href="http://localhost:4000/feed.xml" type="application/rss+xml" title="">
+
+</head>
+
+<body>
+	<main class="container avocado">
+		
+			<header>
+				
+				<div>
+					<a href="http://localhost:4000" id="logo" title="" style="background-image: url(/assets/images/logo.png);"></a>
+				</div>
+
+				<nav id="main-navigation">
+  
+  
+  <a href="/" title="Home">Home</a>
+  
+  
+  
+  <a href="/category/" title="Category">Category</a>
+  
+  
+  
+  <a href="/about/" title="about">about</a>
+  
+  
+</nav>
+
+
+			</header>
+
+			
+<div class="well article">
+        <h2><a href="/ios/2015/10/04/pod.html">CocoaPods 的安装及使用</a></h2>
+        <span class="post-date">
+            
+            October-4-2015
+        </span>
+        <hr style="border-top:0px solid #28323C;"/>
+    
+    <div class="post-content">
+    <h2 id="cocoapods-ios用于管理第三方库用-好处就不多说了-愿意用的应该都知道-此文综合摘自网络-以免以后遗忘">CocoaPods iOS用于管理第三方库用 好处就不多说了 愿意用的应该都知道 此文综合摘自网络 以免以后遗忘</h2>
+
+<h2 id="安装过程">安装过程</h2>
+<h3 id="升级ruby环境">升级Ruby环境</h3>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+gem update --system
+若无权限
+sudo gem update --system
+
+</code></pre></div></div>
+
+<h3 id="更换ruby镜像">更换Ruby镜像</h3>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>删除原来的镜像
+gem sources --remove https://rubygems.org/
+添加新镜像
+gem sources -a https://gems.ruby-china.org/
+查看镜像是否替换掉了
+gem sources -l
+
+</code></pre></div></div>
+
+<h3 id="安装cocoapods">安装CocoaPods</h3>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+sudo gem install cocoapods
+
+若无权限
+sudo gem install -n /usr/local/bin cocoapods
+pod setup
+
+</code></pre></div></div>
+
+<h2 id="cocoapods的使用">CocoaPods的使用</h2>
+<h3 id="搜索三方库">搜索三方库</h3>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+pod search AFNetworking
+
+</code></pre></div></div>
+
+<h3 id="创建podfile文件">创建Podfile文件</h3>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+touch Podfile
+
+</code></pre></div></div>
+
+<h3 id="编辑-要下载的库">编辑 要下载的库</h3>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+platform :ios, '8.0'
+target 'MyTarget' do
+
+//'~&gt; 3.1.0' 不写的话 默认下载最新的
+pod 'AFNetworking', '~&gt; 3.1.0'
+
+end
+
+</code></pre></div></div>
+
+<h3 id="终端下载第三方库库">终端下载第三方库库</h3>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+pod install
+
+</code></pre></div></div>
+
+<h3 id="更新第三方库">更新第三方库</h3>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+pod update
+</code></pre></div></div>
+
+<h2 id="常见问题">常见问题</h2>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+//更新pod版本
+sudo gem install -n /usr/local/bin cocoapods --pre
+
+pod repo update
+
+问题还是特别多的 遇到再说 希望能记得更新
+
+</code></pre></div></div>
+
+
+    <hr style="border-top:0px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/categories.html">
+                iOS <span>(8)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    <!--    -->
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    <a class="btn btn-default" href="/ios/2015/11/08/iOS-block.html" class="next">上一篇</a>
+    
+    
+    <a class="btn btn-default" href="/%E9%9A%8F%E7%AC%94/2015/07/01/%E8%A1%8C%E4%B8%BA%E5%87%86%E5%88%99.html" class="previous">下一篇</a>
+    
+</div>
+
+			<footer>
+				<p>
+					This work is licensed under a
+					<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/deed.en_US">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+				</p>
+				<p>
+					Powered by
+					<a rel="license" target="_blank" href="https://jekyllrb.com">Jekyll</a> ,
+					<a rel="license" target="_blank" href="https://github.com">Github</a> ,
+					<a rel="license" target="_blank" href="https://yashendaoren.github.io/home/">wanglizhen</a>
+				</p>
+			</footer>
+	</main>
+</body>
+
+</html>

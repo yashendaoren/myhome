@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- meta information -->
+<meta charset="utf-8">
+<meta name="description" 
+      content="Welcome to wanglizhen 的主页!" >
+<meta name="author" content="">
+
+<!-- Enable responsiveness on mobile devices-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<!-- title -->
+<title>快应用入门 与 常见问题 &middot; </title>
+
+<!-- icons -->
+<link rel="shortcut icon" href="/assets/images/favicon.ico">
+
+<!-- stylesheets -->
+<link rel="stylesheet" href="/assets/css/responsive.gs.12col.css">
+<link rel="stylesheet" href="/assets/css/animate.min.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/category.css"/>
+
+
+<!-- Google fonts -->
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic&subset=latin-ext">
+
+
+<!-- font Awesome -->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+
+<!-- feed links -->
+<link rel="alternate" href="http://localhost:4000/feed.xml" type="application/rss+xml" title="">
+
+</head>
+
+<body>
+	<main class="container avocado">
+		
+			<header>
+				
+				<div>
+					<a href="http://localhost:4000" id="logo" title="" style="background-image: url(/assets/images/logo.png);"></a>
+				</div>
+
+				<nav id="main-navigation">
+  
+  
+  <a href="/" title="Home">Home</a>
+  
+  
+  
+  <a href="/category/" title="Category">Category</a>
+  
+  
+  
+  <a href="/about/" title="about">about</a>
+  
+  
+</nav>
+
+
+			</header>
+
+			
+<div class="well article">
+        <h2><a href="/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%8E%E5%BF%AB%E5%BA%94%E7%94%A8/2018/03/26/qkapp.html">快应用入门 与 常见问题</a></h2>
+        <span class="post-date">
+            
+            March-26-2018
+        </span>
+        <hr style="border-top:0px solid #28323C;"/>
+    
+    <div class="post-content">
+    <p>快应用出来好几天啦，今天才有时间好好看看，这里是<a href="https://doc.quickapp.cn">官方文档</a>。环境搭建按照文档上说的来，但是他们要求安装6.0以上版本的NodeJS，又不能高于8.0版本，因为我是老早以前就安装了NodeJS，9.9的版本，也懒得降版本了，就凑活着用吧。</p>
+
+<p>安装hap-toolkit</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+//创建项目
+npm install -g hap-toolkit
+
+//查看版本
+hap -V
+
+</code></pre></div></div>
+
+<p>环境配置好，创建项目</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+//创建项目
+hap init Hello
+//安装依赖
+npm install
+
+//编译出错
+npm run build
+
+</code></pre></div></div>
+
+<p>错误提示</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gt">
+&gt; Hello@1.0.0 build /Users/wanglizhen/Desktop/19Lou/qkapp/Hello</span>
+<span class="gt">&gt; cross-env NODE_PLATFORM=na NODE_PHASE=dv webpack</span>
+    --config ./node_modules/hap-tools/webpack.config.js
+
+module.js:545
+throw err;
+^
+
+Error: Cannot find module '/Users/wanglizhen/Desktop/19Lou/qkapp/
+    Hello/node_modules/hap-tools/webpack.config.js'
+at Function.Module._resolveFilename (module.js:543:15)
+at Function.Module._load (module.js:470:25)
+at Module.require (module.js:593:17)
+at require (internal/module.js:11:18)
+at module.exports (/Users/wanglizhen/Desktop/19Lou/qkapp/
+    Hello/node_modules/webpack/bin/convert-argv.js:80:13)
+at Object.<span class="nt">&lt;anonymous&gt;</span> (/Users/wanglizhen/Desktop/19Lou/qkapp/
+    Hello/node_modules/webpack/bin/webpack.js:39:40)
+at Module._compile (module.js:649:30)
+at Object.Module._extensions..js (module.js:660:10)
+at Module.load (module.js:561:32)
+at tryModuleLoad (module.js:501:12)
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! Hello@1.0.0 build: <span class="sb">`cross-env NODE_PLATFORM=na NODE_PHASE=dv webpack
+    --config ./node_modules/hap-tools/webpack.config.js`</span>
+npm ERR! Exit status 1
+npm ERR!
+npm ERR! Failed at the Hello@1.0.0 build script.
+npm ERR! This is probably not a problem with npm.
+    There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /Users/wanglizhen/.npm/_logs/2018-03-26T02_43_53_924Z-debug.log<span class="sb">
+
+
+</span></code></pre></div></div>
+
+<p>解决方案：我看了下错误原因 发现项目下面缺少/node_modules/hap-tools/webpack.config.js文件，我进入目录查看了一下，原来连hap-tools目录都没有，于是我就手动装了一下</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+npm install hap-tools
+
+</code></pre></div></div>
+
+<p>//再编译</p>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+npm run build
+
+</code></pre></div></div>
+
+<p>//通过</p>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gt">
+&gt; hello@1.0.0 build /Users/wanglizhen/Desktop/19Lou/qkapp/hello</span>
+<span class="gt">&gt; cross-env NODE_PLATFORM=na NODE_PHASE=dv webpack</span>
+    --config ./node_modules/hap-tools/webpack.config.js
+
+<span class="p">[</span><span class="nv">INFO</span><span class="p">]</span> 配置环境：{"NODE_PLATFORM":"na","NODE_PHASE":"dv"}
+<span class="p">[</span><span class="nv">INFO</span><span class="p">]</span> Build Time Cost: NaNs
+Hash: 6965d809aaa352821c8f
+Time: 1437ms
+<span class="p">+</span> 15 hidden modules
+<span class="p">[</span><span class="nv">LOG</span><span class="p">]</span> ### App Loader ### 编译完成, 生成压缩包
+<span class="p">[</span><span class="nv">LOG</span><span class="p">]</span> ### App Loader ### 压缩包加签名
+<span class="p">[</span><span class="nv">LOG</span><span class="p">]</span> ### App Loader ### 自动刷新执行build :
+<span class="gt">&gt; hello@1.0.0 notify /Users/wanglizhen/Desktop/19Lou/qkapp/hello</span>
+<span class="gt">&gt; node ./node_modules/hap-tools/debugger/command/notify.js</span>
+
+</code></pre></div></div>
+
+<p>//启动HTTP服务器</p>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+npm run server
+
+</code></pre></div></div>
+
+<p>//搞定了</p>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gt">
+&gt; hello@1.0.0 server /Users/wanglizhen/Desktop/19Lou/qkapp/hello</span>
+<span class="gt">&gt; cross-env NODE_MOUNTED_ROUTER="debug bundle"</span>
+node ./node_modules/hap-tools/debugger/server/index.js
+
+<span class="p">[</span><span class="nv">INFO</span><span class="p">]</span> ### App Server ### server started at http://localhost:12306/
+<span class="p">[</span><span class="nv">INFO</span><span class="p">]</span> ### App Server ### 请确保手机与App Server处于相同网段
+
+生成HTTP服务器的二维码: http://172.16.115.231:12306
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █▄▀▀▄▄█▄█ █ ▄▄▄▄▄ █
+█ █   █ ███▄█  ▀▄██ █   █ █
+█ █▄▄▄█ ██▄▀▄▀▀████ █▄▄▄█ █
+█▄▄▄▄▄▄▄█ █ ▀▄▀ █▄█▄▄▄▄▄▄▄█
+█  █▄ ▀▄██ ▄▄ ██ ▀▀▄█▀▀▀▀▄█
+█▀ ▄█▀█▄  ▀ ▄▄▄ ▄  ▄ █ ▀▀ █
+█ ▀▄▄▀▀▄█  █ ▀▀▄ █▄▄▀▀██▀▄█
+█ ▄▀▄▀ ▄▄  ▀█ ▄█ ▄▄██▀▄ ▄ █
+█▄█▄█▄▄▄▄▀▄█▄▀  █ ▄▄▄ █▄ ██
+█ ▄▄▄▄▄ ██▄▀ ▀▀ █ █▄█ ▄█▀▄█
+█ █   █ █ █▀▀▀██▄▄▄  ▄ █▀▀█
+█ █▄▄▄█ █▀ ▄▄ █ ▀█▀▀▀ █   █
+█▄▄▄▄▄▄▄█▄██▄██▄▄▄█▄██▄██▄█
+
+</code></pre></div></div>
+
+<p>下面就可以专心的的研究代码了</p>
+
+
+    <hr style="border-top:0px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/categories.html">
+                小程序与快应用 <span>(3)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    <!--    -->
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    
+    <a class="btn btn-default" href="/ios/2018/03/24/iOS-target-action.html" class="previous">下一篇</a>
+    
+</div>
+
+			<footer>
+				<p>
+					This work is licensed under a
+					<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/deed.en_US">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+				</p>
+				<p>
+					Powered by
+					<a rel="license" target="_blank" href="https://jekyllrb.com">Jekyll</a> ,
+					<a rel="license" target="_blank" href="https://github.com">Github</a> ,
+					<a rel="license" target="_blank" href="https://yashendaoren.github.io/home/">wanglizhen</a>
+				</p>
+			</footer>
+	</main>
+</body>
+
+</html>

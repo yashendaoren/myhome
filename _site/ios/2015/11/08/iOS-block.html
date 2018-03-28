@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- meta information -->
+<meta charset="utf-8">
+<meta name="description" 
+      content="Welcome to wanglizhen 的主页!" >
+<meta name="author" content="">
+
+<!-- Enable responsiveness on mobile devices-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<!-- title -->
+<title>iOS 页面之间的几种数据交互 &middot; </title>
+
+<!-- icons -->
+<link rel="shortcut icon" href="/assets/images/favicon.ico">
+
+<!-- stylesheets -->
+<link rel="stylesheet" href="/assets/css/responsive.gs.12col.css">
+<link rel="stylesheet" href="/assets/css/animate.min.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/category.css"/>
+
+
+<!-- Google fonts -->
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic&subset=latin-ext">
+
+
+<!-- font Awesome -->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+
+<!-- feed links -->
+<link rel="alternate" href="http://localhost:4000/feed.xml" type="application/rss+xml" title="">
+
+</head>
+
+<body>
+	<main class="container avocado">
+		
+			<header>
+				
+				<div>
+					<a href="http://localhost:4000" id="logo" title="" style="background-image: url(/assets/images/logo.png);"></a>
+				</div>
+
+				<nav id="main-navigation">
+  
+  
+  <a href="/" title="Home">Home</a>
+  
+  
+  
+  <a href="/category/" title="Category">Category</a>
+  
+  
+  
+  <a href="/about/" title="about">about</a>
+  
+  
+</nav>
+
+
+			</header>
+
+			
+<div class="well article">
+        <h2><a href="/ios/2015/11/08/iOS-block.html">iOS 页面之间的几种数据交互</a></h2>
+        <span class="post-date">
+            
+            November-8-2015
+        </span>
+        <hr style="border-top:0px solid #28323C;"/>
+    
+    <div class="post-content">
+    <p>页面之间数据回传常用方式</p>
+
+<h3 id="block方式">block方式</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+.h 文件中
+
+typedef void(^ResponseBlock)(NSString <span class="err">*</span>);
+//定义一个block属性,使用copy策略
+@property(nonatomic, copy)ResponseBlock block;
+
+也可以直接定义
+@property(nonatomic, copy)(void(^)(NSString <span class="err">*</span>)) block;<span class="sb">
+
+
+</span>//.m文件中 需要的地方回调block
+if (self.block != nil) {
+    self.block(@"string");
+}<span class="sb">
+
+
+
+</span>//在需要回传值的地方 调用
+myView.block = ^(NSString <span class="err">*</span>text) {
+    NSLog(@"%@", text)
+};
+
+</code></pre></div></div>
+
+<h3 id="单例">单例</h3>
+<p>因为单利只会创建一次对象，因此任何地方创建调用它们的属性 都具有唯一性</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+//第一种常用方式
++(UserInfo <span class="err">*</span>)shareInstance{<span class="sb">
+
+    static UserInfo *userInfo = nil;
+    static dispatch_once_t = onceToken;
+    dispatch_once(&amp;onceToken,^{
+        userInfo = [[self alloc] init];
+    })
+    
+    return userInfo;
+</span>}<span class="sb">
+
+
+</span>//第二种常用方式
++(UserInfo <span class="err">*</span>)shareInstance{<span class="sb">
+
+    static UserInfo *userInfo = nil;
+    if (userInfo == nil) {
+
+        userInfo = [[self alloc] init];
+    }
+
+    return userInfo;
+</span>}<span class="sb">
+
+
+</span></code></pre></div></div>
+
+<h3 id="代理模式">代理模式</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+//.h 中定义一组协议方法，让代理对象去实现 可以很多方法
+@protocol RegistDelegate <span class="nt">&lt;NSObject&gt;</span>
+<span class="p">
+-</span> (void)registQQNumber:(NSString <span class="ge">*)qqNumber withPassWorld:(NSString *</span>)passWorld;
+
+@end
+
+// 包含一个代理对象属性，用于接收实现协议方法的代理对象
+@property(assign, nonatomic)id <span class="nt">&lt;RegistDelegate&gt;</span> delegate;<span class="sb">
+
+
+
+</span>//需要调用的地方 创建对象 设置代理方法
+RegistController <span class="err">*</span>reg = <span class="p">[</span><span class="nv">[RegistController alloc</span><span class="p">]</span> init];
+reg.delegate = self;
+
+<span class="gh">#pragma mark - 实现注册类的代理方法</span>
+<span class="p">-</span> (void)registQQNumber:(NSString <span class="ge">*)qqNumber withPassWorld:(NSString *</span>)passWorld
+{
+    NSLog(@"qqNumber:%@,passWorld:%@", qqNumber, passWorld)
+}
+
+</code></pre></div></div>
+
+<h3 id="kvo">KVO</h3>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+/<span class="err">*</span>
+Key_Value_Coding,键值编码
+用于修改属性的值，如果属性是有对应的set方法，那么会优先调用set方法，如果没有就会强行赋值
+<span class="err">*</span>/
+<span class="p">[</span><span class="nv">self setValue:qqText forKey:@"qqNumber"</span><span class="p">]</span>;
+
+// 要触发KVO,就必须使用set方法赋值或者使用KVC赋值
+self.passWorld = passText;
+
+// 这样赋值是不能触发KVO
+// _qqNumber = qqText;<span class="sb">
+
+
+
+</span><span class="p">----------------------------------------------------
+</span>
+//需要使用的地方 添加监听
+
+RegistViewController <span class="err">*</span>reg = <span class="p">[</span><span class="nv">[RegistViewController alloc</span><span class="p">]</span> init];
+
+/<span class="err">*</span> KVO : KeyValueObserv
+
+KeyPath: 监听属性的名称
+options： 要监听新值还是旧值
+NSKeyValueObservingOptionNew // 新值
+NSKeyValueObservingOptionOld // 旧值
+context： 传递的数据
+<span class="err">*</span>/
+<span class="err">[</span>reg addObserver:self forKeyPath:@"qqNumber" options:NSKeyValueObservingOptionNew
+|NSKeyValueObservingOptionOld context:NULL];
+
+<span class="err">[</span>reg addObserver:self forKeyPath:@"passWorld" options:NSKeyValueObservingOptionNew
+|NSKeyValueObservingOptionOld context:NULL];<span class="sb">
+
+
+
+</span><span class="gh">#pragma mark - KVO监听到属性值改变后触发的方法</span>
+<span class="p">-</span> (void)observeValueForKeyPath:(NSString <span class="err">*</span>)keyPath //监听的属性名称
+ofObject:(id)object // 被监听的对象
+change:(NSDictionary <span class="err">*</span>)change // 监听属性的值
+context:(void <span class="err">*</span>)context // 添加监听时传来的值
+{
+// 首先区别是那个属性值改变触发的方法
+    if (<span class="p">[</span><span class="nv">keyPath isEqualToString:@"qqNumber"</span><span class="p">]</span>) {
+        // 获取属性的最新值 <span class="p">[</span><span class="nv">change objectForKey:@"new"</span><span class="p">]</span>
+        // 获取属性的旧值 <span class="p">[</span><span class="nv">change objectForKey:@"old"</span><span class="p">]</span>
+        NSString <span class="err">*</span>userInfo = <span class="p">[</span><span class="nv">change objectForKey:@"new"</span><span class="p">]</span>;<span class="sb">
+
+        qqTextField.text = userInfo;
+
+    } else if([keyPath isEqualToString:@"passWorld"])
+    {
+        NSString *userInfo = [change objectForKey:@"new"];
+        passField.text = userInfo;
+    }
+
+</span>}
+</code></pre></div></div>
+<p>other Linker Flags  把 -all_load去掉，就可以正常运行了。</p>
+
+<h3 id="通知">通知</h3>
+<p>通知是app全局通知 如非必要 选用上面的方法</p>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+//发送通知
+<span class="p">[</span><span class="nv">[NSNotificationCenter defaultCenter</span><span class="p">]</span> postNotificationName:
+LoginSuccessNotification object:nil userInfo:dic];
+
+//添加监听
+<span class="p">[</span><span class="nv">[NSNotificationCenter defaultCenter</span><span class="p">]</span> addObserverForName:
+LoginSuccessNotification object:nil queue:<span class="p">[</span><span class="nv">NSOperationQueue mainQueue</span><span class="p">]</span>
+usingBlock:^(NSNotification <span class="err">*</span>note) {<span class="sb">
+
+    NSLog(@"%@", note.userInfo)
+
+</span>}];
+
+//删除监听
+<span class="p">[</span><span class="nv">[NSNotificationCenter defaultCenter</span><span class="p">]</span> removeObserver:self
+name:LoginSuccessNotification object:nil];
+
+</code></pre></div></div>
+
+<h3 id="本地存储">本地存储</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">
+-</span> (NSString<span class="ge">*)dictionaryToJson:(NSDictionary *</span>)dic
+
+{
+
+//存
+NSUserDefaults <span class="err">*</span>userDefaults = <span class="p">[</span><span class="nv">NSUserDefaults standardUserDefaults</span><span class="p">]</span>;
+<span class="p">[</span><span class="nv">userDefaults setObject:@"123456" forKey:@"uid"</span><span class="p">]</span>;
+<span class="p">[</span><span class="nv">userDefaults synchronize</span><span class="p">]</span>;
+
+//取
+NSUserDefaults <span class="err">*</span>defaults = <span class="p">[</span><span class="nv">NSUserDefaults standardUserDefaults</span><span class="p">]</span>;
+NSString <span class="err">*</span>uid = <span class="p">[</span><span class="nv">defaults valueForKey:@"uid"</span><span class="p">]</span>;
+
+}
+</code></pre></div></div>
+
+<p>方法还有很多 这几种是量级比较小的 简单易用的传值方式</p>
+
+
+    <hr style="border-top:0px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/categories.html">
+                iOS <span>(8)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    <!--    -->
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    <a class="btn btn-default" href="/web%E5%89%8D%E7%AB%AF/it%E5%85%B6%E4%BB%96/2016/03/24/github-page.html" class="next">上一篇</a>
+    
+    
+    <a class="btn btn-default" href="/ios/2015/10/04/pod.html" class="previous">下一篇</a>
+    
+</div>
+
+			<footer>
+				<p>
+					This work is licensed under a
+					<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/deed.en_US">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+				</p>
+				<p>
+					Powered by
+					<a rel="license" target="_blank" href="https://jekyllrb.com">Jekyll</a> ,
+					<a rel="license" target="_blank" href="https://github.com">Github</a> ,
+					<a rel="license" target="_blank" href="https://yashendaoren.github.io/home/">wanglizhen</a>
+				</p>
+			</footer>
+	</main>
+</body>
+
+</html>

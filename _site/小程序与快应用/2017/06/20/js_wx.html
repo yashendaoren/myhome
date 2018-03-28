@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- meta information -->
+<meta charset="utf-8">
+<meta name="description" 
+      content="Welcome to wanglizhen 的主页!" >
+<meta name="author" content="">
+
+<!-- Enable responsiveness on mobile devices-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<!-- title -->
+<title>微信小程序 文字溢出换行、各种引用 和 半透明浮层实现 &middot; </title>
+
+<!-- icons -->
+<link rel="shortcut icon" href="/assets/images/favicon.ico">
+
+<!-- stylesheets -->
+<link rel="stylesheet" href="/assets/css/responsive.gs.12col.css">
+<link rel="stylesheet" href="/assets/css/animate.min.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/category.css"/>
+
+
+<!-- Google fonts -->
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic&subset=latin-ext">
+
+
+<!-- font Awesome -->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+
+<!-- feed links -->
+<link rel="alternate" href="http://localhost:4000/feed.xml" type="application/rss+xml" title="">
+
+</head>
+
+<body>
+	<main class="container avocado">
+		
+			<header>
+				
+				<div>
+					<a href="http://localhost:4000" id="logo" title="" style="background-image: url(/assets/images/logo.png);"></a>
+				</div>
+
+				<nav id="main-navigation">
+  
+  
+  <a href="/" title="Home">Home</a>
+  
+  
+  
+  <a href="/category/" title="Category">Category</a>
+  
+  
+  
+  <a href="/about/" title="about">about</a>
+  
+  
+</nav>
+
+
+			</header>
+
+			
+<div class="well article">
+        <h2><a href="/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%8E%E5%BF%AB%E5%BA%94%E7%94%A8/2017/06/20/js_wx.html">微信小程序 文字溢出换行、各种引用 和 半透明浮层实现</a></h2>
+        <span class="post-date">
+            
+            June-20-2017
+        </span>
+        <hr style="border-top:0px solid #28323C;"/>
+    
+    <div class="post-content">
+    <h3 id="多行限制-文字溢出换行-并显示-">多行限制 文字溢出换行 并显示 …</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+.board_list_content{<span class="sb">
+
+    display: -webkit-box;
+    word-break: break-all;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    ont-size: 32rpx;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp:4;
+</span>}
+
+</code></pre></div></div>
+
+<h3 id="代码简介">代码简介</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+    white-space:nowrap;  //强制不换行
+    
+    text-overflow:ellipsis;//文字隐藏后添加省略号
+    
+    overflow:hidden; //超出文字自动隐藏
+
+</code></pre></div></div>
+
+<h3 id="小程序当中的各种引用">小程序当中的各种引用</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+    @import 'style/weui.wxss'; //wxss 样式引用
+    
+    var Api = require('../../utils/api.js') //js 引用
+    
+    <span class="nt">&lt;import</span> <span class="na">src=</span><span class="s">"../../utils/loading.wxml"</span><span class="nt">/&gt;</span> // <span class="nt">&lt;template&gt;</span>引用
+    
+    <span class="nt">&lt;include</span> <span class="na">src=</span><span class="s">"login.wxml"</span> <span class="nt">/&gt;</span> // 除<span class="nt">&lt;template&gt;</span>以外的其他标签引用
+
+</code></pre></div></div>
+<h3 id="小程序浮层的实现">小程序浮层的实现</h3>
+
+<p>首先添加触摸方法 方法什么都不用做 只是为了隔断事件传递用的</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+  <span class="nt">&lt;view</span> <span class="na">class=</span><span class="s">'floatView'</span> <span class="na">wx:if=</span><span class="s">""</span> <span class="na">capture-catch:touchstart=</span><span class="s">"doNothing"</span><span class="nt">&gt;&lt;/view&gt;</span>
+
+</code></pre></div></div>
+
+<p>再添加浮层的半透明属性、位置和层级就行了</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+.floatView{
+  width:100%; 
+  height:100%;
+  background-color:#000; 
+  filter:alpha(opacity=50); 
+  -moz-opacity:0.5; 
+  opacity:0.5; 
+  position:fixed; 
+  left:0px; 
+  top:90rpx; 
+  z-index:1000;
+  /<span class="ge">* overflow: hidden; *</span>/
+}
+
+</code></pre></div></div>
+
+
+    <hr style="border-top:0px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/categories.html">
+                小程序与快应用 <span>(3)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    <!--    -->
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    <a class="btn btn-default" href="/ios/2018/02/23/my-pod.html" class="next">上一篇</a>
+    
+    
+    <a class="btn btn-default" href="/ios/2017/05/01/iOS_gif.html" class="previous">下一篇</a>
+    
+</div>
+
+			<footer>
+				<p>
+					This work is licensed under a
+					<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/deed.en_US">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+				</p>
+				<p>
+					Powered by
+					<a rel="license" target="_blank" href="https://jekyllrb.com">Jekyll</a> ,
+					<a rel="license" target="_blank" href="https://github.com">Github</a> ,
+					<a rel="license" target="_blank" href="https://yashendaoren.github.io/home/">wanglizhen</a>
+				</p>
+			</footer>
+	</main>
+</body>
+
+</html>

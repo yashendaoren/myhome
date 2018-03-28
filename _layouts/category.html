@@ -1,0 +1,51 @@
+---
+layout: default
+title: Home
+---
+
+
+<div class="nav">
+  <ul>
+    {% for category in site.categories %}
+    <li onclick="selectCategory('{{ category | first }}')"><a href="#">{{ category | first }} - {{ category | last | size }}</a></li>
+    {% endfor %}
+  </ul>
+</div><br/>
+<br/>
+
+<div id="post_list">
+    {% for category in site.categories %}
+        {% if category.first == "iOS" %}
+            <ol class="arc-list" style="display:block;" data-category={{ category | first }}>
+                {% for post in category.last %}
+                    <li class="arc-list-item"><a href="{{ post.url }}">{{ post.title }}</a><span style="float:right;">{{ post.date | date:"%d/%m/%Y"}}</span></li>
+                {% endfor %}
+            </ol>
+        {% else %}
+            <ol class="arc-list" style="display:none;" data-category={{ category | first }}>
+                {% for post in category.last %}
+                    <li class="arc-list-item"><a href="{{ post.url }}">{{ post.title }}</a><span style="float:right;">{{ post.date | date:"%d/%m/%Y"}}</span></li>
+                {% endfor %}
+            </ol>
+        {% endif %}
+    {% endfor %}
+</div>
+
+
+<script>
+    function selectCategory (category){
+        var OlArray = document.getElementsByClassName("arc-list")
+        for(var i = 0; i < OlArray.length; i++){
+            var oneOl = OlArray[i];
+            // console.log(oneOl)
+            // console.log(oneOl.dataset)
+            if(category==oneOl.dataset.category){
+                oneOl.style.display = "block"
+            }else{
+                oneOl.style.display = "none"
+            }
+        }
+    }
+</script>
+
+ 

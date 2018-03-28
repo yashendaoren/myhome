@@ -1,0 +1,1067 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>wanglizhen</title>
+		<description>Welcome to wanglizhen 的主页!</description>
+		<link>http://localhost:4000</link>
+		<atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
+		
+			<item>
+				<title>快应用入门 与 常见问题</title>
+				<description>&lt;p&gt;快应用出来好几天啦，今天才有时间好好看看，这里是&lt;a href=&quot;https://doc.quickapp.cn&quot;&gt;官方文档&lt;/a&gt;。环境搭建按照文档上说的来，但是他们要求安装6.0以上版本的NodeJS，又不能高于8.0版本，因为我是老早以前就安装了NodeJS，9.9的版本，也懒得降版本了，就凑活着用吧。&lt;/p&gt;
+
+&lt;p&gt;安装hap-toolkit&lt;/p&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+//创建项目
+npm install -g hap-toolkit
+
+//查看版本
+hap -V
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;环境配置好，创建项目&lt;/p&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+//创建项目
+hap init Hello
+//安装依赖
+npm install
+
+//编译出错
+npm run build
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;错误提示&lt;/p&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gt&quot;&gt;
+&amp;gt; Hello@1.0.0 build /Users/wanglizhen/Desktop/19Lou/qkapp/Hello&lt;/span&gt;
+&lt;span class=&quot;gt&quot;&gt;&amp;gt; cross-env NODE_PLATFORM=na NODE_PHASE=dv webpack&lt;/span&gt;
+    --config ./node_modules/hap-tools/webpack.config.js
+
+module.js:545
+throw err;
+^
+
+Error: Cannot find module '/Users/wanglizhen/Desktop/19Lou/qkapp/
+    Hello/node_modules/hap-tools/webpack.config.js'
+at Function.Module._resolveFilename (module.js:543:15)
+at Function.Module._load (module.js:470:25)
+at Module.require (module.js:593:17)
+at require (internal/module.js:11:18)
+at module.exports (/Users/wanglizhen/Desktop/19Lou/qkapp/
+    Hello/node_modules/webpack/bin/convert-argv.js:80:13)
+at Object.&lt;span class=&quot;nt&quot;&gt;&amp;lt;anonymous&amp;gt;&lt;/span&gt; (/Users/wanglizhen/Desktop/19Lou/qkapp/
+    Hello/node_modules/webpack/bin/webpack.js:39:40)
+at Module._compile (module.js:649:30)
+at Object.Module._extensions..js (module.js:660:10)
+at Module.load (module.js:561:32)
+at tryModuleLoad (module.js:501:12)
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! Hello@1.0.0 build: &lt;span class=&quot;sb&quot;&gt;`cross-env NODE_PLATFORM=na NODE_PHASE=dv webpack
+    --config ./node_modules/hap-tools/webpack.config.js`&lt;/span&gt;
+npm ERR! Exit status 1
+npm ERR!
+npm ERR! Failed at the Hello@1.0.0 build script.
+npm ERR! This is probably not a problem with npm.
+    There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /Users/wanglizhen/.npm/_logs/2018-03-26T02_43_53_924Z-debug.log&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;解决方案：我看了下错误原因 发现项目下面缺少/node_modules/hap-tools/webpack.config.js文件，我进入目录查看了一下，原来连hap-tools目录都没有，于是我就手动装了一下&lt;/p&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+npm install hap-tools
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;//再编译&lt;/p&gt;
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+npm run build
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;//通过&lt;/p&gt;
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gt&quot;&gt;
+&amp;gt; hello@1.0.0 build /Users/wanglizhen/Desktop/19Lou/qkapp/hello&lt;/span&gt;
+&lt;span class=&quot;gt&quot;&gt;&amp;gt; cross-env NODE_PLATFORM=na NODE_PHASE=dv webpack&lt;/span&gt;
+    --config ./node_modules/hap-tools/webpack.config.js
+
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;INFO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; 配置环境：{&quot;NODE_PLATFORM&quot;:&quot;na&quot;,&quot;NODE_PHASE&quot;:&quot;dv&quot;}
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;INFO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; Build Time Cost: NaNs
+Hash: 6965d809aaa352821c8f
+Time: 1437ms
+&lt;span class=&quot;p&quot;&gt;+&lt;/span&gt; 15 hidden modules
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOG&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; ### App Loader ### 编译完成, 生成压缩包
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOG&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; ### App Loader ### 压缩包加签名
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOG&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; ### App Loader ### 自动刷新执行build :
+&lt;span class=&quot;gt&quot;&gt;&amp;gt; hello@1.0.0 notify /Users/wanglizhen/Desktop/19Lou/qkapp/hello&lt;/span&gt;
+&lt;span class=&quot;gt&quot;&gt;&amp;gt; node ./node_modules/hap-tools/debugger/command/notify.js&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;//启动HTTP服务器&lt;/p&gt;
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+npm run server
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;//搞定了&lt;/p&gt;
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gt&quot;&gt;
+&amp;gt; hello@1.0.0 server /Users/wanglizhen/Desktop/19Lou/qkapp/hello&lt;/span&gt;
+&lt;span class=&quot;gt&quot;&gt;&amp;gt; cross-env NODE_MOUNTED_ROUTER=&quot;debug bundle&quot;&lt;/span&gt;
+node ./node_modules/hap-tools/debugger/server/index.js
+
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;INFO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; ### App Server ### server started at http://localhost:12306/
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;INFO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; ### App Server ### 请确保手机与App Server处于相同网段
+
+生成HTTP服务器的二维码: http://172.16.115.231:12306
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █▄▀▀▄▄█▄█ █ ▄▄▄▄▄ █
+█ █   █ ███▄█  ▀▄██ █   █ █
+█ █▄▄▄█ ██▄▀▄▀▀████ █▄▄▄█ █
+█▄▄▄▄▄▄▄█ █ ▀▄▀ █▄█▄▄▄▄▄▄▄█
+█  █▄ ▀▄██ ▄▄ ██ ▀▀▄█▀▀▀▀▄█
+█▀ ▄█▀█▄  ▀ ▄▄▄ ▄  ▄ █ ▀▀ █
+█ ▀▄▄▀▀▄█  █ ▀▀▄ █▄▄▀▀██▀▄█
+█ ▄▀▄▀ ▄▄  ▀█ ▄█ ▄▄██▀▄ ▄ █
+█▄█▄█▄▄▄▄▀▄█▄▀  █ ▄▄▄ █▄ ██
+█ ▄▄▄▄▄ ██▄▀ ▀▀ █ █▄█ ▄█▀▄█
+█ █   █ █ █▀▀▀██▄▄▄  ▄ █▀▀█
+█ █▄▄▄█ █▀ ▄▄ █ ▀█▀▀▀ █   █
+█▄▄▄▄▄▄▄█▄██▄██▄▄▄█▄██▄██▄█
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;下面就可以专心的的研究代码了&lt;/p&gt;
+
+</description>
+				<pubDate>Mon, 26 Mar 2018 00:00:00 +0800</pubDate>
+				<link>http://localhost:4000/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%8E%E5%BF%AB%E5%BA%94%E7%94%A8/2018/03/26/qkapp.html</link>
+				<guid isPermaLink="true">http://localhost:4000/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%8E%E5%BF%AB%E5%BA%94%E7%94%A8/2018/03/26/qkapp.html</guid>
+			</item>
+		
+			<item>
+				<title>基于CTMediator解耦</title>
+				<description>&lt;p&gt;CTMediator 模块化开发用的还是比较多的，网上教程和讲解也是非常多的，我就不班门弄斧了，也不详细讲解原理了，只是简单记录一下样式和使用&lt;/p&gt;
+
+&lt;h3 id=&quot;首先-创建target-action---继承自-nsobject-就行&quot;&gt;首先 创建Target-Action   继承自 NSObject 就行&lt;/h3&gt;
+
+&lt;p&gt;Target_XXXXXX    这里的 XXXXXX 最好有意义，后面需要通过传入Target 的XXXXXX代码决定进入Target_XXXXXX类中执行方法，比如我下面的 Target_Home 是说这是首页的接口处理&lt;/p&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+.h文件中&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;&lt;span class=&quot;gh&quot;&gt;#import &amp;lt;Foundation/Foundation.h&amp;gt;&lt;/span&gt;
+
+@interface Target_Home : NSObject
+
+//获取首页对象
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; (UIViewController &lt;span class=&quot;ge&quot;&gt;*)Action_HomeViewController:(NSDictionary *&lt;/span&gt;)params;
+//刷新首页方法
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; (void)Action_refreshUpdate:(NSDictionary &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)params;
+
+//获取另外页面对象
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; (UIViewController &lt;span class=&quot;ge&quot;&gt;*)Action_SecondViewController:(NSDictionary *&lt;/span&gt;)params;
+
+@end&lt;span class=&quot;sb&quot;&gt;
+
+
+
+
+
+
+&lt;/span&gt;.m文件中&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;&lt;span class=&quot;gh&quot;&gt;#import &quot;Target_Home.h&quot;&lt;/span&gt;
+&lt;span class=&quot;gh&quot;&gt;#import &quot;HomeViewController.h&quot;&lt;/span&gt;
+&lt;span class=&quot;gh&quot;&gt;#import &quot;SecondViewController.h&quot;&lt;/span&gt;
+
+@implementation Target_Home
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; (UIViewController &lt;span class=&quot;ge&quot;&gt;*)Action_HomeViewController:(NSDictionary *&lt;/span&gt;)params{
+    HomeViewController &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;homeVC = &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;HomeViewController sharedInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
+    return homeVC;
+}
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; (void)Action_refreshUpdate:(NSDictionary &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)params{
+    HomeViewController &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;homeVC = &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;HomeViewController sharedInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;homeVC refreshUpdate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
+}&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; (UIViewController &lt;span class=&quot;ge&quot;&gt;*)Action_SecondViewController:(NSDictionary *&lt;/span&gt;)params{&lt;span class=&quot;sb&quot;&gt;
+
+    SecondViewController *SecondVC = [[SecondViewController alloc] init];
+    //参数
+    SecondVC.sId = [params objectForKey:@&quot;sId&quot;];
+    return SecondVC;
+&lt;/span&gt;}
+
+@end
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;创建-ctmediator-的分类&quot;&gt;创建 CTMediator 的分类&lt;/h3&gt;
+
+&lt;p&gt;action 传入要执行的方法名 target中的方法名 都是以action为前缀的，这里的action前缀可以修改，这里不做过多解释&lt;/p&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+.h文件中&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;&lt;span class=&quot;gh&quot;&gt;#import &quot;CTMediator.h&quot;&lt;/span&gt;
+
+@interface CTMediator (HomeComponent)
+/&lt;span class=&quot;ge&quot;&gt;**&lt;/span&gt;
+paramters 参数以字典样式传入
+&lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;/
+-(UIViewController&lt;span class=&quot;ge&quot;&gt;*)home_homeViewControllerWithParamters:(NSDictionary*&lt;/span&gt;)paramters;
+
+/&lt;span class=&quot;ge&quot;&gt;**&lt;/span&gt;
+刷新方法
+&lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;/
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; (void)home_refreshUpdate;
+
+/&lt;span class=&quot;ge&quot;&gt;**&lt;/span&gt;
+paramters 参数写清楚 必要参数和非必要参数
+&lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;/
+-(UIViewController&lt;span class=&quot;ge&quot;&gt;*)home_SecondViewControllerWithParamters:(NSDictionary*&lt;/span&gt;)paramters;
+
+@end&lt;span class=&quot;sb&quot;&gt;
+
+
+
+
+
+
+
+&lt;/span&gt;.m文件中&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;&lt;span class=&quot;gh&quot;&gt;#import &quot;CTMediator+HomeComponent.h&quot;&lt;/span&gt;
+
+@implementation CTMediator (HomeComponent)
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; (UIViewController &lt;span class=&quot;ge&quot;&gt;*)home_homeViewControllerWithParamters:(NSDictionary *&lt;/span&gt;)paramters{
+    return &lt;span class=&quot;err&quot;&gt;[&lt;/span&gt;self performTarget:@&quot;Home&quot;
+    action:@&quot;HomeViewController&quot; params:paramters shouldCacheTarget:NO];
+}
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; (void)home_refreshUpdate{
+    &lt;span class=&quot;err&quot;&gt;[&lt;/span&gt;self performTarget:@&quot;Home&quot;
+    action:@&quot;refreshUpdate&quot; params:nil shouldCacheTarget:NO];
+}
+&lt;span class=&quot;p&quot;&gt;
+-&lt;/span&gt; (UIViewController &lt;span class=&quot;ge&quot;&gt;*)home_SecondViewControllerWithParamters:(NSDictionary *&lt;/span&gt;)paramters{&lt;span class=&quot;sb&quot;&gt;
+
+    return [self performTarget:@&quot;Home&quot;
+    action:@&quot;SecondViewController&quot; params:paramters shouldCacheTarget:NO];
+&lt;/span&gt;}
+
+@end
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;最终使用&quot;&gt;最终使用&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;gh&quot;&gt;#import &quot;CTMediator+HomeComponent.h&quot;&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; (void)bButtonClick:(UIButton &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)sender {
+    UIViewController &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;viewController = &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;[CTMediator sharedInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    home_homeViewControllerWithParamters:@{@&quot;home_id&quot;:@&quot;123456&quot;}];
+    
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;self.navigationController pushViewController:viewController animated:YES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;使用的好处 就是不用在各处包含#import “XXXX.h” 实现所有页面间的方法 通过路由层间接调用 实现解耦&lt;/p&gt;
+
+</description>
+				<pubDate>Sat, 24 Mar 2018 00:00:00 +0800</pubDate>
+				<link>http://localhost:4000/ios/2018/03/24/iOS-target-action.html</link>
+				<guid isPermaLink="true">http://localhost:4000/ios/2018/03/24/iOS-target-action.html</guid>
+			</item>
+		
+			<item>
+				<title>创建自己的Pods库</title>
+				<description>&lt;p&gt;我们把自己的代码，全部分模块创建为了一个个库，为了模块化开发，后来发现，模块化开发真是好处多多，下一篇讲一下，模块化开发吧，这两片文章均摘自网络。本人怕原博主删掉博客或者因为网站原因找不到，特在此做了一个简单拷贝 &lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MjM5OTM0MzIwMQ==&amp;amp;mid=2652551137&amp;amp;idx=3&amp;amp;sn=5a6a162a41c54be12b51c0390715c063&amp;amp;chksm=bcd2f2ef8ba57bf95f03ee0cec37516c091d80f1adaf875c98613acc34d9972c240d5a159823&amp;amp;mpshare=1&amp;amp;scene=23&amp;amp;srcid=0822HLLoDepjHMsV9bP1R468#rd&quot;&gt;原文出处&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;创建存储-podspec-后缀文件的-git-仓库&quot;&gt;创建存储 .podspec 后缀文件的 Git 仓库。&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/my_pod/01.png&quot; alt=&quot;创建存储&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;记录第一个地址&quot;&gt;记录第一个地址。&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/my_pod/02.png&quot; alt=&quot;创建存储&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;创建第二个用于存储代码的-git-仓库&quot;&gt;创建第二个用于存储代码的 Git 仓库&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/my_pod/03.png&quot; alt=&quot;创建存储&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;记录第二个地址&quot;&gt;记录第二个地址。&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/my_pod/04.png&quot; alt=&quot;创建存储&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;打开终端-到桌面&quot;&gt;打开终端 到桌面。&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+cd Desktop/
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;然后输入-pod-lib-create-lib-命令创建一个待上传的-lib-模版&quot;&gt;然后输入 pod lib create Lib 命令创建一个待上传的 Lib 模版&lt;/h3&gt;
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+pod lib create Lib
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;然后输入邮箱&quot;&gt;然后输入邮箱&lt;/h3&gt;
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+What is your email?
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;按找提示填写基础信息应该不用每个都解释了吧&quot;&gt;按找提示填写基础信息（应该不用每个都解释了吧）。&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/my_pod/05.png&quot; alt=&quot;创建存储&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;完成之后-就可以在finder中看到如下&quot;&gt;完成之后 就可以在Finder中看到如下。&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/my_pod/06.png&quot; alt=&quot;创建存储&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;配置-podspec-后缀文件&quot;&gt;配置 .podspec 后缀文件&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/my_pod/07.png&quot; alt=&quot;创建存储&quot; /&gt;
+注意需要修改的地方一般有&lt;/p&gt;
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+s.version :  版本号(需跟后面打 Tag 的值相等)
+s.summary : 描述(这个如果不修改，后面会出现问题。简单修改，不能超过 s.description 的文字长度，不然也会出问题)
+s.homepage : 项目主页（第二个地址 去掉.git）
+s.source : Git 仓库地址（第二个地址）
+s.ios.deployment_target : 项目最低支持版本
+s.source_files : 共享的代码目录
+s.frameworks : 所依赖的系统库
+s.dependency : 所依赖的第三方库
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;验证&quot;&gt;验证&lt;/h3&gt;
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+pod lib lint
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;结果有两个警告 验证失败
+&lt;img src=&quot;http://localhost:4000/assets/images/my_pod/08.png&quot; alt=&quot;创建存储&quot; /&gt;
+于是我忽略了警告 重新验证 验证通过
+&lt;img src=&quot;http://localhost:4000/assets/images/my_pod/09.png&quot; alt=&quot;创建存储&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;上传远程仓库&quot;&gt;上传远程仓库&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//链接远程仓库
+git remote add origin 第二个地址
+//更新本地。（文件有冲突自己解决）
+git pull origin master --allow-unrelated-histories
+
+git add .
+git commit -m 'Lib commit'
+git push origin master
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;上传成功-查看&quot;&gt;上传成功 查看&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/my_pod/10.png&quot; alt=&quot;创建存储&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;验证文件有效性&quot;&gt;验证文件有效性&lt;/h3&gt;
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+pod spec lint
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;发现tag值不对应
+&lt;img src=&quot;http://localhost:4000/assets/images/my_pod/11.png&quot; alt=&quot;创建存储&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;同步tag值&lt;/p&gt;
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+git tag -a 0.1.0 -m '0.1.0标签'
+git push origin master --tags
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;同步成功
+&lt;img src=&quot;http://localhost:4000/assets/images/my_pod/12.png&quot; alt=&quot;创建存储&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;其实也可以在这边后台手动添加tag
+&lt;img src=&quot;http://localhost:4000/assets/images/my_pod/13.png&quot; alt=&quot;创建存储&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;上传podspec到第一个远程仓库&quot;&gt;上传.podspec到第一个远程仓库&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+pod repo add MyPodspec 第一个创建的git仓库地址&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;查看本地库&quot;&gt;查看本地库&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/my_pod/14.png&quot; alt=&quot;创建存储&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;向-mypodspec-远程仓库中提交-podspec-成功&quot;&gt;向 MyPodspec 远程仓库中提交 .podspec 成功&lt;/h3&gt;
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+pod repo push MyPodspec Lib.podspec
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/my_pod/15.png&quot; alt=&quot;创建存储&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;可以用了-查一下试试&quot;&gt;可以用了 查一下试试&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+pod search Lib&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;结果真是日了狗了搜出来一大堆的库想偷懒一下起了这个名字最终还是把自己给坑到了&quot;&gt;结果真是日了狗了！！搜出来一大堆的库！！！想偷懒一下起了这个名字，最终还是把自己给坑到了。。。。。。&lt;/h2&gt;
+
+</description>
+				<pubDate>Fri, 23 Feb 2018 00:00:00 +0800</pubDate>
+				<link>http://localhost:4000/ios/2018/02/23/my-pod.html</link>
+				<guid isPermaLink="true">http://localhost:4000/ios/2018/02/23/my-pod.html</guid>
+			</item>
+		
+			<item>
+				<title>微信小程序 文字溢出换行、各种引用 和 半透明浮层实现</title>
+				<description>&lt;h3 id=&quot;多行限制-文字溢出换行-并显示-&quot;&gt;多行限制 文字溢出换行 并显示 …&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+.board_list_content{&lt;span class=&quot;sb&quot;&gt;
+
+    display: -webkit-box;
+    word-break: break-all;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    ont-size: 32rpx;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp:4;
+&lt;/span&gt;}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;代码简介&quot;&gt;代码简介&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+    white-space:nowrap;  //强制不换行
+    
+    text-overflow:ellipsis;//文字隐藏后添加省略号
+    
+    overflow:hidden; //超出文字自动隐藏
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;小程序当中的各种引用&quot;&gt;小程序当中的各种引用&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+    @import 'style/weui.wxss'; //wxss 样式引用
+    
+    var Api = require('../../utils/api.js') //js 引用
+    
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;import&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;../../utils/loading.wxml&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt; // &lt;span class=&quot;nt&quot;&gt;&amp;lt;template&amp;gt;&lt;/span&gt;引用
+    
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;include&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;login.wxml&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt; // 除&lt;span class=&quot;nt&quot;&gt;&amp;lt;template&amp;gt;&lt;/span&gt;以外的其他标签引用
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;小程序浮层的实现&quot;&gt;小程序浮层的实现&lt;/h3&gt;
+
+&lt;p&gt;首先添加触摸方法 方法什么都不用做 只是为了隔断事件传递用的&lt;/p&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;view&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'floatView'&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;wx:if=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;capture-catch:touchstart=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;doNothing&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/view&amp;gt;&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;再添加浮层的半透明属性、位置和层级就行了&lt;/p&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+.floatView{
+  width:100%; 
+  height:100%;
+  background-color:#000; 
+  filter:alpha(opacity=50); 
+  -moz-opacity:0.5; 
+  opacity:0.5; 
+  position:fixed; 
+  left:0px; 
+  top:90rpx; 
+  z-index:1000;
+  /&lt;span class=&quot;ge&quot;&gt;* overflow: hidden; *&lt;/span&gt;/
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+				<pubDate>Tue, 20 Jun 2017 00:00:00 +0800</pubDate>
+				<link>http://localhost:4000/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%8E%E5%BF%AB%E5%BA%94%E7%94%A8/2017/06/20/js_wx.html</link>
+				<guid isPermaLink="true">http://localhost:4000/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%8E%E5%BF%AB%E5%BA%94%E7%94%A8/2017/06/20/js_wx.html</guid>
+			</item>
+		
+			<item>
+				<title>gif 动图支持</title>
+				<description>&lt;p&gt;iOS 9.0之后照片支持gif的展示了，简介一下保存gif图的方法 和加载gif图的方法&lt;/p&gt;
+
+&lt;h3 id=&quot;保存-gif-图&quot;&gt;保存 gif 图&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+//保存图片
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; (void)saveImageWithData:(NSData &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)imageData{
+    if (&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;UIDevice currentDevice&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;.systemVersion.floatValue &amp;gt;= 9.0f) {
+        &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;[PHPhotoLibrary sharedPhotoLibrary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; performChanges:^{&lt;span class=&quot;sb&quot;&gt;
+
+        PHAssetResourceCreationOptions *options = [[PHAssetResourceCreationOptions 
+        alloc] init];
+        [[PHAssetCreationRequest creationRequestForAsset] 
+        addResourceWithType:PHAssetResourceTypePhoto
+         data:[common getNSDataFromUrl:imageUrl] options:options];
+        } completionHandler:^(BOOL success, NSError * _Nullable error) {
+
+            [self image:nil didFinishSavingWithError:error contextInfo:nil];
+
+        }];
+
+    }else {
+        UIImageWriteToSavedPhotosAlbum([UIImage imageWithData:
+        [common getNSDataFromUrl:imageUrl]], 
+        self, 
+        @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    }
+
+&lt;/span&gt;}
+
+//保存之后的提示方法
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; (void)image:(UIImage &lt;span class=&quot;ge&quot;&gt;*)image didFinishSavingWithError:(NSError *&lt;/span&gt;)error
+contextInfo:(void &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)contextInfo
+{
+    if (error != NULL)
+    {
+    NSString &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;message;
+    if (error.code ==-3310) {
+        message = @&quot;请到设置隐私开启相册权限&quot;;
+    }else{
+        message = @&quot;保存失败&quot;;
+    }
+        &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;NSObject toastMessage:message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
+    }
+    else  // No errors
+    {
+        &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;NSObject toastMessage:@&quot;已保存至手机相册&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
+    }
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;获取gif图片资源的方法&quot;&gt;获取gif图片资源的方法&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; (void)getImage{
+    PHImageManager &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt; manager =&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PHImageManager defaultManager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
+    PHImageRequestOptions &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt; ops =&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;[PHImageRequestOptions alloc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;init];&lt;span class=&quot;sb&quot;&gt;
+
+    PHAsset * asset = [self.dataArray objectAtIndex:indexPath.row];
+    // 下面的回调会返回多次 该属性设置YES 只返回一次，返回的是原图
+    ops.synchronous = YES;
+    ops.resizeMode = PHImageRequestOptionsResizeModeExact;
+
+    [manager requestImageDataForAsset:asset options:ops
+     resultHandler:^(NSData * _Nullable imageData,
+      NSString * _Nullable dataUTI, 
+      UIImageOrientation orientation,
+       NSDictionary * _Nullable info) {
+        if (imageData.length){
+
+        //gif 图片
+        if ([dataUTI isEqualToString:(__bridge NSString *)kUTTypeGIF]) {
+            //这里获取gif图片的NSData数据
+            _gifImageData = imageData;
+        }
+        else {
+            //其他格式的图片
+            returnImage = [UIImage imageWithData:imageData];
+
+        }
+
+    }else{
+        //如果没有获取到imagedata，尝试直接获取图片
+        [manager requestImageForAsset:asset targetSize:AssetGridThumbnailSize 
+        contentMode:PHImageContentModeAspectFill options:ops
+         resultHandler:^(UIImage * result, NSDictionary * info) {
+            if (result) {
+                returnImage = result;
+            }
+        }];
+    }
+&lt;/span&gt;}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+				<pubDate>Mon, 01 May 2017 00:00:00 +0800</pubDate>
+				<link>http://localhost:4000/ios/2017/05/01/iOS_gif.html</link>
+				<guid isPermaLink="true">http://localhost:4000/ios/2017/05/01/iOS_gif.html</guid>
+			</item>
+		
+			<item>
+				<title>Xcode快捷键 和 iOS零散bug</title>
+				<description>&lt;p&gt;iOS开发多年了 一直只有保存代码的习惯 是时候整合一下了 长时间的开发 最大的遗憾就是没有开刚开始的时候就养成写博客的习惯 以至于当时觉得很有收获或者很有成就感的瞬间 在后来完全不记得了。以后持续更细……&lt;/p&gt;
+
+&lt;h3 id=&quot;xcode-常用快捷键&quot;&gt;Xcode 常用快捷键&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+.h .m 切换：Control + Command + 上箭头
+浏览过的文件快速切换：Control + Command + 左右箭头
+代码上跳：Cmd+Option+&lt;span class=&quot;err&quot;&gt;[&lt;/span&gt;
+代码左移：Cmd+&lt;span class=&quot;err&quot;&gt;[&lt;/span&gt;
+全局搜索：Cmd+Shift+F
+搜索：Cmd+F
+快速打开：Cmd+Shift+O 搜索文件
+定位打开文件：Cmd+Shift+J
+清除工程：Cmd+Shift+K
+暂停运行模拟器：Cmd+.
+文档和参考：Cmd+Shift+0
+工程导航器：Cmd+1
+多行注释：Cmd+Option+/
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;图片扭曲的问题&quot;&gt;图片扭曲的问题&lt;/h3&gt;
+
+&lt;p&gt;测试突然找来 说线上的app图片全部扭曲了，我下载了发现并没有。经过排查发现，iOS 8 以下的系统，图片真的扭曲了。后来发现扭曲的全部是 Images.xcassets 里面的图片，其他图片和网络图片都是好的。后来确认是苹果自己的锅，Xcode 9.2 之后，打出来的包，iOS 8的系统都有问题。经产品测试和开发商议，这个问题不管了。&lt;/p&gt;
+
+&lt;h3 id=&quot;获取启动图获取launchimage-中的图片&quot;&gt;获取启动图获取LaunchImage 中的图片&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+    if (IS_iPHONE_X) {
+        _guideView.image = &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;UIImage imageNamed:@&quot;LaunchImage-1100-2436h&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
+    }else if (FUll_VIEW_HEIGHT&amp;gt;480) {
+        _guideView.image = &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;UIImage imageNamed:@&quot;LaunchImage-800-667h&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
+    }else {
+        _guideView.image = &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;UIImage imageNamed:@&quot;LaunchImage&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
+    }
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;微信屏蔽了通用链接&quot;&gt;微信屏蔽了通用链接&lt;/h3&gt;
+
+&lt;p&gt;刚开始还以为只把淘宝的通用链接给屏蔽了，回来测试了一下我们自己的通用链接，也被屏蔽了，以后通过分享微信，刷流量，又少了一条途径。&lt;/p&gt;
+
+&lt;h3 id=&quot;ios11-uicollectionview滚动条以及放在上面的view被headerview遮盖的问题&quot;&gt;iOS11 UICollectionView滚动条以及放在上面的View被headerView遮盖的问题&lt;/h3&gt;
+&lt;p&gt;最近写项目在 iOS 11上，UICollectionView的滚动条 以及 放在上面的View被 UICollectionView的 headerView遮盖  ，通过研究发现，需要设置zPosition 才能解决这个问题。具体实施方案如下：&lt;/p&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+.h文件&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;//添加的代码（因iOS 11以上才有问题，所以提前判定，避免对iOs 10造成新的影响）
+&lt;span class=&quot;gh&quot;&gt;#ifdef __IPHONE_11_0&lt;/span&gt;
+@interface CustomLayer : CALayer
+@end
+&lt;span class=&quot;gh&quot;&gt;#endif&lt;/span&gt;
+
+@interface RecommentTvAndVideoheaderView : UICollectionReusableView
+@end
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+.m文件&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;//添加的代码
+&lt;span class=&quot;gh&quot;&gt;#ifdef __IPHONE_11_0&lt;/span&gt;
+@implementation CustomLayer1
+&lt;span class=&quot;p&quot;&gt;
+-&lt;/span&gt; (CGFloat) zPosition {
+    return 0;
+}
+@end
+&lt;span class=&quot;gh&quot;&gt;#endif&lt;/span&gt;
+
+&lt;span class=&quot;gh&quot;&gt;#ifdef __IPHONE_11_0&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;+&lt;/span&gt; (Class)layerClass {
+    return &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CustomLayer1 class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
+}
+&lt;span class=&quot;gh&quot;&gt;#endif&lt;/span&gt;
+
+对于有多个headerView的情况，需要在每个headerView中单独处理（每个的名称需要不同）
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+				<pubDate>Mon, 09 May 2016 00:00:00 +0800</pubDate>
+				<link>http://localhost:4000/ios/2016/05/09/iOS.html</link>
+				<guid isPermaLink="true">http://localhost:4000/ios/2016/05/09/iOS.html</guid>
+			</item>
+		
+			<item>
+				<title>如何使用Github搭建自己的静态网站</title>
+				<description>&lt;h3 id=&quot;首先登陆自己的github账号-如果没有-注册一个-无需多说&quot;&gt;首先登陆自己的Github账号 如果没有 注册一个 无需多说&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/github-page/01.png&quot; alt=&quot;图片&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;创建仓库-用于存放自己的页面代码&quot;&gt;创建仓库 用于存放自己的页面代码&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/github-page/02.png&quot; alt=&quot;图片&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;切换到settings页面&quot;&gt;切换到Settings页面&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/github-page/03.png&quot; alt=&quot;图片&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;往下拉-会看到一个选择主题的选项按钮&quot;&gt;往下拉 会看到一个选择主题的选项按钮&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/github-page/04.png&quot; alt=&quot;图片&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;选择一个自己喜欢的样式-点击选择&quot;&gt;选择一个自己喜欢的样式 点击选择&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/github-page/05.png&quot; alt=&quot;图片&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;上传自己选中的主题&quot;&gt;上传自己选中的主题&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/github-page/06.png&quot; alt=&quot;图片&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;再切换到settings页面-往下拉&quot;&gt;再切换到Settings页面 往下拉&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/github-page/07.png&quot; alt=&quot;图片&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;此时-github-已经帮我们生成了自己网页的地址-点开看看&quot;&gt;此时 Github 已经帮我们生成了自己网页的地址 点开看看！&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/github-page/08.png&quot; alt=&quot;图片&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;再看我们的仓库里面&quot;&gt;再看我们的仓库里面&lt;/h3&gt;
+&lt;p&gt;我们的仓库里面也已经有了配置和第一个页面的文件（index.md）以后的每个博文 都会是一个.md文件 index.md里面有如何使用的介绍 功能不算丰富 但是只是写个博客 也足够了
+&lt;img src=&quot;http://localhost:4000/assets/images/github-page/09.png&quot; alt=&quot;图片&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;切换样式&quot;&gt;切换样式&lt;/h3&gt;
+&lt;p&gt;如果自己不喜欢原本的模版，可以自己写，Github支持.html文件 支持js特效。当然，如果觉得自己的设计不够好，也可以去下载别的模版，比如楼主的模版，就是在&lt;a href=&quot;https://jekyllrb.com&quot;&gt;Jekyll&lt;/a&gt;下载的。对于&lt;a href=&quot;https://jekyllrb.com&quot;&gt;Jekyll&lt;/a&gt;的使用，里面有很详细的教程。&lt;/p&gt;
+
+&lt;h3 id=&quot;更换域名&quot;&gt;更换域名&lt;/h3&gt;
+&lt;p&gt;如果想换成自己的域名，也很简单
+&lt;br /&gt;
+1，申请一个域名
+&lt;br /&gt;
+2，解析域名（选择CNAME方式解析，地址选择Github分配给我们的 “二级域名.github.io”）
+&lt;br /&gt;
+3，创建一个CNAME文件，里面写上自己的域名就行了（注意：CNAME字母要大写，没有后缀）
+&lt;br /&gt;
+4，上传到自己刚开始创建的仓库&lt;/p&gt;
+
+&lt;h3 id=&quot;搞定了-试试自己的网站吧&quot;&gt;搞定了 试试自己的网站吧！！&lt;/h3&gt;
+
+</description>
+				<pubDate>Thu, 24 Mar 2016 00:00:00 +0800</pubDate>
+				<link>http://localhost:4000/web%E5%89%8D%E7%AB%AF/it%E5%85%B6%E4%BB%96/2016/03/24/github-page.html</link>
+				<guid isPermaLink="true">http://localhost:4000/web%E5%89%8D%E7%AB%AF/it%E5%85%B6%E4%BB%96/2016/03/24/github-page.html</guid>
+			</item>
+		
+			<item>
+				<title>iOS 页面之间的几种数据交互</title>
+				<description>&lt;p&gt;页面之间数据回传常用方式&lt;/p&gt;
+
+&lt;h3 id=&quot;block方式&quot;&gt;block方式&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+.h 文件中
+
+typedef void(^ResponseBlock)(NSString &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;);
+//定义一个block属性,使用copy策略
+@property(nonatomic, copy)ResponseBlock block;
+
+也可以直接定义
+@property(nonatomic, copy)(void(^)(NSString &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)) block;&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;//.m文件中 需要的地方回调block
+if (self.block != nil) {
+    self.block(@&quot;string&quot;);
+}&lt;span class=&quot;sb&quot;&gt;
+
+
+
+&lt;/span&gt;//在需要回传值的地方 调用
+myView.block = ^(NSString &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;text) {
+    NSLog(@&quot;%@&quot;, text)
+};
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;单例&quot;&gt;单例&lt;/h3&gt;
+&lt;p&gt;因为单利只会创建一次对象，因此任何地方创建调用它们的属性 都具有唯一性&lt;/p&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+//第一种常用方式
++(UserInfo &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)shareInstance{&lt;span class=&quot;sb&quot;&gt;
+
+    static UserInfo *userInfo = nil;
+    static dispatch_once_t = onceToken;
+    dispatch_once(&amp;amp;onceToken,^{
+        userInfo = [[self alloc] init];
+    })
+    
+    return userInfo;
+&lt;/span&gt;}&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;//第二种常用方式
++(UserInfo &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)shareInstance{&lt;span class=&quot;sb&quot;&gt;
+
+    static UserInfo *userInfo = nil;
+    if (userInfo == nil) {
+
+        userInfo = [[self alloc] init];
+    }
+
+    return userInfo;
+&lt;/span&gt;}&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;代理模式&quot;&gt;代理模式&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+//.h 中定义一组协议方法，让代理对象去实现 可以很多方法
+@protocol RegistDelegate &lt;span class=&quot;nt&quot;&gt;&amp;lt;NSObject&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;
+-&lt;/span&gt; (void)registQQNumber:(NSString &lt;span class=&quot;ge&quot;&gt;*)qqNumber withPassWorld:(NSString *&lt;/span&gt;)passWorld;
+
+@end
+
+// 包含一个代理对象属性，用于接收实现协议方法的代理对象
+@property(assign, nonatomic)id &lt;span class=&quot;nt&quot;&gt;&amp;lt;RegistDelegate&amp;gt;&lt;/span&gt; delegate;&lt;span class=&quot;sb&quot;&gt;
+
+
+
+&lt;/span&gt;//需要调用的地方 创建对象 设置代理方法
+RegistController &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;reg = &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;[RegistController alloc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; init];
+reg.delegate = self;
+
+&lt;span class=&quot;gh&quot;&gt;#pragma mark - 实现注册类的代理方法&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; (void)registQQNumber:(NSString &lt;span class=&quot;ge&quot;&gt;*)qqNumber withPassWorld:(NSString *&lt;/span&gt;)passWorld
+{
+    NSLog(@&quot;qqNumber:%@,passWorld:%@&quot;, qqNumber, passWorld)
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;kvo&quot;&gt;KVO&lt;/h3&gt;
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+/&lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;
+Key_Value_Coding,键值编码
+用于修改属性的值，如果属性是有对应的set方法，那么会优先调用set方法，如果没有就会强行赋值
+&lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;/
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;self setValue:qqText forKey:@&quot;qqNumber&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
+
+// 要触发KVO,就必须使用set方法赋值或者使用KVC赋值
+self.passWorld = passText;
+
+// 这样赋值是不能触发KVO
+// _qqNumber = qqText;&lt;span class=&quot;sb&quot;&gt;
+
+
+
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;----------------------------------------------------
+&lt;/span&gt;
+//需要使用的地方 添加监听
+
+RegistViewController &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;reg = &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;[RegistViewController alloc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; init];
+
+/&lt;span class=&quot;err&quot;&gt;*&lt;/span&gt; KVO : KeyValueObserv
+
+KeyPath: 监听属性的名称
+options： 要监听新值还是旧值
+NSKeyValueObservingOptionNew // 新值
+NSKeyValueObservingOptionOld // 旧值
+context： 传递的数据
+&lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;/
+&lt;span class=&quot;err&quot;&gt;[&lt;/span&gt;reg addObserver:self forKeyPath:@&quot;qqNumber&quot; options:NSKeyValueObservingOptionNew
+|NSKeyValueObservingOptionOld context:NULL];
+
+&lt;span class=&quot;err&quot;&gt;[&lt;/span&gt;reg addObserver:self forKeyPath:@&quot;passWorld&quot; options:NSKeyValueObservingOptionNew
+|NSKeyValueObservingOptionOld context:NULL];&lt;span class=&quot;sb&quot;&gt;
+
+
+
+&lt;/span&gt;&lt;span class=&quot;gh&quot;&gt;#pragma mark - KVO监听到属性值改变后触发的方法&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; (void)observeValueForKeyPath:(NSString &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)keyPath //监听的属性名称
+ofObject:(id)object // 被监听的对象
+change:(NSDictionary &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)change // 监听属性的值
+context:(void &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)context // 添加监听时传来的值
+{
+// 首先区别是那个属性值改变触发的方法
+    if (&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;keyPath isEqualToString:@&quot;qqNumber&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;) {
+        // 获取属性的最新值 &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;change objectForKey:@&quot;new&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+        // 获取属性的旧值 &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;change objectForKey:@&quot;old&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+        NSString &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;userInfo = &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;change objectForKey:@&quot;new&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;&lt;span class=&quot;sb&quot;&gt;
+
+        qqTextField.text = userInfo;
+
+    } else if([keyPath isEqualToString:@&quot;passWorld&quot;])
+    {
+        NSString *userInfo = [change objectForKey:@&quot;new&quot;];
+        passField.text = userInfo;
+    }
+
+&lt;/span&gt;}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;other Linker Flags  把 -all_load去掉，就可以正常运行了。&lt;/p&gt;
+
+&lt;h3 id=&quot;通知&quot;&gt;通知&lt;/h3&gt;
+&lt;p&gt;通知是app全局通知 如非必要 选用上面的方法&lt;/p&gt;
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+//发送通知
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;[NSNotificationCenter defaultCenter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; postNotificationName:
+LoginSuccessNotification object:nil userInfo:dic];
+
+//添加监听
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;[NSNotificationCenter defaultCenter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; addObserverForName:
+LoginSuccessNotification object:nil queue:&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;NSOperationQueue mainQueue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+usingBlock:^(NSNotification &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;note) {&lt;span class=&quot;sb&quot;&gt;
+
+    NSLog(@&quot;%@&quot;, note.userInfo)
+
+&lt;/span&gt;}];
+
+//删除监听
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;[NSNotificationCenter defaultCenter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; removeObserver:self
+name:LoginSuccessNotification object:nil];
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;本地存储&quot;&gt;本地存储&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;
+-&lt;/span&gt; (NSString&lt;span class=&quot;ge&quot;&gt;*)dictionaryToJson:(NSDictionary *&lt;/span&gt;)dic
+
+{
+
+//存
+NSUserDefaults &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;userDefaults = &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;NSUserDefaults standardUserDefaults&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;userDefaults setObject:@&quot;123456&quot; forKey:@&quot;uid&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;userDefaults synchronize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
+
+//取
+NSUserDefaults &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;defaults = &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;NSUserDefaults standardUserDefaults&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
+NSString &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;uid = &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;defaults valueForKey:@&quot;uid&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
+
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;方法还有很多 这几种是量级比较小的 简单易用的传值方式&lt;/p&gt;
+
+</description>
+				<pubDate>Sun, 08 Nov 2015 00:00:00 +0800</pubDate>
+				<link>http://localhost:4000/ios/2015/11/08/iOS-block.html</link>
+				<guid isPermaLink="true">http://localhost:4000/ios/2015/11/08/iOS-block.html</guid>
+			</item>
+		
+			<item>
+				<title>CocoaPods 的安装及使用</title>
+				<description>&lt;h2 id=&quot;cocoapods-ios用于管理第三方库用-好处就不多说了-愿意用的应该都知道-此文综合摘自网络-以免以后遗忘&quot;&gt;CocoaPods iOS用于管理第三方库用 好处就不多说了 愿意用的应该都知道 此文综合摘自网络 以免以后遗忘&lt;/h2&gt;
+
+&lt;h2 id=&quot;安装过程&quot;&gt;安装过程&lt;/h2&gt;
+&lt;h3 id=&quot;升级ruby环境&quot;&gt;升级Ruby环境&lt;/h3&gt;
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+gem update --system
+若无权限
+sudo gem update --system
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;更换ruby镜像&quot;&gt;更换Ruby镜像&lt;/h3&gt;
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;删除原来的镜像
+gem sources --remove https://rubygems.org/
+添加新镜像
+gem sources -a https://gems.ruby-china.org/
+查看镜像是否替换掉了
+gem sources -l
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;安装cocoapods&quot;&gt;安装CocoaPods&lt;/h3&gt;
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+sudo gem install cocoapods
+
+若无权限
+sudo gem install -n /usr/local/bin cocoapods
+pod setup
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;cocoapods的使用&quot;&gt;CocoaPods的使用&lt;/h2&gt;
+&lt;h3 id=&quot;搜索三方库&quot;&gt;搜索三方库&lt;/h3&gt;
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+pod search AFNetworking
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;创建podfile文件&quot;&gt;创建Podfile文件&lt;/h3&gt;
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+touch Podfile
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;编辑-要下载的库&quot;&gt;编辑 要下载的库&lt;/h3&gt;
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+platform :ios, '8.0'
+target 'MyTarget' do
+
+//'~&amp;gt; 3.1.0' 不写的话 默认下载最新的
+pod 'AFNetworking', '~&amp;gt; 3.1.0'
+
+end
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;终端下载第三方库库&quot;&gt;终端下载第三方库库&lt;/h3&gt;
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+pod install
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;更新第三方库&quot;&gt;更新第三方库&lt;/h3&gt;
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+pod update
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;常见问题&quot;&gt;常见问题&lt;/h2&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+//更新pod版本
+sudo gem install -n /usr/local/bin cocoapods --pre
+
+pod repo update
+
+问题还是特别多的 遇到再说 希望能记得更新
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+				<pubDate>Sun, 04 Oct 2015 00:00:00 +0800</pubDate>
+				<link>http://localhost:4000/ios/2015/10/04/pod.html</link>
+				<guid isPermaLink="true">http://localhost:4000/ios/2015/10/04/pod.html</guid>
+			</item>
+		
+			<item>
+				<title>行为准则小记</title>
+				<description>&lt;h3 id=&quot;别打扰人写代码&quot;&gt;别打扰人写代码&lt;/h3&gt;
+
+&lt;p&gt;作为一个程序员，这条准则一定要记住，当人在写代码的时候，千万别去打扰他。我们在认真写代码的时候，是大脑十分集中的时候，也是效率最高的时候，这个时候打断我，可能我要很久才能反应过来你在说什么，而且突然转到你的问题上，很可能并不能很好的帮你解决问题，最后，我想再度回到我刚刚写的代码上的时候，可能就要花更长的时间了，工作的质量也肯定会下降。所以在你问我，或者我问别人的时候，如果说了第一句，我没反应或者别人没反应，就等等，别再打扰他了。&lt;/p&gt;
+
+&lt;h3 id=&quot;地铁上-别把背靠在柱子上&quot;&gt;地铁上 别把背靠在柱子上&lt;/h3&gt;
+
+&lt;p&gt;我觉得这是一个人的素质问题，背靠在柱子上，真心觉得是一件很不礼貌的行为。既然我对别人有这种想法，那么在此也要告诫自己，我一定不要去做同样的事，哪怕地铁上很空！&lt;/p&gt;
+
+&lt;h3 id=&quot;常写博客-哪怕只是一句话一点感悟或者只是一个很简单的知识点&quot;&gt;常写博客 哪怕只是一句话、一点感悟或者只是一个很简单的知识点&lt;/h3&gt;
+
+&lt;p&gt;要说从工作到现在，我最后悔的是什么，肯定是没有把自己的成长记录下来。工作这么久，收获肯定是有的，中间有过为难的时候，也有过解决困难之后的喜悦，但是这都是一时的。甚至三五天之后就不记得了。中间也想过些博客，但有时候觉得这种技术很简单，或者网上已经有别人的博客了，自己懒得写，或者不好意思写，这明显是不对的。以后要养成写博客的习惯，就算很渣渣的技术又怎么样，只给自己看，大神们看不惯的，请出门左拐。说不定将来再回来看的时候，会是另一番感觉呢 ^_^&lt;/p&gt;
+
+&lt;h3 id=&quot;多学习&quot;&gt;多学习&lt;/h3&gt;
+
+&lt;p&gt;不管做什么工作，学习都是必不可少的，作为程序员，更是如此。如果不学习，总会被淘汰的。可是我最大的问题是，学会了，用不上，很快就遗忘了，这个该怎么办呢？？？&lt;/p&gt;
+
+&lt;h3 id=&quot;没事就锻炼身体&quot;&gt;没事就锻炼身体&lt;/h3&gt;
+
+&lt;p&gt;身体是自己的，别总到了自己后悔的时候，再懊恼以前为什么没有锻炼，不管能不能坚持，哪怕只是锻炼一次，也比一次都不锻炼的好&lt;/p&gt;
+
+</description>
+				<pubDate>Wed, 01 Jul 2015 00:00:00 +0800</pubDate>
+				<link>http://localhost:4000/%E9%9A%8F%E7%AC%94/2015/07/01/%E8%A1%8C%E4%B8%BA%E5%87%86%E5%88%99.html</link>
+				<guid isPermaLink="true">http://localhost:4000/%E9%9A%8F%E7%AC%94/2015/07/01/%E8%A1%8C%E4%B8%BA%E5%87%86%E5%88%99.html</guid>
+			</item>
+		
+	</channel>
+</rss>

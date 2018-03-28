@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- meta information -->
+<meta charset="utf-8">
+<meta name="description" 
+      content="Welcome to wanglizhen 的主页!" >
+<meta name="author" content="">
+
+<!-- Enable responsiveness on mobile devices-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<!-- title -->
+<title>基于CTMediator解耦 &middot; </title>
+
+<!-- icons -->
+<link rel="shortcut icon" href="/assets/images/favicon.ico">
+
+<!-- stylesheets -->
+<link rel="stylesheet" href="/assets/css/responsive.gs.12col.css">
+<link rel="stylesheet" href="/assets/css/animate.min.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/category.css"/>
+
+
+<!-- Google fonts -->
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic&subset=latin-ext">
+
+
+<!-- font Awesome -->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+
+<!-- feed links -->
+<link rel="alternate" href="http://localhost:4000/feed.xml" type="application/rss+xml" title="">
+
+</head>
+
+<body>
+	<main class="container avocado">
+		
+			<header>
+				
+				<div>
+					<a href="http://localhost:4000" id="logo" title="" style="background-image: url(/assets/images/logo.png);"></a>
+				</div>
+
+				<nav id="main-navigation">
+  
+  
+  <a href="/" title="Home">Home</a>
+  
+  
+  
+  <a href="/category/" title="Category">Category</a>
+  
+  
+  
+  <a href="/about/" title="about">about</a>
+  
+  
+</nav>
+
+
+			</header>
+
+			
+<div class="well article">
+        <h2><a href="/ios/2018/03/24/iOS-target-action.html">基于CTMediator解耦</a></h2>
+        <span class="post-date">
+            
+            March-24-2018
+        </span>
+        <hr style="border-top:0px solid #28323C;"/>
+    
+    <div class="post-content">
+    <p>CTMediator 模块化开发用的还是比较多的，网上教程和讲解也是非常多的，我就不班门弄斧了，也不详细讲解原理了，只是简单记录一下样式和使用</p>
+
+<h3 id="首先-创建target-action---继承自-nsobject-就行">首先 创建Target-Action   继承自 NSObject 就行</h3>
+
+<p>Target_XXXXXX    这里的 XXXXXX 最好有意义，后面需要通过传入Target 的XXXXXX代码决定进入Target_XXXXXX类中执行方法，比如我下面的 Target_Home 是说这是首页的接口处理</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+.h文件中<span class="sb">
+
+
+</span><span class="gh">#import &lt;Foundation/Foundation.h&gt;</span>
+
+@interface Target_Home : NSObject
+
+//获取首页对象
+<span class="p">-</span> (UIViewController <span class="ge">*)Action_HomeViewController:(NSDictionary *</span>)params;
+//刷新首页方法
+<span class="p">-</span> (void)Action_refreshUpdate:(NSDictionary <span class="err">*</span>)params;
+
+//获取另外页面对象
+<span class="p">-</span> (UIViewController <span class="ge">*)Action_SecondViewController:(NSDictionary *</span>)params;
+
+@end<span class="sb">
+
+
+
+
+
+
+</span>.m文件中<span class="sb">
+
+
+</span><span class="gh">#import "Target_Home.h"</span>
+<span class="gh">#import "HomeViewController.h"</span>
+<span class="gh">#import "SecondViewController.h"</span>
+
+@implementation Target_Home
+<span class="p">-</span> (UIViewController <span class="ge">*)Action_HomeViewController:(NSDictionary *</span>)params{
+    HomeViewController <span class="err">*</span>homeVC = <span class="p">[</span><span class="nv">HomeViewController sharedInstance</span><span class="p">]</span>;
+    return homeVC;
+}
+<span class="p">-</span> (void)Action_refreshUpdate:(NSDictionary <span class="err">*</span>)params{
+    HomeViewController <span class="err">*</span>homeVC = <span class="p">[</span><span class="nv">HomeViewController sharedInstance</span><span class="p">]</span>;
+    <span class="p">[</span><span class="nv">homeVC refreshUpdate</span><span class="p">]</span>;
+}<span class="sb">
+
+
+</span><span class="p">-</span> (UIViewController <span class="ge">*)Action_SecondViewController:(NSDictionary *</span>)params{<span class="sb">
+
+    SecondViewController *SecondVC = [[SecondViewController alloc] init];
+    //参数
+    SecondVC.sId = [params objectForKey:@"sId"];
+    return SecondVC;
+</span>}
+
+@end
+
+</code></pre></div></div>
+
+<h3 id="创建-ctmediator-的分类">创建 CTMediator 的分类</h3>
+
+<p>action 传入要执行的方法名 target中的方法名 都是以action为前缀的，这里的action前缀可以修改，这里不做过多解释</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+.h文件中<span class="sb">
+
+
+</span><span class="gh">#import "CTMediator.h"</span>
+
+@interface CTMediator (HomeComponent)
+/<span class="ge">**</span>
+paramters 参数以字典样式传入
+<span class="err">*</span>/
+-(UIViewController<span class="ge">*)home_homeViewControllerWithParamters:(NSDictionary*</span>)paramters;
+
+/<span class="ge">**</span>
+刷新方法
+<span class="err">*</span>/
+<span class="p">-</span> (void)home_refreshUpdate;
+
+/<span class="ge">**</span>
+paramters 参数写清楚 必要参数和非必要参数
+<span class="err">*</span>/
+-(UIViewController<span class="ge">*)home_SecondViewControllerWithParamters:(NSDictionary*</span>)paramters;
+
+@end<span class="sb">
+
+
+
+
+
+
+
+</span>.m文件中<span class="sb">
+
+
+</span><span class="gh">#import "CTMediator+HomeComponent.h"</span>
+
+@implementation CTMediator (HomeComponent)
+<span class="p">-</span> (UIViewController <span class="ge">*)home_homeViewControllerWithParamters:(NSDictionary *</span>)paramters{
+    return <span class="err">[</span>self performTarget:@"Home"
+    action:@"HomeViewController" params:paramters shouldCacheTarget:NO];
+}
+<span class="p">-</span> (void)home_refreshUpdate{
+    <span class="err">[</span>self performTarget:@"Home"
+    action:@"refreshUpdate" params:nil shouldCacheTarget:NO];
+}
+<span class="p">
+-</span> (UIViewController <span class="ge">*)home_SecondViewControllerWithParamters:(NSDictionary *</span>)paramters{<span class="sb">
+
+    return [self performTarget:@"Home"
+    action:@"SecondViewController" params:paramters shouldCacheTarget:NO];
+</span>}
+
+@end
+
+</code></pre></div></div>
+
+<h3 id="最终使用">最终使用</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="gh">#import "CTMediator+HomeComponent.h"</span><span class="sb">
+
+
+</span><span class="p">-</span> (void)bButtonClick:(UIButton <span class="err">*</span>)sender {
+    UIViewController <span class="err">*</span>viewController = <span class="p">[</span><span class="nv">[CTMediator sharedInstance</span><span class="p">]</span>
+    home_homeViewControllerWithParamters:@{@"home_id":@"123456"}];
+    
+    <span class="p">[</span><span class="nv">self.navigationController pushViewController:viewController animated:YES</span><span class="p">]</span>;
+}
+
+</code></pre></div></div>
+<p>使用的好处 就是不用在各处包含#import “XXXX.h” 实现所有页面间的方法 通过路由层间接调用 实现解耦</p>
+
+
+    <hr style="border-top:0px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/categories.html">
+                iOS <span>(8)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    <!--    -->
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    <a class="btn btn-default" href="/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%8E%E5%BF%AB%E5%BA%94%E7%94%A8/2018/03/26/qkapp.html" class="next">上一篇</a>
+    
+    
+    <a class="btn btn-default" href="/ios/2018/02/23/my-pod.html" class="previous">下一篇</a>
+    
+</div>
+
+			<footer>
+				<p>
+					This work is licensed under a
+					<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/deed.en_US">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+				</p>
+				<p>
+					Powered by
+					<a rel="license" target="_blank" href="https://jekyllrb.com">Jekyll</a> ,
+					<a rel="license" target="_blank" href="https://github.com">Github</a> ,
+					<a rel="license" target="_blank" href="https://yashendaoren.github.io/home/">wanglizhen</a>
+				</p>
+			</footer>
+	</main>
+</body>
+
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- meta information -->
+<meta charset="utf-8">
+<meta name="description" 
+      content="Welcome to wanglizhen 的主页!" >
+<meta name="author" content="">
+
+<!-- Enable responsiveness on mobile devices-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<!-- title -->
+<title>创建自己的Pods库 &middot; </title>
+
+<!-- icons -->
+<link rel="shortcut icon" href="/assets/images/favicon.ico">
+
+<!-- stylesheets -->
+<link rel="stylesheet" href="/assets/css/responsive.gs.12col.css">
+<link rel="stylesheet" href="/assets/css/animate.min.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/category.css"/>
+
+
+<!-- Google fonts -->
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic&subset=latin-ext">
+
+
+<!-- font Awesome -->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+
+<!-- feed links -->
+<link rel="alternate" href="http://localhost:4000/feed.xml" type="application/rss+xml" title="">
+
+</head>
+
+<body>
+	<main class="container avocado">
+		
+			<header>
+				
+				<div>
+					<a href="http://localhost:4000" id="logo" title="" style="background-image: url(/assets/images/logo.png);"></a>
+				</div>
+
+				<nav id="main-navigation">
+  
+  
+  <a href="/" title="Home">Home</a>
+  
+  
+  
+  <a href="/category/" title="Category">Category</a>
+  
+  
+  
+  <a href="/about/" title="about">about</a>
+  
+  
+</nav>
+
+
+			</header>
+
+			
+<div class="well article">
+        <h2><a href="/ios/2018/02/23/my-pod.html">创建自己的Pods库</a></h2>
+        <span class="post-date">
+            
+            February-23-2018
+        </span>
+        <hr style="border-top:0px solid #28323C;"/>
+    
+    <div class="post-content">
+    <p>我们把自己的代码，全部分模块创建为了一个个库，为了模块化开发，后来发现，模块化开发真是好处多多，下一篇讲一下，模块化开发吧，这两片文章均摘自网络。本人怕原博主删掉博客或者因为网站原因找不到，特在此做了一个简单拷贝 <a href="https://mp.weixin.qq.com/s?__biz=MjM5OTM0MzIwMQ==&amp;mid=2652551137&amp;idx=3&amp;sn=5a6a162a41c54be12b51c0390715c063&amp;chksm=bcd2f2ef8ba57bf95f03ee0cec37516c091d80f1adaf875c98613acc34d9972c240d5a159823&amp;mpshare=1&amp;scene=23&amp;srcid=0822HLLoDepjHMsV9bP1R468#rd">原文出处</a></p>
+
+<h3 id="创建存储-podspec-后缀文件的-git-仓库">创建存储 .podspec 后缀文件的 Git 仓库。</h3>
+<p><img src="http://localhost:4000/assets/images/my_pod/01.png" alt="创建存储" /></p>
+
+<h3 id="记录第一个地址">记录第一个地址。</h3>
+<p><img src="http://localhost:4000/assets/images/my_pod/02.png" alt="创建存储" /></p>
+
+<h3 id="创建第二个用于存储代码的-git-仓库">创建第二个用于存储代码的 Git 仓库</h3>
+<p><img src="http://localhost:4000/assets/images/my_pod/03.png" alt="创建存储" /></p>
+
+<h3 id="记录第二个地址">记录第二个地址。</h3>
+<p><img src="http://localhost:4000/assets/images/my_pod/04.png" alt="创建存储" /></p>
+
+<h3 id="打开终端-到桌面">打开终端 到桌面。</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+cd Desktop/
+
+</code></pre></div></div>
+<h3 id="然后输入-pod-lib-create-lib-命令创建一个待上传的-lib-模版">然后输入 pod lib create Lib 命令创建一个待上传的 Lib 模版</h3>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+pod lib create Lib
+
+</code></pre></div></div>
+<h3 id="然后输入邮箱">然后输入邮箱</h3>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+What is your email?
+
+</code></pre></div></div>
+
+<h3 id="按找提示填写基础信息应该不用每个都解释了吧">按找提示填写基础信息（应该不用每个都解释了吧）。</h3>
+<p><img src="http://localhost:4000/assets/images/my_pod/05.png" alt="创建存储" /></p>
+
+<h3 id="完成之后-就可以在finder中看到如下">完成之后 就可以在Finder中看到如下。</h3>
+<p><img src="http://localhost:4000/assets/images/my_pod/06.png" alt="创建存储" /></p>
+
+<h3 id="配置-podspec-后缀文件">配置 .podspec 后缀文件</h3>
+<p><img src="http://localhost:4000/assets/images/my_pod/07.png" alt="创建存储" />
+注意需要修改的地方一般有</p>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+s.version :  版本号(需跟后面打 Tag 的值相等)
+s.summary : 描述(这个如果不修改，后面会出现问题。简单修改，不能超过 s.description 的文字长度，不然也会出问题)
+s.homepage : 项目主页（第二个地址 去掉.git）
+s.source : Git 仓库地址（第二个地址）
+s.ios.deployment_target : 项目最低支持版本
+s.source_files : 共享的代码目录
+s.frameworks : 所依赖的系统库
+s.dependency : 所依赖的第三方库
+
+</code></pre></div></div>
+
+<h3 id="验证">验证</h3>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+pod lib lint
+
+</code></pre></div></div>
+<p>结果有两个警告 验证失败
+<img src="http://localhost:4000/assets/images/my_pod/08.png" alt="创建存储" />
+于是我忽略了警告 重新验证 验证通过
+<img src="http://localhost:4000/assets/images/my_pod/09.png" alt="创建存储" /></p>
+
+<h3 id="上传远程仓库">上传远程仓库</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//链接远程仓库
+git remote add origin 第二个地址
+//更新本地。（文件有冲突自己解决）
+git pull origin master --allow-unrelated-histories
+
+git add .
+git commit -m 'Lib commit'
+git push origin master
+
+</code></pre></div></div>
+
+<h3 id="上传成功-查看">上传成功 查看</h3>
+<p><img src="http://localhost:4000/assets/images/my_pod/10.png" alt="创建存储" /></p>
+
+<h3 id="验证文件有效性">验证文件有效性</h3>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+pod spec lint
+
+</code></pre></div></div>
+<p>发现tag值不对应
+<img src="http://localhost:4000/assets/images/my_pod/11.png" alt="创建存储" /></p>
+
+<p>同步tag值</p>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+git tag -a 0.1.0 -m '0.1.0标签'
+git push origin master --tags
+
+</code></pre></div></div>
+
+<p>同步成功
+<img src="http://localhost:4000/assets/images/my_pod/12.png" alt="创建存储" /></p>
+
+<p>其实也可以在这边后台手动添加tag
+<img src="http://localhost:4000/assets/images/my_pod/13.png" alt="创建存储" /></p>
+
+<h3 id="上传podspec到第一个远程仓库">上传.podspec到第一个远程仓库</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+pod repo add MyPodspec 第一个创建的git仓库地址<span class="sb">
+
+
+</span></code></pre></div></div>
+
+<h3 id="查看本地库">查看本地库</h3>
+<p><img src="http://localhost:4000/assets/images/my_pod/14.png" alt="创建存储" /></p>
+
+<h3 id="向-mypodspec-远程仓库中提交-podspec-成功">向 MyPodspec 远程仓库中提交 .podspec 成功</h3>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+pod repo push MyPodspec Lib.podspec
+
+</code></pre></div></div>
+<p><img src="http://localhost:4000/assets/images/my_pod/15.png" alt="创建存储" /></p>
+
+<h3 id="可以用了-查一下试试">可以用了 查一下试试</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+pod search Lib<span class="sb">
+
+
+</span></code></pre></div></div>
+
+<h2 id="结果真是日了狗了搜出来一大堆的库想偷懒一下起了这个名字最终还是把自己给坑到了">结果真是日了狗了！！搜出来一大堆的库！！！想偷懒一下起了这个名字，最终还是把自己给坑到了。。。。。。</h2>
+
+
+    <hr style="border-top:0px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/categories.html">
+                iOS <span>(8)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    <!--    -->
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    <a class="btn btn-default" href="/ios/2018/03/24/iOS-target-action.html" class="next">上一篇</a>
+    
+    
+    <a class="btn btn-default" href="/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%8E%E5%BF%AB%E5%BA%94%E7%94%A8/2017/06/20/js_wx.html" class="previous">下一篇</a>
+    
+</div>
+
+			<footer>
+				<p>
+					This work is licensed under a
+					<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/deed.en_US">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+				</p>
+				<p>
+					Powered by
+					<a rel="license" target="_blank" href="https://jekyllrb.com">Jekyll</a> ,
+					<a rel="license" target="_blank" href="https://github.com">Github</a> ,
+					<a rel="license" target="_blank" href="https://yashendaoren.github.io/home/">wanglizhen</a>
+				</p>
+			</footer>
+	</main>
+</body>
+
+</html>

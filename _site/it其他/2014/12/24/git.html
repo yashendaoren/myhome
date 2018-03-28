@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- meta information -->
+<meta charset="utf-8">
+<meta name="description" 
+      content="Welcome to wanglizhen 的主页!" >
+<meta name="author" content="">
+
+<!-- Enable responsiveness on mobile devices-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<!-- title -->
+<title>Git 常用命令 &middot; </title>
+
+<!-- icons -->
+<link rel="shortcut icon" href="/assets/images/favicon.ico">
+
+<!-- stylesheets -->
+<link rel="stylesheet" href="/assets/css/responsive.gs.12col.css">
+<link rel="stylesheet" href="/assets/css/animate.min.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/category.css"/>
+
+
+<!-- Google fonts -->
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic&subset=latin-ext">
+
+
+<!-- font Awesome -->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+
+<!-- feed links -->
+<link rel="alternate" href="http://localhost:4000/feed.xml" type="application/rss+xml" title="">
+
+</head>
+
+<body>
+	<main class="container avocado">
+		
+			<header>
+				
+				<div>
+					<a href="http://localhost:4000" id="logo" title="" style="background-image: url(/assets/images/logo.png);"></a>
+				</div>
+
+				<nav id="main-navigation">
+  
+  
+  <a href="/" title="Home">Home</a>
+  
+  
+  
+  <a href="/category/" title="Category">Category</a>
+  
+  
+  
+  <a href="/about/" title="about">about</a>
+  
+  
+</nav>
+
+
+			</header>
+
+			
+<div class="well article">
+        <h2><a href="/it%E5%85%B6%E4%BB%96/2014/12/24/git.html">Git 常用命令</a></h2>
+        <span class="post-date">
+            
+            December-24-2014
+        </span>
+        <hr style="border-top:0px solid #28323C;"/>
+    
+    <div class="post-content">
+    <p>git 的使用就无需多说了 我的记录不全 只记录了我能用到的 其他的用到再说吧</p>
+
+<h2 id="基本常用命令">基本常用命令</h2>
+
+<h3 id="关联-和-取消关联远程仓库">关联 和 取消关联远程仓库</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git remote add origin 远程仓库地址
+git remote remove origin   取消关联远程仓库地址<span class="sb">
+
+
+</span></code></pre></div></div>
+
+<h3 id="克隆项目">克隆项目</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+git clone https://github.com/<span class="gs">****</span>/test.git
+
+</code></pre></div></div>
+
+<h3 id="进入项目目录">进入项目目录</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+cd test
+
+</code></pre></div></div>
+
+<h3 id="创建文件-打开文件编辑并保存">创建文件 打开文件编辑并保存</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+touch a.txt
+open a.txt<span class="sb">
+
+
+</span></code></pre></div></div>
+
+<h3 id="添加">添加</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+git add a.txt
+
+</code></pre></div></div>
+
+<h3 id="提交到缓存并添加描述">提交到缓存并添加描述</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+git commit -m "添加a.txt"<span class="sb">
+
+
+</span></code></pre></div></div>
+
+<h3 id="更新代码-允许冲突">更新代码 允许冲突</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+git pull origin master --allow-unrelated-histories<span class="sb">
+
+
+</span></code></pre></div></div>
+
+<h3 id="提交到远程仓库-输入远程仓库的用户名和密码-ok了">提交到远程仓库 输入远程仓库的用户名和密码 OK了</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+git pull origin master
+
+</code></pre></div></div>
+
+<h2 id="分支操作">分支操作</h2>
+
+<h3 id="创建新的分支">创建新的分支</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+git branch test1<span class="sb">
+
+
+</span></code></pre></div></div>
+
+<h3 id="提交分支到远程仓库">提交分支到远程仓库</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+git push origin test1<span class="sb">
+
+
+</span></code></pre></div></div>
+
+<h3 id="切换分支">切换分支</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+git checkout test1<span class="sb">
+
+
+</span></code></pre></div></div>
+
+<h3 id="查看本地分支">查看本地分支</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+git branch<span class="sb">
+
+
+</span></code></pre></div></div>
+
+<h3 id="查看远程分支">查看远程分支</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+git branch -a<span class="sb">
+
+
+</span></code></pre></div></div>
+
+<h3 id="合并分支">合并分支</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+git merge test1<span class="sb">
+
+
+</span></code></pre></div></div>
+
+<h3 id="删除本地分支">删除本地分支</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+git branch -d test1<span class="sb">
+
+
+</span></code></pre></div></div>
+<h3 id="删除远程分支">删除远程分支</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+git push origin --delete test1<span class="sb">
+
+
+</span></code></pre></div></div>
+
+<h2 id="tag-标签">tag 标签</h2>
+
+<h3 id="查看标签">查看标签</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+git tag<span class="sb">
+
+
+</span></code></pre></div></div>
+
+<h3 id="添加标签-和-描述">添加标签 和 描述</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+git tag -a 0.1.0 -m '0.1.0标签'<span class="sb">
+
+
+</span></code></pre></div></div>
+<h3 id="提交到缓存区">提交到缓存区</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+git commit<span class="sb">
+
+
+</span></code></pre></div></div>
+
+<h3 id="上传所有tag">上传所有tag</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+git push origin master --tags
+
+</code></pre></div></div>
+
+<p>只记录了工作中常用的命令 其他命令有用到再说吧</p>
+
+
+    <hr style="border-top:0px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/categories.html">
+                IT其他 <span>(4)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    <!--    -->
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    <a class="btn btn-default" href="/ios/2015/03/24/iOS-small.html" class="next">上一篇</a>
+    
+    
+    <a class="btn btn-default" href="/it%E5%85%B6%E4%BB%96/2014/11/30/mac.html" class="previous">下一篇</a>
+    
+</div>
+
+			<footer>
+				<p>
+					This work is licensed under a
+					<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/deed.en_US">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+				</p>
+				<p>
+					Powered by
+					<a rel="license" target="_blank" href="https://jekyllrb.com">Jekyll</a> ,
+					<a rel="license" target="_blank" href="https://github.com">Github</a> ,
+					<a rel="license" target="_blank" href="https://yashendaoren.github.io/home/">wanglizhen</a>
+				</p>
+			</footer>
+	</main>
+</body>
+
+</html>

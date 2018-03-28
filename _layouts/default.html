@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	{% include head.html %}
+</head>
+
+<body>
+	<main class="container {% if site.color_scheme %}{{ site.color_scheme }}{% else %}avocado{% endif %}">
+		{% if page.title == "Home" %}
+		<header class="fadeInLeft animated">
+			{% else %}
+			<header>
+				{% endif %}
+				<div>
+					<a href="{{ site.url }}" id="logo" title="{{ site.title }}" style="background-image: url({{ '/assets/images/logo.png' | relative_url }});"></a>
+				</div>
+
+				{% include navigation.html %}
+
+			</header>
+
+			{{ content }}
+
+			<footer>
+				<p>
+					This work is licensed under a
+					<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/deed.en_US">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+				</p>
+				<p>
+					Powered by
+					<a rel="license" target="_blank" href="https://jekyllrb.com">Jekyll</a> ,
+					<a rel="license" target="_blank" href="https://github.com">Github</a> ,
+					<a rel="license" target="_blank" href="https://yashendaoren.github.io/home/">wanglizhen</a>
+				</p>
+			</footer>
+	</main>
+</body>
+
+</html>
