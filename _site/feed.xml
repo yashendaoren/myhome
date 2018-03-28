@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>wanglizhen</title>
-		<description>Welcome to wanglizhen 的主页!</description>
+		<description>Welcome to wanglizhen 的主页! - iOS开发 iOS技术探讨 开发中的bug记录 微信小程序开发技术探讨与bug记录 前端 html、js、css 开发  IT技术探讨 共同学习 共同进步</description>
 		<link>http://localhost:4000</link>
 		<atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
 		
@@ -144,8 +144,8 @@ node ./node_modules/hap-tools/debugger/server/index.js
 
 </description>
 				<pubDate>Mon, 26 Mar 2018 00:00:00 +0800</pubDate>
-				<link>http://localhost:4000/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%8E%E5%BF%AB%E5%BA%94%E7%94%A8/2018/03/26/qkapp.html</link>
-				<guid isPermaLink="true">http://localhost:4000/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%8E%E5%BF%AB%E5%BA%94%E7%94%A8/2018/03/26/qkapp.html</guid>
+				<link>http://localhost:4000/qkapp</link>
+				<guid isPermaLink="true">http://localhost:4000/qkapp</guid>
 			</item>
 		
 			<item>
@@ -286,8 +286,8 @@ paramters 参数写清楚 必要参数和非必要参数
 
 </description>
 				<pubDate>Sat, 24 Mar 2018 00:00:00 +0800</pubDate>
-				<link>http://localhost:4000/ios/2018/03/24/iOS-target-action.html</link>
-				<guid isPermaLink="true">http://localhost:4000/ios/2018/03/24/iOS-target-action.html</guid>
+				<link>http://localhost:4000/iOS-target-action</link>
+				<guid isPermaLink="true">http://localhost:4000/iOS-target-action</guid>
 			</item>
 		
 			<item>
@@ -421,8 +421,8 @@ pod search Lib&lt;span class=&quot;sb&quot;&gt;
 
 </description>
 				<pubDate>Fri, 23 Feb 2018 00:00:00 +0800</pubDate>
-				<link>http://localhost:4000/ios/2018/02/23/my-pod.html</link>
-				<guid isPermaLink="true">http://localhost:4000/ios/2018/02/23/my-pod.html</guid>
+				<link>http://localhost:4000/my-pod</link>
+				<guid isPermaLink="true">http://localhost:4000/my-pod</guid>
 			</item>
 		
 			<item>
@@ -496,8 +496,8 @@ pod search Lib&lt;span class=&quot;sb&quot;&gt;
 
 </description>
 				<pubDate>Tue, 20 Jun 2017 00:00:00 +0800</pubDate>
-				<link>http://localhost:4000/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%8E%E5%BF%AB%E5%BA%94%E7%94%A8/2017/06/20/js_wx.html</link>
-				<guid isPermaLink="true">http://localhost:4000/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%8E%E5%BF%AB%E5%BA%94%E7%94%A8/2017/06/20/js_wx.html</guid>
+				<link>http://localhost:4000/js_wx</link>
+				<guid isPermaLink="true">http://localhost:4000/js_wx</guid>
 			</item>
 		
 			<item>
@@ -599,8 +599,8 @@ contextInfo:(void &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)contextInfo
 
 </description>
 				<pubDate>Mon, 01 May 2017 00:00:00 +0800</pubDate>
-				<link>http://localhost:4000/ios/2017/05/01/iOS_gif.html</link>
-				<guid isPermaLink="true">http://localhost:4000/ios/2017/05/01/iOS_gif.html</guid>
+				<link>http://localhost:4000/iOS_gif</link>
+				<guid isPermaLink="true">http://localhost:4000/iOS_gif</guid>
 			</item>
 		
 			<item>
@@ -691,8 +691,8 @@ contextInfo:(void &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)contextInfo
 
 </description>
 				<pubDate>Mon, 09 May 2016 00:00:00 +0800</pubDate>
-				<link>http://localhost:4000/ios/2016/05/09/iOS.html</link>
-				<guid isPermaLink="true">http://localhost:4000/ios/2016/05/09/iOS.html</guid>
+				<link>http://localhost:4000/iOS</link>
+				<guid isPermaLink="true">http://localhost:4000/iOS</guid>
 			</item>
 		
 			<item>
@@ -743,8 +743,8 @@ contextInfo:(void &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)contextInfo
 
 </description>
 				<pubDate>Thu, 24 Mar 2016 00:00:00 +0800</pubDate>
-				<link>http://localhost:4000/web%E5%89%8D%E7%AB%AF/it%E5%85%B6%E4%BB%96/2016/03/24/github-page.html</link>
-				<guid isPermaLink="true">http://localhost:4000/web%E5%89%8D%E7%AB%AF/it%E5%85%B6%E4%BB%96/2016/03/24/github-page.html</guid>
+				<link>http://localhost:4000/github-page</link>
+				<guid isPermaLink="true">http://localhost:4000/github-page</guid>
 			</item>
 		
 			<item>
@@ -944,8 +944,8 @@ NSString &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;uid = &lt;span class=&q
 
 </description>
 				<pubDate>Sun, 08 Nov 2015 00:00:00 +0800</pubDate>
-				<link>http://localhost:4000/ios/2015/11/08/iOS-block.html</link>
-				<guid isPermaLink="true">http://localhost:4000/ios/2015/11/08/iOS-block.html</guid>
+				<link>http://localhost:4000/iOS-block</link>
+				<guid isPermaLink="true">http://localhost:4000/iOS-block</guid>
 			</item>
 		
 			<item>
@@ -1031,8 +1031,8 @@ pod repo update
 
 </description>
 				<pubDate>Sun, 04 Oct 2015 00:00:00 +0800</pubDate>
-				<link>http://localhost:4000/ios/2015/10/04/pod.html</link>
-				<guid isPermaLink="true">http://localhost:4000/ios/2015/10/04/pod.html</guid>
+				<link>http://localhost:4000/pod</link>
+				<guid isPermaLink="true">http://localhost:4000/pod</guid>
 			</item>
 		
 			<item>
@@ -1059,8 +1059,8 @@ pod repo update
 
 </description>
 				<pubDate>Wed, 01 Jul 2015 00:00:00 +0800</pubDate>
-				<link>http://localhost:4000/%E9%9A%8F%E7%AC%94/2015/07/01/%E8%A1%8C%E4%B8%BA%E5%87%86%E5%88%99.html</link>
-				<guid isPermaLink="true">http://localhost:4000/%E9%9A%8F%E7%AC%94/2015/07/01/%E8%A1%8C%E4%B8%BA%E5%87%86%E5%88%99.html</guid>
+				<link>http://localhost:4000/%E8%A1%8C%E4%B8%BA%E5%87%86%E5%88%99</link>
+				<guid isPermaLink="true">http://localhost:4000/%E8%A1%8C%E4%B8%BA%E5%87%86%E5%88%99</guid>
 			</item>
 		
 	</channel>
