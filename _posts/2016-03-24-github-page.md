@@ -2,7 +2,7 @@
 layout: post
 title: 如何使用Github搭建自己的静态网站
 date: 2016-3-24
-category: [web前端,IT其他]
+category: [web开发,IT其他]
 
 ---
 
