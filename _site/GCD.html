@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- meta information -->
+<meta charset="utf-8">
+<meta name="description" 
+      content="Welcome to wanglizhen 的主页! - iOS开发 iOS技术探讨 开发中的bug记录 微信小程序开发技术探讨与bug记录 前端 html、js、css 开发  IT技术探讨 共同学习 共同进步" >
+<meta name="author" content="wanglizhen（王立震） && Aigars Dzerviniks">
+
+<!-- Enable responsiveness on mobile devices-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<!-- title -->
+<title>iOS多线程简析 &middot; wanglizhen 的主页</title>
+
+<!-- icons -->
+<link rel="shortcut icon" href="/assets/images/favicon.ico">
+
+<!-- stylesheets -->
+<link rel="stylesheet" href="/assets/css/responsive.gs.12col.css">
+<link rel="stylesheet" href="/assets/css/animate.min.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/category.css"/>
+
+
+<!-- Google fonts -->
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic&subset=latin-ext">
+
+
+<!-- font Awesome -->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+
+<!-- feed links -->
+<link rel="alternate" href="http://localhost:4000/feed.xml" type="application/rss+xml" title="wanglizhen 的主页">
+
+</head>
+
+<body>
+	<main class="container avocado">
+		
+			<header>
+				
+				<div>
+					<a href="http://localhost:4000" id="logo" title="wanglizhen 的主页" style="background-image: url(/assets/images/logo.png);"></a>
+				</div>
+
+				<nav id="main-navigation">
+  
+  
+  <a href="https://www.wanglizhen.xyz/" title="Home">Home</a>
+  
+  
+  
+  <a href="https://www.wanglizhen.xyz/category/" title="Category">Category</a>
+  
+  
+  
+  <a href="https://www.wanglizhen.xyz/about/" title="about">about</a>
+  
+  
+</nav>
+
+
+			</header>
+
+			
+<div class="well article">
+        <h2><a href="/GCD">iOS多线程简析</a></h2>
+        <span class="post-date">
+            
+            January-11-2016
+        </span>
+        <hr style="border-top:0px solid #28323C;"/>
+    
+    <div class="post-content">
+    <h2 id="线程">线程：</h2>
+<p>时间：线程在时间上可以分为“串行” 和“并发”两种方式，同步就是让我们的线程同时执行，异步线程不同时执行。强调时间性。</p>
+
+<p>关系：线程在线程之间关系上可以分为“顺序执行”和“并行执行”，强调的是线程之间的关系。</p>
+
+<h2 id="任务同步sync和-异步async任务就是执行操作就是代码的运行">任务：同步（Sync）和 异步（Async）（任务：就是执行操作，就是代码的运行）</h2>
+<h3 id="同步sync">同步（Sync）</h3>
+<ul>
+  <li>同步添加任务到指定的队列中，在添加的任务执行结束之前，会一直等待，直到队列里面的任务完成之后再执行</li>
+  <li>只能在当前线程中执行任务，不具备开启新线程的能力</li>
+</ul>
+
+<h3 id="异步async">异步（Async）</h3>
+
+<ul>
+  <li>异步添加任务到指定的队列中，它不会做任何等待，可以继续执行任务</li>
+  <li>可以在新的线程中执行任务，具备开启新线程的能力</li>
+</ul>
+
+<h2 id="队列-串行和并行">队列 ：串行和并行。</h2>
+<h3 id="串行和并行">串行和并行</h3>
+<ul>
+  <li>相同： 串行队列和并发队列都符合先进先出的原则。</li>
+  <li>区别： 执行的顺序不同，以及开启的线程数不同</li>
+</ul>
+
+<h3 id="四种组合情况gcd为例">四种组合情况（GCD为例）</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">
+-</span> (void)viewDidLoad {
+<span class="p">[</span><span class="nv">super viewDidLoad</span><span class="p">]</span>;<span class="sb">
+
+    //1.获取并行队列，异步追加任务
+    //[self concurrentAndAsync];
+
+    //2.获取并行队列，同步追加任务
+    //[self concurrentAndSync];
+
+    //3.创建串行队列，异步追加任务
+    //[self serialAndAsync];
+
+    //4.创建串行队列，同步追加任务
+    //[self serialAndSync];
+
+    //5.向主队列中同步追加任务引起死锁
+    [self addSyncTaskToMainQueue];
+
+    [self mainQueuePrintTask];
+
+</span>}
+
+</code></pre></div></div>
+
+<p>1.获取并行队列，异步追加任务</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">
+-</span> (void)concurrentAndAsync {<span class="sb">
+
+    //(1)获取全局队列
+    dispatch_queue_t queue = dispatch_get_global_queue(
+        DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+
+    //(2)开启多线程1：添加任务1
+    dispatch_async(queue, ^{
+        for (int i = 0; i &lt; 20;i++) {
+            NSLog(@"多线程1：%i", i);
+        }
+    });
+
+    //(3)开启多线程2：添加任务2
+    dispatch_async(queue, ^{
+        for (int i = 0; i &lt; 20;i++) {
+            NSLog(@"多线程2：%i", i);
+        }
+    });
+
+    //睡眠
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+        (int64_t)(2.0 * NSEC_PER_SEC)), queue, ^{
+        NSLog(@"-------------等待2秒");
+        // 2秒后异步执行这里的代码...
+        [self postNoti];
+        NSLog(@"-------------time");
+    });
+
+</span>}
+
+//打印结果： 主线程和多线程 之间没有任何先后顺序 同时执行
+//打印结果： 主线程1和多线程2 之间也没有任何先后顺序 并发执行
+
+</code></pre></div></div>
+
+<p>2.获取并行队列，同步追加任务</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">
+-</span> (void)concurrentAndSync {<span class="sb">
+
+    //(1)获取全局队列
+    dispatch_queue_t queue = dispatch_get_global_queue(
+        DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+
+    //(2)添加任务1
+    dispatch_sync(queue, ^{
+        for (int i = 0; i &lt; 20;i++) {
+            NSLog(@"任务1：%i", i);
+        }
+    });
+
+    //(3)添加任务2
+    dispatch_sync(queue, ^{
+        for (int i = 0; i &lt; 20;i++) {
+            NSLog(@"任务2：%i", i);
+        }
+    });
+
+</span>}
+
+//打印结果： 多线程在前 优先执行，多线程完成之后，主线程才执行
+//打印结果： 多线程之中任务1在前 先执行 任务1完成之后，才执行任务2
+
+</code></pre></div></div>
+
+<p>3.创建串行队列，异步追加任务</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">
+
+-</span> (void)serialAndAsync {
+//(1)创建串行队列
+dispatch_queue_t queue = dispatch_queue_create("iOS", DISPATCH_QUEUE_SERIAL);<span class="sb">
+
+    //(2)添加任务1
+    dispatch_async(queue, ^{
+        for (int i = 0; i &lt; 20;i++) {
+            NSLog(@"串行队列中执行任务1：%i", i);
+        }
+    });
+
+    //(3)添加任务2
+    dispatch_async(queue, ^{
+        for (int i = 0; i &lt; 20;i++) {
+            NSLog(@"串行队列中执行任务2：%i", i);
+        }
+    });
+</span>}<span class="sb">
+
+
+</span>//打印结果： 主线程和多线程 之间没有任何先后顺序 同时执行
+//打印结果： 多线程之中任务1在前 先执行 任务1完成之后，才执行任务2
+
+</code></pre></div></div>
+
+<p>4.创建串行队列，同步追加任务</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">
+
+-</span> (void)serialAndSync {
+    //(1)创建串行队列
+    dispatch_queue_t queue = dispatch_queue_create("iOS", DISPATCH_QUEUE_SERIAL);<span class="sb">
+
+    //(2)添加任务1
+    dispatch_sync(queue, ^{
+        for (int i = 0; i &lt; 20;i++) {
+            NSLog(@"串行队列中执行任务1：%i", i);
+        }
+    });
+
+    //(3)添加任务2
+    dispatch_sync(queue, ^{
+        for (int i = 0; i &lt; 20;i++) {
+            NSLog(@"串行队列中执行任务2：%i", i);
+        }
+    });
+</span>}<span class="sb">
+
+
+</span>//打印结果： 多线程在前 优先执行，多线程完成之后，主线程才执行
+//打印结果： 多线程之中任务1在前 先执行 任务1完成之后，才执行任务2
+
+</code></pre></div></div>
+
+<p>5.向主队列中同步追加任务引起死锁</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">
+
+-</span> (void)serialAndSync {
+    dispatch_queue_t mainQueue = dispatch_get_main_queue();<span class="sb">
+
+    dispatch_async(mainQueue, ^{
+        //NSLog(@"主队列中添加此任务");
+        for (int i =0; i &lt; 50; i++) {
+            NSLog(@"%i", i);
+        }
+    });
+</span>}<span class="sb">
+
+
+</span>//打印结果： 只有mainQueuePrintTask方法的打印，没有本方法的打印
+
+</code></pre></div></div>
+
+<p>主线程方法</p>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">
+-</span> (void)postNoti{<span class="sb">
+
+    NSLog(@"睡眠2秒");
+</span>}
+<span class="p">
+-</span> (void)mainQueuePrintTask {
+    for (int i = 0; i &lt; 50000;i++) {
+        NSLog(@"主线程：%i", i);
+    }
+}<span class="sb">
+
+
+</span></code></pre></div></div>
+
+<blockquote>
+  <p>同步执行 + 串行队列：我们把任务分配一个个线程，每个线程的任务都在主线程中执行。</p>
+</blockquote>
+
+<blockquote>
+  <p>异步执行 + 串行队列：队列中的任务顺序执行：在子线程中执行，主线程继续，不会等待子线程执行完毕。</p>
+</blockquote>
+
+<blockquote>
+  <p>同步执行 + 并发队列：（一般不用）：队列中任务顺序执行，在主线程中执行（并行）</p>
+</blockquote>
+
+<blockquote>
+  <p>异步执行 + 并发队列：队列中的任务同时执行；在子线程中执行；主线程继续执行，不会等待子线程执行完毕。</p>
+</blockquote>
+
+<h2 id="nsthread的使用">NSThread的使用</h2>
+<p>1.优点：NSThread比其他两种多线程方案较轻量级，更直观地控制线程对象</p>
+
+<p>2.缺点：需要自己管理线程的生命周期，线程同步。线程同步对数据的加锁会有一定的系统开销</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">
+-</span> (void)viewDidLoad {
+    <span class="p">[</span><span class="nv">super viewDidLoad</span><span class="p">]</span>;<span class="sb">
+
+
+    //1.创建线程对象
+    NSThread *thread = [[NSThread alloc] initWithTarget:self
+        selector:@selector(thread) object:nil];
+    thread.name = @"thread-2";
+    // 设置线程的优先级(0.0 - 1.0，1.0最高级)
+    thread.threadPriority = 1;
+    //开启一个多线程
+    [thread start];
+
+    //2.创建一个线程对象，并且直接开启此线程，但无法获取线程对象。
+    //[NSThread detachNewThreadSelector:@selector(thread)
+        toTarget:self withObject:nil];
+
+
+    //3.创建一个线程对象，并且启动此线程，调用当前self对象的方法。（隐式创建线程的方法）
+    //[self performSelectorInBackground:@selector(thread) withObject:nil];
+    //[self thread];
+    
+    for (int i = 0; i &lt; 20; i++) {
+        NSLog(@"主线程：%i",i);
+    }
+
+</span>}
+
+</code></pre></div></div>
+
+<p>多线程的入口方法</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">
+-</span> (void)thread {<span class="sb">
+
+
+    //获取当前方法的线程对象
+    NSThread *thread = [NSThread currentThread];
+    NSLog(@"thread-2:%@", thread);
+    //获取主线程
+    //NSThread *main = [NSThread mainThread];
+
+
+    //多线程分配堆栈大小为512k
+    NSLog(@"thread-2:stackSize:%li", [thread stackSize]);
+
+    for (int i = 0; i &lt; 50; i++) {
+
+        if (i == 10) {
+
+            NSLog(@"thread sleep");
+            //使当前线程睡眠
+            [NSThread sleepForTimeInterval:2];
+        }
+
+        if (i == 20) {
+            NSLog(@"thread end");
+            //线程退出
+            [NSThread exit];
+            }
+            NSLog(@"thread：%i",i);
+        }
+
+        //判断当前线程是否为主线程
+        if (![NSThread isMainThread]) {
+            NSLog(@"当前线程不是主线程");
+        }
+    }
+
+</span></code></pre></div></div>
+
+<h2 id="nsoperationqueue使用">NSOperationQueue使用</h2>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">
+-</span> (void)viewDidLoad {
+    <span class="p">[</span><span class="nv">super viewDidLoad</span><span class="p">]</span>;<span class="sb">
+
+
+    //1.创建一个线程队列（线程池）
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+
+    //2.创建线程 //NSOperation-&gt;NSInvocationOperation
+    NSInvocationOperation *op1 = [[NSInvocationOperation alloc] initWithTarget:self
+    selector:@selector(thread1:) object:@"operation-1"];
+
+    NSInvocationOperation *op2 = [[NSInvocationOperation alloc] initWithTarget:self
+    selector:@selector(thread2:)object:@"operation-2"];
+
+    HWOperation *op3 = [[HWOperation alloc] initTarget:self
+    selector:@selector(thread3)];
+
+    //设置queue的并发数
+    //queue.maxConcurrentOperationCount = 1;
+
+    op2.queuePriority = NSOperationQueuePriorityVeryHigh;
+
+    //[queue setSuspended:YES];
+
+    //3.把线程对象加入到线程队列中
+    [queue addOperation:op1];
+    [queue addOperation:op2];
+
+    [queue addOperation:op3];
+
+    //[queue setSuspended:NO];
+
+    //[queue addOperationWithBlock:^{
+    //    for (int i = 0; i &lt; 20; i++) {
+    //        NSLog(@"block:%i", i);
+    //    }
+    //}];
+
+    for (int i = 0; i &lt; 10; i++) {
+        NSLog(@"主线程:%i",i);
+    }
+
+</span>}
+
+</code></pre></div></div>
+
+<p>线程方法</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+//线程thread1入口方法
+<span class="p">-</span> (void)thread1:(NSString <span class="err">*</span>)name {<span class="sb">
+
+    for (int i = 0; i &lt; 20; i++) {
+        NSLog(@"多线程%@:%i", name, i);
+    }
+</span>}
+
+//线程thread2入口方法
+<span class="p">-</span> (void)thread2:(NSString <span class="err">*</span>)name {<span class="sb">
+
+    for (int i = 0; i &lt; 20; i++) {
+        NSLog(@"多线程%@:%i", name, i);
+    }
+</span>}
+
+//自定义线程类：thread3的入口方法
+<span class="p">-</span> (void)thread3 {
+    for (int i = 0; i &lt; 20; i++) {
+        NSLog(@"HWOPeration线程:%i", i);
+    }
+}
+
+</code></pre></div></div>
+
+<p>只是简单使用，多有不足，有时间再补充吧</p>
+
+
+    <hr style="border-top:0px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/categories.html">
+                iOS <span>(10)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    <!--    -->
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    <a class="btn btn-default" href="/github-page" class="next">上一篇</a>
+    
+    
+    <a class="btn btn-default" href="/iOS-block" class="previous">下一篇</a>
+    
+</div>
+
+			<footer>
+				<p>
+					This work is licensed under a
+					<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/deed.en_US">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+				</p>
+				<p>
+					Powered by
+					<a rel="license" target="_blank" href="https://jekyllrb.com">Jekyll</a> ,
+					<a rel="license" target="_blank" href="https://github.com">Github</a> ,
+					<a rel="license" target="_blank" href="https://yashendaoren.github.io/home/">wanglizhen</a>
+				</p>
+			</footer>
+	</main>
+</body>
+
+</html>
