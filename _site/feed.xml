@@ -813,6 +813,30 @@ contextInfo:(void &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)contextInfo
 			</item>
 		
 			<item>
+				<title>web后端</title>
+				<description>&lt;p&gt;以前专业写前端，后端技术不够扎实，发现这样对我的限制特别大，不仅在开发阶段，数据基本全是假数据，也很难做动态网页。所以就想学一门后端语言，补一下自己的短板，于是我把目标瞄准了Java，毕竟Java能使用的场景太多了。Java的语言本身倒是不难，但服务端的环境配置真是有点绕啊。于是在我还没看完Java的基础语法的时候，就果断弃了。&lt;/p&gt;
+
+&lt;p&gt;后面开始看PHP，PHP是简单，当然我是说入门简单。毕竟任何一门语言本身，都是深奥而伟大的存在。但是刚开始我就是为了配合前端，简单入门再加上google和度娘，也算勉强够了。而且，PHP有服务端的集成环境，方便入门阶段的学习。在这里推荐一下一个MAC版的集成环境XAMPP，希望对大家能有所帮助。&lt;/p&gt;
+
+&lt;p&gt;早就听说过Node.js环境下，JS也可以写后端了，一直想学习呢，就是没有大块的时间（这个借口只值5分）。最近一段时间了解了一下，发现Node.js真是个好东西，虽然只有CLI没有GUI工具，但是开发还是很方便的。所以我决定要好好看一看Node.js了。不过长时间不用，还是会遗忘，PHP中间隔了两个月就忘的差不多了(笑哭)。这个问题怎么处理呢？很严重。。。。这种事没有特别有效的方法，只能以后多用点了。等又时间，我把PHP和Node.js的常用API整理一下，写个博客吧，也避免遗忘，慢慢加油吧！！&lt;/p&gt;
+
+&lt;p&gt;先简单记录几个Node.js的学习网站&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://nodejs.org&quot;&gt;Node.js官网&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://nodejs.cn&quot;&gt;Node.js中文网&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.runoob.com/nodejs/nodejs-tutorial.html&quot;&gt;Node.js 菜鸟教程&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://cnodejs.org&quot;&gt;Node.js中文论坛&lt;/a&gt;中的新手入门可以看看，挺好的&lt;/p&gt;
+
+</description>
+				<pubDate>Sun, 15 Jan 2017 00:00:00 +0800</pubDate>
+				<link>http://localhost:4000/server</link>
+				<guid isPermaLink="true">http://localhost:4000/server</guid>
+			</item>
+		
+			<item>
 				<title>Xcode快捷键 和 iOS零散bug</title>
 				<description>&lt;p&gt;iOS开发多年了 一直只有保存代码的习惯 是时候整合一下了 长时间的开发 最大的遗憾就是没有开刚开始的时候就养成写博客的习惯 以至于当时觉得很有收获或者很有成就感的瞬间 在后来完全不记得了。以后持续更细……&lt;/p&gt;
 
@@ -1350,207 +1374,6 @@ dispatch_queue_t queue = dispatch_queue_create(&quot;iOS&quot;, DISPATCH_QUEUE_S
 				<pubDate>Mon, 11 Jan 2016 00:00:00 +0800</pubDate>
 				<link>http://localhost:4000/GCD</link>
 				<guid isPermaLink="true">http://localhost:4000/GCD</guid>
-			</item>
-		
-			<item>
-				<title>iOS 页面之间的几种数据交互</title>
-				<description>&lt;p&gt;页面之间数据回传常用方式&lt;/p&gt;
-
-&lt;h3 id=&quot;block方式&quot;&gt;block方式&lt;/h3&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-.h 文件中
-
-typedef void(^ResponseBlock)(NSString &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;);
-//定义一个block属性,使用copy策略
-@property(nonatomic, copy)ResponseBlock block;
-
-也可以直接定义
-@property(nonatomic, copy)(void(^)(NSString &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)) block;&lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;//.m文件中 需要的地方回调block
-if (self.block != nil) {
-    self.block(@&quot;string&quot;);
-}&lt;span class=&quot;sb&quot;&gt;
-
-
-
-&lt;/span&gt;//在需要回传值的地方 调用
-myView.block = ^(NSString &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;text) {
-    NSLog(@&quot;%@&quot;, text)
-};
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;单例&quot;&gt;单例&lt;/h3&gt;
-&lt;p&gt;因为单利只会创建一次对象，因此任何地方创建调用它们的属性 都具有唯一性&lt;/p&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-//第一种常用方式
-+(UserInfo &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)shareInstance{&lt;span class=&quot;sb&quot;&gt;
-
-    static UserInfo *userInfo = nil;
-    static dispatch_once_t = onceToken;
-    dispatch_once(&amp;amp;onceToken,^{
-        userInfo = [[self alloc] init];
-    })
-    
-    return userInfo;
-&lt;/span&gt;}&lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;//第二种常用方式
-+(UserInfo &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)shareInstance{&lt;span class=&quot;sb&quot;&gt;
-
-    static UserInfo *userInfo = nil;
-    if (userInfo == nil) {
-
-        userInfo = [[self alloc] init];
-    }
-
-    return userInfo;
-&lt;/span&gt;}&lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;代理模式&quot;&gt;代理模式&lt;/h3&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-//.h 中定义一组协议方法，让代理对象去实现 可以很多方法
-@protocol RegistDelegate &lt;span class=&quot;nt&quot;&gt;&amp;lt;NSObject&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;
--&lt;/span&gt; (void)registQQNumber:(NSString &lt;span class=&quot;ge&quot;&gt;*)qqNumber withPassWorld:(NSString *&lt;/span&gt;)passWorld;
-
-@end
-
-// 包含一个代理对象属性，用于接收实现协议方法的代理对象
-@property(assign, nonatomic)id &lt;span class=&quot;nt&quot;&gt;&amp;lt;RegistDelegate&amp;gt;&lt;/span&gt; delegate;&lt;span class=&quot;sb&quot;&gt;
-
-
-
-&lt;/span&gt;//需要调用的地方 创建对象 设置代理方法
-RegistController &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;reg = &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;[RegistController alloc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; init];
-reg.delegate = self;
-
-&lt;span class=&quot;gh&quot;&gt;#pragma mark - 实现注册类的代理方法&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; (void)registQQNumber:(NSString &lt;span class=&quot;ge&quot;&gt;*)qqNumber withPassWorld:(NSString *&lt;/span&gt;)passWorld
-{
-    NSLog(@&quot;qqNumber:%@,passWorld:%@&quot;, qqNumber, passWorld)
-}
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;kvo&quot;&gt;KVO&lt;/h3&gt;
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-/&lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;
-Key_Value_Coding,键值编码
-用于修改属性的值，如果属性是有对应的set方法，那么会优先调用set方法，如果没有就会强行赋值
-&lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;/
-&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;self setValue:qqText forKey:@&quot;qqNumber&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
-
-// 要触发KVO,就必须使用set方法赋值或者使用KVC赋值
-self.passWorld = passText;
-
-// 这样赋值是不能触发KVO
-// _qqNumber = qqText;&lt;span class=&quot;sb&quot;&gt;
-
-
-
-&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;----------------------------------------------------
-&lt;/span&gt;
-//需要使用的地方 添加监听
-
-RegistViewController &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;reg = &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;[RegistViewController alloc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; init];
-
-/&lt;span class=&quot;err&quot;&gt;*&lt;/span&gt; KVO : KeyValueObserv
-
-KeyPath: 监听属性的名称
-options： 要监听新值还是旧值
-NSKeyValueObservingOptionNew // 新值
-NSKeyValueObservingOptionOld // 旧值
-context： 传递的数据
-&lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;/
-&lt;span class=&quot;err&quot;&gt;[&lt;/span&gt;reg addObserver:self forKeyPath:@&quot;qqNumber&quot; options:NSKeyValueObservingOptionNew
-|NSKeyValueObservingOptionOld context:NULL];
-
-&lt;span class=&quot;err&quot;&gt;[&lt;/span&gt;reg addObserver:self forKeyPath:@&quot;passWorld&quot; options:NSKeyValueObservingOptionNew
-|NSKeyValueObservingOptionOld context:NULL];&lt;span class=&quot;sb&quot;&gt;
-
-
-
-&lt;/span&gt;&lt;span class=&quot;gh&quot;&gt;#pragma mark - KVO监听到属性值改变后触发的方法&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; (void)observeValueForKeyPath:(NSString &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)keyPath //监听的属性名称
-ofObject:(id)object // 被监听的对象
-change:(NSDictionary &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)change // 监听属性的值
-context:(void &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)context // 添加监听时传来的值
-{
-// 首先区别是那个属性值改变触发的方法
-    if (&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;keyPath isEqualToString:@&quot;qqNumber&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;) {
-        // 获取属性的最新值 &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;change objectForKey:@&quot;new&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-        // 获取属性的旧值 &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;change objectForKey:@&quot;old&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-        NSString &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;userInfo = &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;change objectForKey:@&quot;new&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;&lt;span class=&quot;sb&quot;&gt;
-
-        qqTextField.text = userInfo;
-
-    } else if([keyPath isEqualToString:@&quot;passWorld&quot;])
-    {
-        NSString *userInfo = [change objectForKey:@&quot;new&quot;];
-        passField.text = userInfo;
-    }
-
-&lt;/span&gt;}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;other Linker Flags  把 -all_load去掉，就可以正常运行了。&lt;/p&gt;
-
-&lt;h3 id=&quot;通知&quot;&gt;通知&lt;/h3&gt;
-&lt;p&gt;通知是app全局通知 如非必要 选用上面的方法&lt;/p&gt;
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-//发送通知
-&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;[NSNotificationCenter defaultCenter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; postNotificationName:
-LoginSuccessNotification object:nil userInfo:dic];
-
-//添加监听
-&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;[NSNotificationCenter defaultCenter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; addObserverForName:
-LoginSuccessNotification object:nil queue:&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;NSOperationQueue mainQueue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-usingBlock:^(NSNotification &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;note) {&lt;span class=&quot;sb&quot;&gt;
-
-    NSLog(@&quot;%@&quot;, note.userInfo)
-
-&lt;/span&gt;}];
-
-//删除监听
-&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;[NSNotificationCenter defaultCenter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; removeObserver:self
-name:LoginSuccessNotification object:nil];
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;本地存储&quot;&gt;本地存储&lt;/h3&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;
--&lt;/span&gt; (NSString&lt;span class=&quot;ge&quot;&gt;*)dictionaryToJson:(NSDictionary *&lt;/span&gt;)dic
-
-{
-
-//存
-NSUserDefaults &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;userDefaults = &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;NSUserDefaults standardUserDefaults&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
-&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;userDefaults setObject:@&quot;123456&quot; forKey:@&quot;uid&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
-&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;userDefaults synchronize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
-
-//取
-NSUserDefaults &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;defaults = &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;NSUserDefaults standardUserDefaults&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
-NSString &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;uid = &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;defaults valueForKey:@&quot;uid&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
-
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;方法还有很多 这几种是量级比较小的 简单易用的传值方式&lt;/p&gt;
-
-</description>
-				<pubDate>Sun, 08 Nov 2015 00:00:00 +0800</pubDate>
-				<link>http://localhost:4000/iOS-block</link>
-				<guid isPermaLink="true">http://localhost:4000/iOS-block</guid>
 			</item>
 		
 	</channel>
