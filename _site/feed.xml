@@ -501,6 +501,215 @@ pod search Lib&lt;span class=&quot;sb&quot;&gt;
 			</item>
 		
 			<item>
+				<title>苹果内购(IAP) 代码流程</title>
+				<description>&lt;p&gt;苹果内购，整体来说不好用，支付速度特别慢，虚拟物品还要分成30%，但是虚拟物品在IOS平台上必须用苹果内购，没办法，只能用了。注册流程就不说了，简单说下代码实现流程。&lt;/p&gt;
+
+&lt;p&gt;代码之前，请现在&lt;a href=&quot;https://itunesconnect.apple.com/login&quot;&gt;iTunes Connet&lt;/a&gt;操作，创建应用、创建商品、指定商品价格。注意事项：&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;1,Bundle ID一定不要搞错&lt;/li&gt;
+  &lt;li&gt;2,商品分类（消耗品、不可消耗品、自动更新订阅品、非自动更新订阅品、免费订阅品）创建商品的时候一定要看清楚区别再创建。&lt;/li&gt;
+  &lt;li&gt;3,产品id，（一般是字母、数字或下划线），购买商品就是要看产品id&lt;/li&gt;
+  &lt;li&gt;4,设置税务和银行卡信息&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;以下是代码实现&quot;&gt;以下是代码实现&lt;/h3&gt;
+&lt;p&gt;1，确认用户是否允许苹果内购&lt;/p&gt;
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+//添加监听
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; (void)viewDidLoad{
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;super viewDidLoad&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;[SKPaymentQueue defaultQueue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; addTransactionObserver:self];
+}
+
+//检查权限  _productId 建议从服务器获取 不建议硬编码
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; (void)buyProdution:(UIButton &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)sender{
+    if (&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;SKPaymentQueue canMakePayments&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;) {
+        &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;self toBuy:_productId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
+    } else {
+        &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;self showMessage:@&quot;用户禁止应用内付费购买&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
+    }
+}
+
+//结束之后移除监听
+-(void)dealloc
+{
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;[SKPaymentQueue defaultQueue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; removeTransactionObserver:self];
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;2，发起购买&lt;/p&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+//查询用户购买的产品的信息
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; (void)toBuy:(NSString &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)productId {
+    NSArray &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;product = &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;[NSArray alloc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; initWithObjects:productId, nil];
+    NSSet &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;set = &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;NSSet setWithArray:product&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
+    SKProductsRequest &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt; request = &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;[SKProductsRequest alloc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    initWithProductIdentifiers:set];
+    request.delegate = self;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;request start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;self showHUD:@&quot;正在购买，请稍后&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
+}
+
+//成功后的回调
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; (void)productsRequest:(SKProductsRequest &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)request didReceiveResponse:
+(SKProductsResponse &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)response {
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;self hideHUD&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
+    NSArray &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;myProduct = response.products;
+    if (myProduct.count == 0) {
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;self showMessage:@&quot;无产品信息&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
+    return;
+    }
+    SKPayment &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt; payment = &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;SKPayment paymentWithProduct:myProduct[0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;];
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;[SKPaymentQueue defaultQueue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; addPayment:payment];
+}
+
+//查询失败后的回调
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; (void)request:(SKRequest &lt;span class=&quot;ge&quot;&gt;*)request didFailWithError:(NSError *&lt;/span&gt;)error {
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;self hideHUD&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;self showHUD:@&quot;查询失败&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
+    NSLog(@&quot;%@&quot;,error);
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;3，购买后的回调&lt;/p&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;
+-&lt;/span&gt; (void)paymentQueue:(SKPaymentQueue &lt;span class=&quot;ge&quot;&gt;*)queue updatedTransactions:(NSArray *&lt;/span&gt;)
+transactions {
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;self hideHUD&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
+    for (SKPaymentTransaction &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;transaction in transactions)
+    {
+        switch (transaction.transactionState)
+        {
+        case SKPaymentTransactionStatePurchased://交易完成
+            &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;self completeTransaction:transaction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
+        break;&lt;span class=&quot;sb&quot;&gt;
+
+        case SKPaymentTransactionStateFailed://交易失败
+            [self failedTransaction:transaction];
+        break;
+
+        case SKPaymentTransactionStateRestored://已经购买过该商品
+            [self restoreTransaction:transaction];
+        break;
+
+        case SKPaymentTransactionStatePurchasing://商品添加进列表
+            [self showMessage:@&quot;正在请求付费信息，请稍后&quot;];
+        break;
+
+        default:
+        break;
+    }
+&lt;/span&gt;}
+
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;4，失败、恢复等操作&lt;/p&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;
+-&lt;/span&gt; (void) failedTransaction: (SKPaymentTransaction &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)transaction{&lt;span class=&quot;sb&quot;&gt;
+
+    if (transaction.error.code != SKErrorPaymentCancelled)
+    {
+        [self showHUD:@&quot;用户取消交易&quot;];
+    }else{
+        [self showHUD:@&quot;购买失败，请重试&quot;];
+    }
+    [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+    //购买失败 通知自己服务器
+    [self doRequest:@&quot;failed&quot;];
+&lt;/span&gt;}&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; (void) restoreTransaction: (SKPaymentTransaction &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)transaction
+{
+    NSLog(@&quot;已经购买过该商品&quot;);
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;[SKPaymentQueue defaultQueue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; finishTransaction:transaction];
+
+}
+//恢复购买 （非消耗品的时候 一定要有恢复购买）
+-(void) paymentQueueRestoreCompletedTransactionsFinished:
+(SKPaymentTransaction &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)transaction{
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;self doRequest:@&quot;恢复数据&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
+}
+-(void) paymentQueue:(SKPaymentQueue &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;) paymentQueue
+restoreCompletedTransactionsFailedWithError:(NSError &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)error{
+    NSLog(@&quot;error：%@&quot;， error);
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;4，购买成功&lt;/p&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;
+-&lt;/span&gt; (void) completeTransaction: (SKPaymentTransaction &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)transaction
+{
+    //获取购买凭证
+    NSData &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;receiptData = &lt;span class=&quot;err&quot;&gt;[&lt;/span&gt;NSData dataWithContentsOfURL:
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;[NSBundle mainBundle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; appStoreReceiptURL]];
+    NSString &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;receiptStr = &lt;span class=&quot;err&quot;&gt;[&lt;/span&gt;receiptData base64EncodedStringWithOptions:
+    NSDataBase64EncodingEndLineWithLineFeed];&lt;span class=&quot;sb&quot;&gt;
+
+    //通知后台 结束购买
+    NSString *productid = transaction.payment.productIdentifier;
+    if ([productid length] &amp;gt; 0) {
+    [self doPostReceipt:receiptStr withIndex:0];
+    }
+    [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+&lt;/span&gt;}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;常见掉单问题&quot;&gt;常见掉单问题&lt;/h3&gt;
+&lt;p&gt;苹果内购最常见问题，掉单。就是你在苹果付款成功，但是自己后台却不知道。我们的解决方法是，购买成功之后，本地记录凭证。通知后台，通知失败，再通知，往复三次。如果最终通知失败，可能因为网络等原因，凭证记录本地，下次启动app再往复通知，直至通知成功。通知成功之后，删掉本地凭证。当然后台也会做自己的判断&lt;/p&gt;
+
+&lt;p&gt;在说一下我们记录和删除凭证吧&lt;/p&gt;
+
+&lt;p&gt;4，记录删除凭证&lt;/p&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+//保存交易凭证
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; (void)saveReceipt:(NSString &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)receiptStr{
+    //沙盒/appleBuy/订单号.plist     tradeNo是后台生成的订单号
+    NSString &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;savedPath = &lt;span class=&quot;err&quot;&gt;[&lt;/span&gt;NSString stringWithFormat:@&quot;%@%@.plist&quot;,
+    AppleBuyFilePath,&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;appleBuyDic objectForKey:@&quot;tradeNo&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;];
+    if (appleBuyDic!=nil) {
+        NSDictionary &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;dic = @{
+            @&quot;tradeNo&quot;:&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;appleBuyDic valueForKey:@&quot;tradeNo&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;,
+            @&quot;notifyUrl&quot;:&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;appleBuyDic valueForKey:@&quot;notifyUrl&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;,
+            @&quot;receipt&quot;:receiptStr
+        
+        };
+        &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;dic writeToFile:savedPath atomically:YES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
+    }
+}
+
+//删除交易凭证
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; (void)deleteReceipt:(NSString &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)tradeNo{&lt;span class=&quot;sb&quot;&gt;
+
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *savedPath = [NSString stringWithFormat:@&quot;%@%@.plist&quot;,
+    AppleBuyFilePath,tradeNo];
+    if ([fileManager fileExistsAtPath:savedPath])
+    {
+        [fileManager removeItemAtPath:savedPath error:nil];
+    }
+&lt;/span&gt;}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+				<pubDate>Fri, 12 May 2017 00:00:00 +0800</pubDate>
+				<link>http://localhost:4000/apple-pay</link>
+				<guid isPermaLink="true">http://localhost:4000/apple-pay</guid>
+			</item>
+		
+			<item>
 				<title>gif 动图支持</title>
 				<description>&lt;p&gt;iOS 9.0之后照片支持gif的展示了，简介一下保存gif图的方法 和加载gif图的方法&lt;/p&gt;
 
@@ -1033,34 +1242,6 @@ pod repo update
 				<pubDate>Sun, 04 Oct 2015 00:00:00 +0800</pubDate>
 				<link>http://localhost:4000/pod</link>
 				<guid isPermaLink="true">http://localhost:4000/pod</guid>
-			</item>
-		
-			<item>
-				<title>行为准则小记</title>
-				<description>&lt;h3 id=&quot;别打扰人写代码&quot;&gt;别打扰人写代码&lt;/h3&gt;
-
-&lt;p&gt;作为一个程序员，这条准则一定要记住，当人在写代码的时候，千万别去打扰他。我们在认真写代码的时候，是大脑十分集中的时候，也是效率最高的时候，这个时候打断我，可能我要很久才能反应过来你在说什么，而且突然转到你的问题上，很可能并不能很好的帮你解决问题，最后，我想再度回到我刚刚写的代码上的时候，可能就要花更长的时间了，工作的质量也肯定会下降。所以在你问我，或者我问别人的时候，如果说了第一句，我没反应或者别人没反应，就等等，别再打扰他了。&lt;/p&gt;
-
-&lt;h3 id=&quot;地铁上-别把背靠在柱子上&quot;&gt;地铁上 别把背靠在柱子上&lt;/h3&gt;
-
-&lt;p&gt;我觉得这是一个人的素质问题，背靠在柱子上，真心觉得是一件很不礼貌的行为。既然我对别人有这种想法，那么在此也要告诫自己，我一定不要去做同样的事，哪怕地铁上很空！&lt;/p&gt;
-
-&lt;h3 id=&quot;常写博客-哪怕只是一句话一点感悟或者只是一个很简单的知识点&quot;&gt;常写博客 哪怕只是一句话、一点感悟或者只是一个很简单的知识点&lt;/h3&gt;
-
-&lt;p&gt;要说从工作到现在，我最后悔的是什么，肯定是没有把自己的成长记录下来。工作这么久，收获肯定是有的，中间有过为难的时候，也有过解决困难之后的喜悦，但是这都是一时的。甚至三五天之后就不记得了。中间也想过些博客，但有时候觉得这种技术很简单，或者网上已经有别人的博客了，自己懒得写，或者不好意思写，这明显是不对的。以后要养成写博客的习惯，就算很渣渣的技术又怎么样，只给自己看，大神们看不惯的，请出门左拐。说不定将来再回来看的时候，会是另一番感觉呢 ^_^&lt;/p&gt;
-
-&lt;h3 id=&quot;多学习&quot;&gt;多学习&lt;/h3&gt;
-
-&lt;p&gt;不管做什么工作，学习都是必不可少的，作为程序员，更是如此。如果不学习，总会被淘汰的。可是我最大的问题是，学会了，用不上，很快就遗忘了，这个该怎么办呢？？？&lt;/p&gt;
-
-&lt;h3 id=&quot;没事就锻炼身体&quot;&gt;没事就锻炼身体&lt;/h3&gt;
-
-&lt;p&gt;身体是自己的，别总到了自己后悔的时候，再懊恼以前为什么没有锻炼，不管能不能坚持，哪怕只是锻炼一次，也比一次都不锻炼的好&lt;/p&gt;
-
-</description>
-				<pubDate>Wed, 01 Jul 2015 00:00:00 +0800</pubDate>
-				<link>http://localhost:4000/%E8%A1%8C%E4%B8%BA%E5%87%86%E5%88%99</link>
-				<guid isPermaLink="true">http://localhost:4000/%E8%A1%8C%E4%B8%BA%E5%87%86%E5%88%99</guid>
 			</item>
 		
 	</channel>
