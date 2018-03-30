@@ -2,7 +2,7 @@
 layout: post
 title: 微信小程序 小问题集结
 date: 2017-11-5
-category: [web开发]
+category: [小程序与快应用]
 
 ---
 
