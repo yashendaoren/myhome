@@ -837,6 +837,85 @@ contextInfo:(void &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)contextInfo
 			</item>
 		
 			<item>
+				<title>About JS</title>
+				<description>&lt;h3 id=&quot;变量提升先使用后定义&quot;&gt;变量提升（先使用，后定义）&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+
+console.log(a) // 10
+
+var a = 10;&lt;span class=&quot;sb&quot;&gt;
+
+
+
+&lt;/span&gt;run()   //running....20
+
+function run(){
+    var b = 20
+    console.log(&quot;running....&quot; + b)
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;let--es6&quot;&gt;let  （ES6）&lt;/h3&gt;
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+
+const x = 1;
+
+x = 2;   //报错 const 不能再次赋值&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;console.log(a) //undefine let 不支持变量提升
+
+let a = 10;
+let a = 30;    //报错 let 不支持在次声明&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;function run(){
+    let b = 20;
+}
+
+console.log(b) //undefine。 let块状作用域
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;-函数--es6箭头函数为匿名函数不能变量提升&quot;&gt;=&amp;gt; 函数  （ES6）箭头函数为匿名函数，不能变量提升&lt;/h3&gt;
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+a = a =&amp;gt; a  //函数名 参数 返回值（没有{}，默认是返回值）
+ 
+b = (c,d) =&amp;gt; {&lt;span class=&quot;sb&quot;&gt;
+
+    //箭头函数的 this
+    //默认指向在定义它时,它所处的对象,而不是执行时的对象,
+        定义它的时候,可能环境是window（即继承父级的this）
+        
+    console.log(this)
+&lt;/span&gt;}
+b(1,2)
+
+function eat(){
+    //普通函数的this
+    //1，特指调用当前的函数的对象
+    //2，默认情况下，没找到直接调用者,则this指的是 window
+    //3，在严格模式下,没有直接调用者的函数中的this是 undefined
+    
+    console.log(this)
+}
+eat()&lt;span class=&quot;sb&quot;&gt;
+
+
+
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;持续更新中……&lt;/p&gt;
+
+</description>
+				<pubDate>Mon, 03 Oct 2016 00:00:00 +0800</pubDate>
+				<link>http://localhost:4000/About-JS</link>
+				<guid isPermaLink="true">http://localhost:4000/About-JS</guid>
+			</item>
+		
+			<item>
 				<title>Xcode快捷键 和 iOS零散bug</title>
 				<description>&lt;p&gt;iOS开发多年了 一直只有保存代码的习惯 是时候整合一下了 长时间的开发 最大的遗憾就是没有开刚开始的时候就养成写博客的习惯 以至于当时觉得很有收获或者很有成就感的瞬间 在后来完全不记得了。以后持续更细……&lt;/p&gt;
 
@@ -978,402 +1057,6 @@ contextInfo:(void &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)contextInfo
 				<pubDate>Thu, 24 Mar 2016 00:00:00 +0800</pubDate>
 				<link>http://localhost:4000/github-page</link>
 				<guid isPermaLink="true">http://localhost:4000/github-page</guid>
-			</item>
-		
-			<item>
-				<title>iOS多线程简析</title>
-				<description>&lt;h2 id=&quot;线程&quot;&gt;线程：&lt;/h2&gt;
-&lt;p&gt;时间：线程在时间上可以分为“串行” 和“并发”两种方式，同步就是让我们的线程同时执行，异步线程不同时执行。强调时间性。&lt;/p&gt;
-
-&lt;p&gt;关系：线程在线程之间关系上可以分为“顺序执行”和“并行执行”，强调的是线程之间的关系。&lt;/p&gt;
-
-&lt;h2 id=&quot;任务同步sync和-异步async任务就是执行操作就是代码的运行&quot;&gt;任务：同步（Sync）和 异步（Async）（任务：就是执行操作，就是代码的运行）&lt;/h2&gt;
-&lt;h3 id=&quot;同步sync&quot;&gt;同步（Sync）&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;同步添加任务到指定的队列中，在添加的任务执行结束之前，会一直等待，直到队列里面的任务完成之后再执行&lt;/li&gt;
-  &lt;li&gt;只能在当前线程中执行任务，不具备开启新线程的能力&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;异步async&quot;&gt;异步（Async）&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;异步添加任务到指定的队列中，它不会做任何等待，可以继续执行任务&lt;/li&gt;
-  &lt;li&gt;可以在新的线程中执行任务，具备开启新线程的能力&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;队列-串行和并行&quot;&gt;队列 ：串行和并行。&lt;/h2&gt;
-&lt;h3 id=&quot;串行和并行&quot;&gt;串行和并行&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;相同： 串行队列和并发队列都符合先进先出的原则。&lt;/li&gt;
-  &lt;li&gt;区别： 执行的顺序不同，以及开启的线程数不同&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;四种组合情况gcd为例&quot;&gt;四种组合情况（GCD为例）&lt;/h3&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;
--&lt;/span&gt; (void)viewDidLoad {
-&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;super viewDidLoad&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;&lt;span class=&quot;sb&quot;&gt;
-
-    //1.获取并行队列，异步追加任务
-    //[self concurrentAndAsync];
-
-    //2.获取并行队列，同步追加任务
-    //[self concurrentAndSync];
-
-    //3.创建串行队列，异步追加任务
-    //[self serialAndAsync];
-
-    //4.创建串行队列，同步追加任务
-    //[self serialAndSync];
-
-    //5.向主队列中同步追加任务引起死锁
-    [self addSyncTaskToMainQueue];
-
-    [self mainQueuePrintTask];
-
-&lt;/span&gt;}
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;1.获取并行队列，异步追加任务&lt;/p&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;
--&lt;/span&gt; (void)concurrentAndAsync {&lt;span class=&quot;sb&quot;&gt;
-
-    //(1)获取全局队列
-    dispatch_queue_t queue = dispatch_get_global_queue(
-        DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-
-    //(2)开启多线程1：添加任务1
-    dispatch_async(queue, ^{
-        for (int i = 0; i &amp;lt; 20;i++) {
-            NSLog(@&quot;多线程1：%i&quot;, i);
-        }
-    });
-
-    //(3)开启多线程2：添加任务2
-    dispatch_async(queue, ^{
-        for (int i = 0; i &amp;lt; 20;i++) {
-            NSLog(@&quot;多线程2：%i&quot;, i);
-        }
-    });
-
-    //睡眠
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
-        (int64_t)(2.0 * NSEC_PER_SEC)), queue, ^{
-        NSLog(@&quot;-------------等待2秒&quot;);
-        // 2秒后异步执行这里的代码...
-        [self postNoti];
-        NSLog(@&quot;-------------time&quot;);
-    });
-
-&lt;/span&gt;}
-
-//打印结果： 主线程和多线程 之间没有任何先后顺序 同时执行
-//打印结果： 主线程1和多线程2 之间也没有任何先后顺序 并发执行
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;2.获取并行队列，同步追加任务&lt;/p&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;
--&lt;/span&gt; (void)concurrentAndSync {&lt;span class=&quot;sb&quot;&gt;
-
-    //(1)获取全局队列
-    dispatch_queue_t queue = dispatch_get_global_queue(
-        DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-
-    //(2)添加任务1
-    dispatch_sync(queue, ^{
-        for (int i = 0; i &amp;lt; 20;i++) {
-            NSLog(@&quot;任务1：%i&quot;, i);
-        }
-    });
-
-    //(3)添加任务2
-    dispatch_sync(queue, ^{
-        for (int i = 0; i &amp;lt; 20;i++) {
-            NSLog(@&quot;任务2：%i&quot;, i);
-        }
-    });
-
-&lt;/span&gt;}
-
-//打印结果： 多线程在前 优先执行，多线程完成之后，主线程才执行
-//打印结果： 多线程之中任务1在前 先执行 任务1完成之后，才执行任务2
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;3.创建串行队列，异步追加任务&lt;/p&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;
-
--&lt;/span&gt; (void)serialAndAsync {
-//(1)创建串行队列
-dispatch_queue_t queue = dispatch_queue_create(&quot;iOS&quot;, DISPATCH_QUEUE_SERIAL);&lt;span class=&quot;sb&quot;&gt;
-
-    //(2)添加任务1
-    dispatch_async(queue, ^{
-        for (int i = 0; i &amp;lt; 20;i++) {
-            NSLog(@&quot;串行队列中执行任务1：%i&quot;, i);
-        }
-    });
-
-    //(3)添加任务2
-    dispatch_async(queue, ^{
-        for (int i = 0; i &amp;lt; 20;i++) {
-            NSLog(@&quot;串行队列中执行任务2：%i&quot;, i);
-        }
-    });
-&lt;/span&gt;}&lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;//打印结果： 主线程和多线程 之间没有任何先后顺序 同时执行
-//打印结果： 多线程之中任务1在前 先执行 任务1完成之后，才执行任务2
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;4.创建串行队列，同步追加任务&lt;/p&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;
-
--&lt;/span&gt; (void)serialAndSync {
-    //(1)创建串行队列
-    dispatch_queue_t queue = dispatch_queue_create(&quot;iOS&quot;, DISPATCH_QUEUE_SERIAL);&lt;span class=&quot;sb&quot;&gt;
-
-    //(2)添加任务1
-    dispatch_sync(queue, ^{
-        for (int i = 0; i &amp;lt; 20;i++) {
-            NSLog(@&quot;串行队列中执行任务1：%i&quot;, i);
-        }
-    });
-
-    //(3)添加任务2
-    dispatch_sync(queue, ^{
-        for (int i = 0; i &amp;lt; 20;i++) {
-            NSLog(@&quot;串行队列中执行任务2：%i&quot;, i);
-        }
-    });
-&lt;/span&gt;}&lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;//打印结果： 多线程在前 优先执行，多线程完成之后，主线程才执行
-//打印结果： 多线程之中任务1在前 先执行 任务1完成之后，才执行任务2
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;5.向主队列中同步追加任务引起死锁&lt;/p&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;
-
--&lt;/span&gt; (void)serialAndSync {
-    dispatch_queue_t mainQueue = dispatch_get_main_queue();&lt;span class=&quot;sb&quot;&gt;
-
-    dispatch_async(mainQueue, ^{
-        //NSLog(@&quot;主队列中添加此任务&quot;);
-        for (int i =0; i &amp;lt; 50; i++) {
-            NSLog(@&quot;%i&quot;, i);
-        }
-    });
-&lt;/span&gt;}&lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;//打印结果： 只有mainQueuePrintTask方法的打印，没有本方法的打印
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;主线程方法&lt;/p&gt;
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;
--&lt;/span&gt; (void)postNoti{&lt;span class=&quot;sb&quot;&gt;
-
-    NSLog(@&quot;睡眠2秒&quot;);
-&lt;/span&gt;}
-&lt;span class=&quot;p&quot;&gt;
--&lt;/span&gt; (void)mainQueuePrintTask {
-    for (int i = 0; i &amp;lt; 50000;i++) {
-        NSLog(@&quot;主线程：%i&quot;, i);
-    }
-}&lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;同步执行 + 串行队列：我们把任务分配一个个线程，每个线程的任务都在主线程中执行。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;异步执行 + 串行队列：队列中的任务顺序执行：在子线程中执行，主线程继续，不会等待子线程执行完毕。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;同步执行 + 并发队列：（一般不用）：队列中任务顺序执行，在主线程中执行（并行）&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;异步执行 + 并发队列：队列中的任务同时执行；在子线程中执行；主线程继续执行，不会等待子线程执行完毕。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;nsthread的使用&quot;&gt;NSThread的使用&lt;/h2&gt;
-&lt;p&gt;1.优点：NSThread比其他两种多线程方案较轻量级，更直观地控制线程对象&lt;/p&gt;
-
-&lt;p&gt;2.缺点：需要自己管理线程的生命周期，线程同步。线程同步对数据的加锁会有一定的系统开销&lt;/p&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;
--&lt;/span&gt; (void)viewDidLoad {
-    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;super viewDidLoad&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;&lt;span class=&quot;sb&quot;&gt;
-
-
-    //1.创建线程对象
-    NSThread *thread = [[NSThread alloc] initWithTarget:self
-        selector:@selector(thread) object:nil];
-    thread.name = @&quot;thread-2&quot;;
-    // 设置线程的优先级(0.0 - 1.0，1.0最高级)
-    thread.threadPriority = 1;
-    //开启一个多线程
-    [thread start];
-
-    //2.创建一个线程对象，并且直接开启此线程，但无法获取线程对象。
-    //[NSThread detachNewThreadSelector:@selector(thread)
-        toTarget:self withObject:nil];
-
-
-    //3.创建一个线程对象，并且启动此线程，调用当前self对象的方法。（隐式创建线程的方法）
-    //[self performSelectorInBackground:@selector(thread) withObject:nil];
-    //[self thread];
-    
-    for (int i = 0; i &amp;lt; 20; i++) {
-        NSLog(@&quot;主线程：%i&quot;,i);
-    }
-
-&lt;/span&gt;}
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;多线程的入口方法&lt;/p&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;
--&lt;/span&gt; (void)thread {&lt;span class=&quot;sb&quot;&gt;
-
-
-    //获取当前方法的线程对象
-    NSThread *thread = [NSThread currentThread];
-    NSLog(@&quot;thread-2:%@&quot;, thread);
-    //获取主线程
-    //NSThread *main = [NSThread mainThread];
-
-
-    //多线程分配堆栈大小为512k
-    NSLog(@&quot;thread-2:stackSize:%li&quot;, [thread stackSize]);
-
-    for (int i = 0; i &amp;lt; 50; i++) {
-
-        if (i == 10) {
-
-            NSLog(@&quot;thread sleep&quot;);
-            //使当前线程睡眠
-            [NSThread sleepForTimeInterval:2];
-        }
-
-        if (i == 20) {
-            NSLog(@&quot;thread end&quot;);
-            //线程退出
-            [NSThread exit];
-            }
-            NSLog(@&quot;thread：%i&quot;,i);
-        }
-
-        //判断当前线程是否为主线程
-        if (![NSThread isMainThread]) {
-            NSLog(@&quot;当前线程不是主线程&quot;);
-        }
-    }
-
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;nsoperationqueue使用&quot;&gt;NSOperationQueue使用&lt;/h2&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;
--&lt;/span&gt; (void)viewDidLoad {
-    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;super viewDidLoad&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;&lt;span class=&quot;sb&quot;&gt;
-
-
-    //1.创建一个线程队列（线程池）
-    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-
-    //2.创建线程 //NSOperation-&amp;gt;NSInvocationOperation
-    NSInvocationOperation *op1 = [[NSInvocationOperation alloc] initWithTarget:self
-    selector:@selector(thread1:) object:@&quot;operation-1&quot;];
-
-    NSInvocationOperation *op2 = [[NSInvocationOperation alloc] initWithTarget:self
-    selector:@selector(thread2:)object:@&quot;operation-2&quot;];
-
-    HWOperation *op3 = [[HWOperation alloc] initTarget:self
-    selector:@selector(thread3)];
-
-    //设置queue的并发数
-    //queue.maxConcurrentOperationCount = 1;
-
-    op2.queuePriority = NSOperationQueuePriorityVeryHigh;
-
-    //[queue setSuspended:YES];
-
-    //3.把线程对象加入到线程队列中
-    [queue addOperation:op1];
-    [queue addOperation:op2];
-
-    [queue addOperation:op3];
-
-    //[queue setSuspended:NO];
-
-    //[queue addOperationWithBlock:^{
-    //    for (int i = 0; i &amp;lt; 20; i++) {
-    //        NSLog(@&quot;block:%i&quot;, i);
-    //    }
-    //}];
-
-    for (int i = 0; i &amp;lt; 10; i++) {
-        NSLog(@&quot;主线程:%i&quot;,i);
-    }
-
-&lt;/span&gt;}
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;线程方法&lt;/p&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-//线程thread1入口方法
-&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; (void)thread1:(NSString &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)name {&lt;span class=&quot;sb&quot;&gt;
-
-    for (int i = 0; i &amp;lt; 20; i++) {
-        NSLog(@&quot;多线程%@:%i&quot;, name, i);
-    }
-&lt;/span&gt;}
-
-//线程thread2入口方法
-&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; (void)thread2:(NSString &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)name {&lt;span class=&quot;sb&quot;&gt;
-
-    for (int i = 0; i &amp;lt; 20; i++) {
-        NSLog(@&quot;多线程%@:%i&quot;, name, i);
-    }
-&lt;/span&gt;}
-
-//自定义线程类：thread3的入口方法
-&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; (void)thread3 {
-    for (int i = 0; i &amp;lt; 20; i++) {
-        NSLog(@&quot;HWOPeration线程:%i&quot;, i);
-    }
-}
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;只是简单使用，多有不足，有时间再补充吧&lt;/p&gt;
-
-</description>
-				<pubDate>Mon, 11 Jan 2016 00:00:00 +0800</pubDate>
-				<link>http://localhost:4000/GCD</link>
-				<guid isPermaLink="true">http://localhost:4000/GCD</guid>
 			</item>
 		
 	</channel>

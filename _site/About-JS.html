@@ -12,7 +12,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
 <!-- title -->
-<title>关于web后端 &middot; wanglizhen 的主页</title>
+<title>About JS &middot; wanglizhen 的主页</title>
 
 <!-- icons -->
 <link rel="shortcut icon" href="/assets/images/favicon.ico">
@@ -68,29 +68,84 @@
 
 			
 <div class="well article">
-        <h2><a href="/server">关于web后端</a></h2>
+        <h2><a href="/About-JS">About JS</a></h2>
         <span class="post-date">
             
-            January-15-2017
+            October-3-2016
         </span>
         <hr style="border-top:0px solid #28323C;"/>
     
     <div class="post-content">
-    <p>以前专业写前端，后端技术不够扎实，发现这样对我的限制特别大，不仅在开发阶段，数据基本全是假数据，也很难做动态网页。所以就想学一门后端语言，补一下自己的短板，于是我把目标瞄准了Java，毕竟Java能使用的场景太多了。Java的语言本身倒是不难，但服务端的环境配置真是有点绕啊。于是在我还没看完Java的基础语法的时候，就果断弃了。</p>
+    <h3 id="变量提升先使用后定义">变量提升（先使用，后定义）</h3>
 
-<p>后面开始看PHP，PHP是简单，当然我是说入门简单。毕竟任何一门语言本身，都是深奥而伟大的存在。但是刚开始我就是为了配合前端，简单入门再加上google和度娘，也算勉强够了。而且，PHP有服务端的集成环境，方便入门阶段的学习。在这里推荐一下一个MAC版的集成环境XAMPP，希望对大家能有所帮助。</p>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 
-<p>早就听说过Node.js环境下，JS也可以写后端了，一直想学习呢，就是没有大块的时间（这个借口只值5分）。最近一段时间了解了一下，发现Node.js真是个好东西，虽然只有CLI没有GUI工具，但是开发还是很方便的。所以我决定要好好看一看Node.js了。不过长时间不用，还是会遗忘，PHP中间隔了两个月就忘的差不多了(笑哭)。这个问题怎么处理呢？很严重。。。。这种事没有特别有效的方法，只能以后多用点了。等又时间，我把PHP和Node.js的常用API整理一下，写个博客吧，也避免遗忘，慢慢加油吧！！</p>
+console.log(a) // 10
 
-<p>先简单记录几个Node.js的学习网站</p>
+var a = 10;<span class="sb">
 
-<p><a href="https://nodejs.org">Node.js官网</a></p>
 
-<p><a href="http://nodejs.cn">Node.js中文网</a></p>
 
-<p><a href="http://www.runoob.com/nodejs/nodejs-tutorial.html">Node.js 菜鸟教程</a></p>
+</span>run()   //running....20
 
-<p><a href="https://cnodejs.org">Node.js中文论坛</a>中的新手入门可以看看，挺好的</p>
+function run(){
+    var b = 20
+    console.log("running...." + b)
+}
+
+</code></pre></div></div>
+
+<h3 id="let--es6">let  （ES6）</h3>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+
+const x = 1;
+
+x = 2;   //报错 const 不能再次赋值<span class="sb">
+
+
+</span>console.log(a) //undefine let 不支持变量提升
+
+let a = 10;
+let a = 30;    //报错 let 不支持在次声明<span class="sb">
+
+
+</span>function run(){
+    let b = 20;
+}
+
+console.log(b) //undefine。 let块状作用域
+
+</code></pre></div></div>
+
+<h3 id="-函数--es6箭头函数为匿名函数不能变量提升">=&gt; 函数  （ES6）箭头函数为匿名函数，不能变量提升</h3>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+a = a =&gt; a  //函数名 参数 返回值（没有{}，默认是返回值）
+ 
+b = (c,d) =&gt; {<span class="sb">
+
+    //箭头函数的 this
+    //默认指向在定义它时,它所处的对象,而不是执行时的对象,
+        定义它的时候,可能环境是window（即继承父级的this）
+        
+    console.log(this)
+</span>}
+b(1,2)
+
+function eat(){
+    //普通函数的this
+    //1，特指调用当前的函数的对象
+    //2，默认情况下，没找到直接调用者,则this指的是 window
+    //3，在严格模式下,没有直接调用者的函数中的this是 undefined
+    
+    console.log(this)
+}
+eat()<span class="sb">
+
+
+
+</span></code></pre></div></div>
+
+<p>持续更新中……</p>
 
 
     <hr style="border-top:0px solid #28323C;"/>
@@ -118,10 +173,10 @@
 </div>
 <div class="pagination">
     
-    <a class="btn btn-default" href="/iOS_gif" class="next">上一篇</a>
+    <a class="btn btn-default" href="/server" class="next">上一篇</a>
     
     
-    <a class="btn btn-default" href="/About-JS" class="previous">下一篇</a>
+    <a class="btn btn-default" href="/iOS" class="previous">下一篇</a>
     
 </div>
 
