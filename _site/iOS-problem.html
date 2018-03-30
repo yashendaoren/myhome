@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- meta information -->
+<meta charset="utf-8">
+<meta name="description" 
+      content="Welcome to wanglizhen 的主页! - iOS开发 iOS技术探讨 开发中的bug记录 微信小程序开发技术探讨与bug记录 前端 html、js、css 开发  IT技术探讨 共同学习 共同进步" >
+<meta name="author" content="wanglizhen（王立震） && Aigars Dzerviniks">
+
+<!-- Enable responsiveness on mobile devices-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<!-- title -->
+<title>iOS启动过程及控制器的生命周期 &middot; wanglizhen 的主页</title>
+
+<!-- icons -->
+<link rel="shortcut icon" href="/assets/images/favicon.ico">
+
+<!-- stylesheets -->
+<link rel="stylesheet" href="/assets/css/responsive.gs.12col.css">
+<link rel="stylesheet" href="/assets/css/animate.min.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/category.css"/>
+
+
+<!-- Google fonts -->
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic&subset=latin-ext">
+
+
+<!-- font Awesome -->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+
+<!-- feed links -->
+<link rel="alternate" href="http://localhost:4000/feed.xml" type="application/rss+xml" title="wanglizhen 的主页">
+
+</head>
+
+<body>
+	<main class="container avocado">
+		
+			<header>
+				
+				<div>
+					<a href="http://localhost:4000" id="logo" title="wanglizhen 的主页" style="background-image: url(/assets/images/logo.png);"></a>
+				</div>
+
+				<nav id="main-navigation">
+  
+  
+  <a href="https://www.wanglizhen.xyz/" title="Home">Home</a>
+  
+  
+  
+  <a href="https://www.wanglizhen.xyz/category/" title="Category">Category</a>
+  
+  
+  
+  <a href="https://www.wanglizhen.xyz/about/" title="about">about</a>
+  
+  
+</nav>
+
+
+			</header>
+
+			
+<div class="well article">
+        <h2><a href="/iOS-problem">iOS启动过程及控制器的生命周期</a></h2>
+        <span class="post-date">
+            
+            December-7-2014
+        </span>
+        <hr style="border-top:0px solid #28323C;"/>
+    
+    <div class="post-content">
+    <p>对于iOS开发者，需要熟悉一些基本概念，虽然有时候我们并不会用打他们。一下的一些记录，有自己总结的，也有来源于网络的，虽然并不全面，以后有机会就补充吧。</p>
+
+<h3 id="ios的main函数">iOS的main函数</h3>
+
+<p>如同任何基于C的应用程序，程序启动的主入口点都应该是main函数。虽然我们很少动它，但是应该懂它，它的主要工作是控制UIKit framework的。</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+int main(int argc, char <span class="err">*</span> argv<span class="err">[</span>])
+{
+    @autoreleasepool {
+        return UIApplicationMain(argc, argv, nil,
+            NSStringFromClass(<span class="p">[</span><span class="nv">AppDelegate class</span><span class="p">]</span>));
+    }
+}
+
+</code></pre></div></div>
+
+<p>UIApplicationMain 函数有四个参数，主要是控制程序进程和加载各种资源</p>
+
+<ul>
+  <li>argc和argv：是ISO C标准的main函数的参数，参数包含应用程序何时从系统启动等信息等。</li>
+  <li>principalClassName：这个参数标识了应用程序的类的名称（该类必须继承自UIApplication类）。这是负责运行应用程序的类。一般这个参数传nil，此时，它的值将从Info.plist中获取，如果Info.plist中没有，则默认为UIApplication</li>
+  <li>delegateClassName：是应用程序类的代理类。应用程序的代理负责管理系统和你的代码之间的高层次的互动。 一般默认为Xcode自己帮我们创建的[AppDelegate class]。</li>
+</ul>
+
+<h3 id="程序启动时-运行的先后顺序-与-事件处理">程序启动时 运行的先后顺序 与 事件处理</h3>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+//1，在程序启动过程中 一定会走的方法
+//检查启动选项字典中的内容，查看程序启动的方式，并做出适当的反应。
+//初始化应用程序的关键数据结构
+//准备好你的应用程序的窗口和视图进行显示
+<span class="p">-</span> (BOOL)application:(UIApplication <span class="err">*</span>)application
+    willFinishLaunchingWithOptions:(NSDictionary <span class="err">*</span>)launchOptions;
+<span class="p">
+-</span> (BOOL)application:(UIApplication <span class="err">*</span>)application
+    didFinishLaunchingWithOptions:(NSDictionary <span class="err">*</span>)launchOptions;
+
+//2，创建window窗口
+
+//3，当程序被激活
+<span class="p">-</span> (void)applicationDidBecomeActive:(UIApplication <span class="err">*</span>)application;
+
+//其他进入后台 取消激活等都是常用方法，就不多说了
+applicationDidEnterBackground:
+applicationWillEnterForeground:
+applicationWillResignActive:
+applicationDidBecomeActive:<span class="sb">
+
+
+</span></code></pre></div></div>
+
+<h3 id="uiviewcontroller的生命周期">UIViewController的生命周期</h3>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+//UIViewController的指定初始化方法
+<span class="p">-</span> (id)initWithNibName:(NSString <span class="ge">*)nibNameOrNil bundle:(NSBundle *</span>)nibBundleOrNil;
+
+//加载视图  通常这一步不需要去干涉
+<span class="p">-</span> (void)loadView;
+
+//视图加载完成
+<span class="p">-</span> (void)viewDidLoad;
+
+//出现内存警告
+//模拟内存警告:点击模拟器-&gt;hardware-&gt; Simulate Memory Warning
+<span class="p">-</span> (void)didReceiveMemoryWarning;
+
+//视图将要出现
+<span class="p">-</span> (void)viewWillAppear:(BOOL)animated;
+
+//视图已经出现
+<span class="p">-</span> (void)viewDidAppear:(BOOL)animated;
+
+//视图将要消失
+<span class="p">-</span> (void)viewWillDisappear:(BOOL)animated;
+
+//视图已经消失
+<span class="p">-</span> (void)viewDidDisappear:(BOOL)animated;
+
+//销毁
+<span class="p">-</span> (void)dealloc;<span class="sb">
+
+
+</span></code></pre></div></div>
+
+<h3 id="alloc-和-init">alloc 和 init</h3>
+
+<p>alloc   创建对象，分配空间;</p>
+
+<p>init (initWithNibName) 初始化对象，初始化数据;</p>
+
+
+    <hr style="border-top:0px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/categories.html">
+                iOS <span>(11)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    <!--    -->
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    <a class="btn btn-default" href="/git" class="next">上一篇</a>
+    
+    
+    <a class="btn btn-default" href="/mac" class="previous">下一篇</a>
+    
+</div>
+
+			<footer>
+				<p>
+					This work is licensed under a
+					<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/deed.en_US">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+				</p>
+				<p>
+					Powered by
+					<a rel="license" target="_blank" href="https://jekyllrb.com">Jekyll</a> ,
+					<a rel="license" target="_blank" href="https://github.com">Github</a> ,
+					<a rel="license" target="_blank" href="https://yashendaoren.github.io/home/">wanglizhen</a>
+				</p>
+			</footer>
+	</main>
+</body>
+
+</html>
