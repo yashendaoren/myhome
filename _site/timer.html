@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- meta information -->
+<meta charset="utf-8">
+<meta name="description" 
+      content="Welcome to wanglizhen 的主页! - iOS开发 iOS技术探讨 开发中的bug记录 微信小程序开发技术探讨与bug记录 前端 html、js、css 开发  IT技术探讨 共同学习 共同进步" >
+<meta name="author" content="wanglizhen（王立震） && Aigars Dzerviniks">
+
+<!-- Enable responsiveness on mobile devices-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<!-- title -->
+<title>IOS中常用的定时器 &middot; wanglizhen 的主页</title>
+
+<!-- icons -->
+<link rel="shortcut icon" href="/assets/images/favicon.ico">
+
+<!-- stylesheets -->
+<link rel="stylesheet" href="/assets/css/responsive.gs.12col.css">
+<link rel="stylesheet" href="/assets/css/animate.min.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/category.css"/>
+
+
+<!-- Google fonts -->
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic&subset=latin-ext">
+
+
+<!-- font Awesome -->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+
+<!-- feed links -->
+<link rel="alternate" href="http://localhost:4000/feed.xml" type="application/rss+xml" title="wanglizhen 的主页">
+
+</head>
+
+<body>
+	<main class="container avocado">
+		
+			<header>
+				
+				<div>
+					<a href="http://localhost:4000" id="logo" title="wanglizhen 的主页" style="background-image: url(/assets/images/logo.png);"></a>
+				</div>
+
+				<nav id="main-navigation">
+  
+  
+  <a href="https://www.wanglizhen.xyz/" title="Home">Home</a>
+  
+  
+  
+  <a href="https://www.wanglizhen.xyz/category/" title="Category">Category</a>
+  
+  
+  
+  <a href="https://www.wanglizhen.xyz/about/" title="about">about</a>
+  
+  
+</nav>
+
+
+			</header>
+
+			
+<div class="well article">
+        <h2><a href="/timer">IOS中常用的定时器</a></h2>
+        <span class="post-date">
+            
+            August-21-2014
+        </span>
+        <hr style="border-top:0px solid #28323C;"/>
+    
+    <div class="post-content">
+    <h3 id="常用的定时器">常用的定时器</h3>
+<p>直接上代码吧</p>
+
+<h2 id="nstimer">NSTimer</h2>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+// 创建定时器（自动定时器以默认方式添加到当前线程runloop中）
+NSTimer <span class="err">*</span>timer = <span class="err">[</span>NSTimer scheduledTimerWithTimeInterval:5 target:self
+    selector:@selector(run) userInfo:nil repeats:YES];
+// 停止定时器
+<span class="p">[</span><span class="nv">timer invalidate</span><span class="p">]</span>;<span class="sb">
+
+
+</span>//第二种方法（将定时器添加到runloop中，否则定时器不会启动）
+NSTimer <span class="err">*</span>timer = <span class="err">[</span>NSTimer timerWithTimeInterval:5 target:self
+    selector:@selector(run) userInfo:nil repeats:YES];
+<span class="p">[</span><span class="nv">[NSRunLoop mainRunLoop</span><span class="p">]</span> addTimer:timer forMode:NSRunLoopCommonModes];
+// 停止定时器
+<span class="p">[</span><span class="nv">timer invalidate</span><span class="p">]</span>;<span class="sb">
+
+
+</span>//第一次执行 不必隔5秒钟了 这个方法可以立即执行
+<span class="p">[</span><span class="nv">time fire</span><span class="p">]</span>;<span class="sb">
+
+
+</span></code></pre></div></div>
+
+<h2 id="cgd">CGD</h2>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+//一次性定时
+dispatch_time_t timer = dispatch_time(DISPATCH_TIME_NOW, 5.0 <span class="err">*</span> NSEC_PER_SEC);
+
+dispatch_after(timer, dispatch_get_main_queue(), ^(void){<span class="sb">
+
+    NSLog(@"GCD-----%@",[NSThread currentThread]);
+
+</span>});
+
+//重复执行的定时器
+//注意:此处应该使用强引用 strong 否则定时器执行一次之后将会被释放
+@property (nonatomic ,strong)dispatch_source_t timer;
+
+//0.创建队列
+dispatch_queue_t queue = dispatch_get_main_queue();
+
+//1.创建GCD中的定时器
+/<span class="err">*</span>
+第一个参数:创建source的类型 DISPATCH_SOURCE_TYPE_TIMER:定时器
+第二个参数:0
+第三个参数:0
+第四个参数:队列
+<span class="err">*</span>/
+dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,
+    queue);
+
+//2.设置时间等
+/<span class="err">*</span>
+第一个参数:定时器对象
+第二个参数:DISPATCH_TIME_NOW 表示从现在开始计时
+第三个参数:间隔时间
+第四个参数:精准度(表示允许的误差,0表示绝对精准)
+<span class="err">*</span>/
+dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, 1.0 <span class="err">*</span> NSEC_PER_SEC,
+    0 <span class="err">*</span> NSEC_PER_SEC);<span class="sb">
+
+
+</span>//3.要调用的任务
+dispatch_source_set_event_handler(timer, ^{<span class="sb">
+
+    NSLog(@"GCD-----%@",[NSThread currentThread]);
+
+</span>});
+
+//4.开始执行
+dispatch_resume(timer);<span class="sb">
+
+
+</span>self.timer = timer;<span class="sb">
+
+
+</span></code></pre></div></div>
+
+<h2 id="cadisplaylink">CADisplayLink</h2>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+// 创建displayLink
+CADisplayLink <span class="err">*</span>displayLink = <span class="err">[</span>CADisplayLink displayLinkWithTarget:self
+    selector:@selector(run)];
+
+// 将创建的displaylink添加到runloop中，否则定时器不会执行
+<span class="p">[</span><span class="nv">displayLink addToRunLoop:[NSRunLoop mainRunLoop</span><span class="p">]</span> forMode:NSDefaultRunLoopMode];<span class="sb">
+
+
+
+</span>// 停止定时器
+<span class="p">[</span><span class="nv">displayLink invalidate</span><span class="p">]</span>;
+displayLink = nil;<span class="sb">
+
+
+</span>调用时机
+CADisplayLink是一个和屏幕刷新率同步的定时器类。每次屏幕刷新都会掉用一次该定时器
+
+重要属性
+frameInterval：用来设置间隔多少帧调用一次selector方法，默认值是1，即每帧都调用一次。
+duration：计算selector的调用间隔时间：调用间隔时间 = duration × frameInterval。<span class="sb">
+
+
+</span></code></pre></div></div>
+
+
+    <hr style="border-top:0px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/categories.html">
+                iOS <span>(13)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    <!--    -->
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    <a class="btn btn-default" href="/mac" class="next">上一篇</a>
+    
+    
+    <a class="btn btn-default" href="/iOS-Struct-Unionl" class="previous">下一篇</a>
+    
+</div>
+
+			<footer>
+				<p>
+					This work is licensed under a
+					<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/deed.en_US">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+				</p>
+				<p>
+					Powered by
+					<a rel="license" target="_blank" href="https://jekyllrb.com">Jekyll</a> ,
+					<a rel="license" target="_blank" href="https://github.com">Github</a> ,
+					<a rel="license" target="_blank" href="https://yashendaoren.github.io/home/">wanglizhen</a>
+				</p>
+			</footer>
+	</main>
+</body>
+
+</html>
