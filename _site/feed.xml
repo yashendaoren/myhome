@@ -1060,8 +1060,17 @@ function eat(){
 eat()&lt;span class=&quot;sb&quot;&gt;
 
 
-
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;最常用的定时器&quot;&gt;最常用的定时器&lt;/h3&gt;
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+setTimeout(function() {&lt;span class=&quot;sb&quot;&gt;
+
+    conconsole.log(&quot;已经过了一秒钟......&quot;)
+
+&lt;/span&gt;}, 1000);
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;持续更新中……&lt;/p&gt;
 
