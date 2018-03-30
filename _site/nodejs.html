@@ -168,6 +168,38 @@ fs.readFile("./a.txt","utf8",function(err,data){
 
 </code></pre></div></div>
 
+<h3 id="node事件驱动">Node事件驱动</h3>
+<p>Node.js 使用事件驱动模型，类似于观察者模式。Node.js 是单进程单线程应用程序，但是通过事件和回调支持并发，所以性能非常高。</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+var events = require("events")
+
+//创建eventEmitter对象
+var eventEmitter = new events.EventEmitter()
+
+//创建事件处理程序
+var connectHandler = function connect(){
+    console.log("连接成功")<span class="sb">
+
+    //触发data_received事件
+    eventEmitter.emit("data_received")
+</span>}
+
+//绑定事件
+eventEmitter.on("connection",connectHandler)<span class="sb">
+
+    // 使用匿名函数绑定 data_received 事件
+    eventEmitter.on('data_received', function(){
+    console.log('数据接收成功。');
+</span>});
+
+// 触发 connection 事件
+eventEmitter.emit('connection');
+
+console.log("程序执行完毕。");
+
+</code></pre></div></div>
+
 <p>持续更新中……</p>
 
 
@@ -181,7 +213,7 @@ fs.readFile("./a.txt","utf8",function(err,data){
       
          
             <li class="icon-style"><a href="/categories.html">
-                web开发 <span>(6)</span>
+                web开发 <span>(5)</span>
                 
             </a></li>
         

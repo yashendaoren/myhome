@@ -928,6 +928,38 @@ fs.readFile(&quot;./a.txt&quot;,&quot;utf8&quot;,function(err,data){
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
+&lt;h3 id=&quot;node事件驱动&quot;&gt;Node事件驱动&lt;/h3&gt;
+&lt;p&gt;Node.js 使用事件驱动模型，类似于观察者模式。Node.js 是单进程单线程应用程序，但是通过事件和回调支持并发，所以性能非常高。&lt;/p&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+var events = require(&quot;events&quot;)
+
+//创建eventEmitter对象
+var eventEmitter = new events.EventEmitter()
+
+//创建事件处理程序
+var connectHandler = function connect(){
+    console.log(&quot;连接成功&quot;)&lt;span class=&quot;sb&quot;&gt;
+
+    //触发data_received事件
+    eventEmitter.emit(&quot;data_received&quot;)
+&lt;/span&gt;}
+
+//绑定事件
+eventEmitter.on(&quot;connection&quot;,connectHandler)&lt;span class=&quot;sb&quot;&gt;
+
+    // 使用匿名函数绑定 data_received 事件
+    eventEmitter.on('data_received', function(){
+    console.log('数据接收成功。');
+&lt;/span&gt;});
+
+// 触发 connection 事件
+eventEmitter.emit('connection');
+
+console.log(&quot;程序执行完毕。&quot;);
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;持续更新中……&lt;/p&gt;
 
 </description>
