@@ -99,9 +99,15 @@ if (self.block != nil) {
 
 
 </span>//在需要回传值的地方 调用
-myView.block = ^(NSString <span class="err">*</span>text) {
+<span class="ge">__</span>weak typeof(self) weakSelf = self;
+
+myView.block = ^(NSString <span class="err">*</span>text) {<span class="sb">
+
+    __strong typeof (weakSelf) strongSelf =weakSelf;
+    [strongSelf run];
+    
     NSLog(@"%@", text)
-};
+</span>};
 
 </code></pre></div></div>
 
