@@ -813,7 +813,7 @@ contextInfo:(void &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)contextInfo
 			</item>
 		
 			<item>
-				<title>web后端</title>
+				<title>关于web后端</title>
 				<description>&lt;p&gt;以前专业写前端，后端技术不够扎实，发现这样对我的限制特别大，不仅在开发阶段，数据基本全是假数据，也很难做动态网页。所以就想学一门后端语言，补一下自己的短板，于是我把目标瞄准了Java，毕竟Java能使用的场景太多了。Java的语言本身倒是不难，但服务端的环境配置真是有点绕啊。于是在我还没看完Java的基础语法的时候，就果断弃了。&lt;/p&gt;
 
 &lt;p&gt;后面开始看PHP，PHP是简单，当然我是说入门简单。毕竟任何一门语言本身，都是深奥而伟大的存在。但是刚开始我就是为了配合前端，简单入门再加上google和度娘，也算勉强够了。而且，PHP有服务端的集成环境，方便入门阶段的学习。在这里推荐一下一个MAC版的集成环境XAMPP，希望对大家能有所帮助。&lt;/p&gt;
