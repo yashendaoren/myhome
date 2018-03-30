@@ -813,6 +813,108 @@ contextInfo:(void &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)contextInfo
 			</item>
 		
 			<item>
+				<title>Node.JS学习笔记</title>
+				<description>&lt;h3 id=&quot;node-命令&quot;&gt;Node 命令&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//查看版本
+node -v
+
+//命令之后 直接在命令行中 编写脚本（基本不用，知道就行）
+$ node
+&lt;span class=&quot;gt&quot;&gt;&amp;gt; console.log('Hello World!');&lt;/span&gt;
+
+//当前目录下运行脚本文件 （.js可以省略）
+node index.js
+
+//npm版本
+npm -v
+
+//命令 安装模块
+npm install &lt;span class=&quot;nt&quot;&gt;&amp;lt;Module&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;开启node服务器&quot;&gt;开启Node服务器&lt;/h3&gt;
+
+&lt;p&gt;相应的数据类型可以参考&lt;a href=&quot;https://www.oschina.net&quot;&gt;开源中国&lt;/a&gt;中的&lt;a href=&quot;http://tool.oschina.net&quot;&gt;在线工具&lt;/a&gt;中的&lt;a href=&quot;http://tool.oschina.net/commons&quot;&gt;Content-Type(Mime-Type)&lt;/a&gt;对照表。比如常用的：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;text/plain字符串  image/jpeg图片 image/png图片 text/css CSS text/html标签&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+var http = require(&quot;http&quot;);
+
+http.createServer(function (request, response) {&lt;span class=&quot;sb&quot;&gt;
+
+    //url仅仅只是一个标示 没有任何意义 从 / 开始，不包含协议和域名
+    var url = request.url;
+    
+    if(url == &quot;/&quot;){
+        //发送HTTP头部 状态值: 200  内容类型: text/plain
+        response.writeHead(200, {'Content-Type': 'text/plain'});
+        
+        // 发送响应数据 &quot;Hello World&quot;
+        response.write(&quot;Hello World&quot;)
+        
+        //结束响应
+        response.end();
+    
+    }else{
+    
+        response.end(&quot;404 Not Found&quot;);
+
+    }
+
+    
+    //响应端口 8888
+&lt;/span&gt;}).listen(8888);&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;// 终端打印如下信息
+console.log('Server running at http://127.0.0.1:8888/');&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;css-图片等资源加载&quot;&gt;CSS 图片等资源加载&lt;/h3&gt;
+&lt;p&gt;当浏览器在加载HTML过程中，遇到具有href的link，具有src的script，具有src的img等具有外链的，又需要在内部使用的资源，这个时候，浏览器会对该资源指向的连接自动发起请求。&lt;/p&gt;
+
+&lt;p&gt;utf-8是字符编码，如果是音乐、图片、视频等文件的时候，一定不要指定该编码，直接发送二进制数据就行了&lt;/p&gt;
+
+&lt;h3 id=&quot;node文件操作&quot;&gt;Node文件操作&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+var fs = require(&quot;fs&quot;);
+
+//文件操作中，路径如果是 / 开始，则会到当前脚本所在的磁盘目录下去寻找，而不是当前目录
+fs.writeFile(&quot;./a.txt&quot;,&quot;Hello Node&quot;,function(err){
+    if(err){
+        throw err  //这样会程序崩溃，只是调试用的，release版本不能这样
+    }&lt;span class=&quot;sb&quot;&gt;
+
+    console.log(&quot;saved&quot;)
+&lt;/span&gt;})
+
+fs.readFile(&quot;./a.txt&quot;,&quot;utf8&quot;,function(err,data){
+    if(err){
+        throw err
+    }
+    
+    console.log(data)
+})
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;持续更新中……&lt;/p&gt;
+
+</description>
+				<pubDate>Mon, 16 Jan 2017 00:00:00 +0800</pubDate>
+				<link>http://localhost:4000/nodejs</link>
+				<guid isPermaLink="true">http://localhost:4000/nodejs</guid>
+			</item>
+		
+			<item>
 				<title>关于web后端</title>
 				<description>&lt;p&gt;以前专业写前端，后端技术不够扎实，发现这样对我的限制特别大，不仅在开发阶段，数据基本全是假数据，也很难做动态网页。所以就想学一门后端语言，补一下自己的短板，于是我把目标瞄准了Java，毕竟Java能使用的场景太多了。Java的语言本身倒是不难，但服务端的环境配置真是有点绕啊。于是在我还没看完Java的基础语法的时候，就果断弃了。&lt;/p&gt;
 
@@ -1005,58 +1107,6 @@ eat()&lt;span class=&quot;sb&quot;&gt;
 				<pubDate>Mon, 09 May 2016 00:00:00 +0800</pubDate>
 				<link>http://localhost:4000/iOS</link>
 				<guid isPermaLink="true">http://localhost:4000/iOS</guid>
-			</item>
-		
-			<item>
-				<title>如何使用Github搭建自己的静态网站</title>
-				<description>&lt;h3 id=&quot;首先登陆自己的github账号-如果没有-注册一个-无需多说&quot;&gt;首先登陆自己的Github账号 如果没有 注册一个 无需多说&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/github-page/01.png&quot; alt=&quot;图片&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;创建仓库-用于存放自己的页面代码&quot;&gt;创建仓库 用于存放自己的页面代码&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/github-page/02.png&quot; alt=&quot;图片&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;切换到settings页面&quot;&gt;切换到Settings页面&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/github-page/03.png&quot; alt=&quot;图片&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;往下拉-会看到一个选择主题的选项按钮&quot;&gt;往下拉 会看到一个选择主题的选项按钮&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/github-page/04.png&quot; alt=&quot;图片&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;选择一个自己喜欢的样式-点击选择&quot;&gt;选择一个自己喜欢的样式 点击选择&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/github-page/05.png&quot; alt=&quot;图片&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;上传自己选中的主题&quot;&gt;上传自己选中的主题&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/github-page/06.png&quot; alt=&quot;图片&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;再切换到settings页面-往下拉&quot;&gt;再切换到Settings页面 往下拉&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/github-page/07.png&quot; alt=&quot;图片&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;此时-github-已经帮我们生成了自己网页的地址-点开看看&quot;&gt;此时 Github 已经帮我们生成了自己网页的地址 点开看看！&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/github-page/08.png&quot; alt=&quot;图片&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;再看我们的仓库里面&quot;&gt;再看我们的仓库里面&lt;/h3&gt;
-&lt;p&gt;我们的仓库里面也已经有了配置和第一个页面的文件（index.md）以后的每个博文 都会是一个.md文件 index.md里面有如何使用的介绍 功能不算丰富 但是只是写个博客 也足够了
-&lt;img src=&quot;http://localhost:4000/assets/images/github-page/09.png&quot; alt=&quot;图片&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;切换样式&quot;&gt;切换样式&lt;/h3&gt;
-&lt;p&gt;如果自己不喜欢原本的模版，可以自己写，Github支持.html文件 支持js特效。当然，如果觉得自己的设计不够好，也可以去下载别的模版，比如楼主的模版，就是在&lt;a href=&quot;https://jekyllrb.com&quot;&gt;Jekyll&lt;/a&gt;下载的。对于&lt;a href=&quot;https://jekyllrb.com&quot;&gt;Jekyll&lt;/a&gt;的使用，里面有很详细的教程。&lt;/p&gt;
-
-&lt;h3 id=&quot;更换域名&quot;&gt;更换域名&lt;/h3&gt;
-&lt;p&gt;如果想换成自己的域名，也很简单
-&lt;br /&gt;
-1，申请一个域名
-&lt;br /&gt;
-2，解析域名（选择CNAME方式解析，地址选择Github分配给我们的 “二级域名.github.io”）
-&lt;br /&gt;
-3，创建一个CNAME文件，里面写上自己的域名就行了（注意：CNAME字母要大写，没有后缀）
-&lt;br /&gt;
-4，上传到自己刚开始创建的仓库&lt;/p&gt;
-
-&lt;h3 id=&quot;搞定了-试试自己的网站吧&quot;&gt;搞定了 试试自己的网站吧！！&lt;/h3&gt;
-
-</description>
-				<pubDate>Thu, 24 Mar 2016 00:00:00 +0800</pubDate>
-				<link>http://localhost:4000/github-page</link>
-				<guid isPermaLink="true">http://localhost:4000/github-page</guid>
 			</item>
 		
 	</channel>
