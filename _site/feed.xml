@@ -426,6 +426,28 @@ pod search Lib&lt;span class=&quot;sb&quot;&gt;
 			</item>
 		
 			<item>
+				<title>微信小程序 小问题集结</title>
+				<description>&lt;h3 id=&quot;小程序时间兼容ios版本&quot;&gt;小程序时间兼容iOS版本&lt;/h3&gt;
+&lt;p&gt;我们有个需求，需要将服务器取到的时间再处理，在将字符串时间变为时间的时候，安卓手机是没问题的，但是iOS时间转换错误，原来iOS设备只能识别 ‘2017/02/21 11:23:56’ 这种时间格式，不能识别 ‘2017-02-21 11:23:56’ 这种格式，所以在转时间之前，需要先将时间字符串格式化一下，如有需要，再改回来就行了&lt;/p&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+//改之前
+var myDate = new Date(date)
+
+//改之后
+date = date.replace(/-/g, '/');
+var myDate = new Date(date)
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;持续更新中…….&lt;/p&gt;
+</description>
+				<pubDate>Sun, 05 Nov 2017 00:00:00 +0800</pubDate>
+				<link>http://localhost:4000/wx_problem</link>
+				<guid isPermaLink="true">http://localhost:4000/wx_problem</guid>
+			</item>
+		
+			<item>
 				<title>微信小程序 文字溢出换行、各种引用 和 半透明浮层实现</title>
 				<description>&lt;h3 id=&quot;多行限制-文字溢出换行-并显示-&quot;&gt;多行限制 文字溢出换行 并显示 …&lt;/h3&gt;
 
@@ -1015,98 +1037,6 @@ eat()&lt;span class=&quot;sb&quot;&gt;
 				<pubDate>Mon, 03 Oct 2016 00:00:00 +0800</pubDate>
 				<link>http://localhost:4000/About-JS</link>
 				<guid isPermaLink="true">http://localhost:4000/About-JS</guid>
-			</item>
-		
-			<item>
-				<title>Xcode快捷键 和 iOS零散bug</title>
-				<description>&lt;p&gt;iOS开发多年了 一直只有保存代码的习惯 是时候整合一下了 长时间的开发 最大的遗憾就是没有开刚开始的时候就养成写博客的习惯 以至于当时觉得很有收获或者很有成就感的瞬间 在后来完全不记得了。以后持续更细……&lt;/p&gt;
-
-&lt;h3 id=&quot;xcode-常用快捷键&quot;&gt;Xcode 常用快捷键&lt;/h3&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-.h .m 切换：Control + Command + 上箭头
-浏览过的文件快速切换：Control + Command + 左右箭头
-代码上跳：Cmd+Option+&lt;span class=&quot;err&quot;&gt;[&lt;/span&gt;
-代码左移：Cmd+&lt;span class=&quot;err&quot;&gt;[&lt;/span&gt;
-全局搜索：Cmd+Shift+F
-搜索：Cmd+F
-快速打开：Cmd+Shift+O 搜索文件
-定位打开文件：Cmd+Shift+J
-清除工程：Cmd+Shift+K
-暂停运行模拟器：Cmd+.
-文档和参考：Cmd+Shift+0
-工程导航器：Cmd+1
-多行注释：Cmd+Option+/
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;图片扭曲的问题&quot;&gt;图片扭曲的问题&lt;/h3&gt;
-
-&lt;p&gt;测试突然找来 说线上的app图片全部扭曲了，我下载了发现并没有。经过排查发现，iOS 8 以下的系统，图片真的扭曲了。后来发现扭曲的全部是 Images.xcassets 里面的图片，其他图片和网络图片都是好的。后来确认是苹果自己的锅，Xcode 9.2 之后，打出来的包，iOS 8的系统都有问题。经产品测试和开发商议，这个问题不管了。&lt;/p&gt;
-
-&lt;h3 id=&quot;获取启动图获取launchimage-中的图片&quot;&gt;获取启动图获取LaunchImage 中的图片&lt;/h3&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-    if (IS_iPHONE_X) {
-        _guideView.image = &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;UIImage imageNamed:@&quot;LaunchImage-1100-2436h&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
-    }else if (FUll_VIEW_HEIGHT&amp;gt;480) {
-        _guideView.image = &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;UIImage imageNamed:@&quot;LaunchImage-800-667h&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
-    }else {
-        _guideView.image = &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;UIImage imageNamed:@&quot;LaunchImage&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
-    }
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;微信屏蔽了通用链接&quot;&gt;微信屏蔽了通用链接&lt;/h3&gt;
-
-&lt;p&gt;刚开始还以为只把淘宝的通用链接给屏蔽了，回来测试了一下我们自己的通用链接，也被屏蔽了，以后通过分享微信，刷流量，又少了一条途径。&lt;/p&gt;
-
-&lt;h3 id=&quot;ios11-uicollectionview滚动条以及放在上面的view被headerview遮盖的问题&quot;&gt;iOS11 UICollectionView滚动条以及放在上面的View被headerView遮盖的问题&lt;/h3&gt;
-&lt;p&gt;最近写项目在 iOS 11上，UICollectionView的滚动条 以及 放在上面的View被 UICollectionView的 headerView遮盖  ，通过研究发现，需要设置zPosition 才能解决这个问题。具体实施方案如下：&lt;/p&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-.h文件&lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;//添加的代码（因iOS 11以上才有问题，所以提前判定，避免对iOs 10造成新的影响）
-&lt;span class=&quot;gh&quot;&gt;#ifdef __IPHONE_11_0&lt;/span&gt;
-@interface CustomLayer : CALayer
-@end
-&lt;span class=&quot;gh&quot;&gt;#endif&lt;/span&gt;
-
-@interface RecommentTvAndVideoheaderView : UICollectionReusableView
-@end
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-.m文件&lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;//添加的代码
-&lt;span class=&quot;gh&quot;&gt;#ifdef __IPHONE_11_0&lt;/span&gt;
-@implementation CustomLayer1
-&lt;span class=&quot;p&quot;&gt;
--&lt;/span&gt; (CGFloat) zPosition {
-    return 0;
-}
-@end
-&lt;span class=&quot;gh&quot;&gt;#endif&lt;/span&gt;
-
-&lt;span class=&quot;gh&quot;&gt;#ifdef __IPHONE_11_0&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;+&lt;/span&gt; (Class)layerClass {
-    return &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CustomLayer1 class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
-}
-&lt;span class=&quot;gh&quot;&gt;#endif&lt;/span&gt;
-
-对于有多个headerView的情况，需要在每个headerView中单独处理（每个的名称需要不同）
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-</description>
-				<pubDate>Mon, 09 May 2016 00:00:00 +0800</pubDate>
-				<link>http://localhost:4000/iOS</link>
-				<guid isPermaLink="true">http://localhost:4000/iOS</guid>
 			</item>
 		
 	</channel>
