@@ -1,0 +1,69 @@
+.about_me{
+  /* border: 1px solid red; */
+  margin-bottom:10px; 
+}
+.about_me nav{
+  background:rgb(171, 201, 146);
+  /* border-bottom: 1px solid greenyellow; */
+  padding-top: 20px;
+  height: 200px;
+  margin-bottom: 20px;
+}
+table,td{
+  border-style:none;
+}
+.icon_me{
+  border: 1px solid green;
+  margin-left: 40px;
+  width: 120px;
+  height: 140px;;
+}
+
+.about_me aside{
+  /* border-right: 1px solid goldenrod; */
+  background-color: rgb(171, 201, 146);
+  margin-right:10px; 
+  float: left;
+  width: 30%;
+  height: 800px;
+}
+.about_me aside ul{
+  width: 100%;
+  margin: -10px 0px 30px 20px;
+}
+.about_me aside ul li{
+  margin-bottom: 10px;
+}
+.my_info_title{
+  font-size: 20px;
+  font-weight: 600;
+}
+.my_info_con{
+  margin-left: 20px;
+}
+h2{
+  margin-left: 15px;
+  margin-top: 10px;
+  color: rgb(10, 97, 71);
+}
+
+.about_me article{
+  height: 800px;
+  float: right;
+  width: 68%;
+  /* padding-left: 10px; */
+  /* background-color: dimgray; */
+  /* height: 800px; */
+}
+.about_me article ul{
+  margin: -10px 0px 30px 20px;
+}
+h3{
+  margin-top: 10px;
+  color: rgb(88, 152, 36);
+  border-bottom: 4px solid rgb(171, 201, 146);
+
+}
+
+
+
