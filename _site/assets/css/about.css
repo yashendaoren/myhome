@@ -47,6 +47,18 @@ h2{
   color: rgb(10, 97, 71);
 }
 
+.about_me .info_erweima{
+  /* width: 70%; */
+  text-align: center;
+  margin:50px 47px 0; 
+  border: 3px dotted paleturquoise;
+
+
+}
+.about_me .info_text{
+  text-align: center;
+}
+
 .about_me article{
   height: 800px;
   float: right;
