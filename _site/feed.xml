@@ -1165,7 +1165,8 @@ repeat {
 } while (n &amp;lt; 170)&lt;span class=&quot;sb&quot;&gt;
 
 
-&lt;/span&gt;//switch case 可以字符串比较 不再需要加 break, 会自动终止匹配，定义一个新的常量/变量 x 会把 case 内匹配的数据接收, 其他代码不会被执行，但可以用fallthrough穿过。
+&lt;/span&gt;//switch case 可以字符串比较 不再需要加 break, 会自动终止匹配，定义一个新的常量/变量 x
+    会把 case 内匹配的数据接收, 其他代码不会被执行，但可以用fallthrough穿过。
 let hobby = &quot;扫雷&quot;
 switch hobby {
     case let x:
@@ -1233,7 +1234,8 @@ jinhua(地名: &quot;杭州!&quot;)&lt;span class=&quot;sb&quot;&gt;
 func getAge(a:Int)-&amp;gt;Int {
     return a
 }
-//函数类型包括两部分, (参数类型,...)-&amp;gt;返回值类型.也就是说, 具有相同参数类型和返回值类型的函数是同一个类型的
+//函数类型包括两部分, (参数类型,...)-&amp;gt;返回值类型.也就是说,
+    具有相同参数类型和返回值类型的函数是同一个类型的
 
 //对函数类型重命名
 typealias 函数类型 = (Int)-&amp;gt;Int
