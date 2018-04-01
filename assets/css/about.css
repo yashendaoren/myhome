@@ -9,7 +9,7 @@
   height: 200px;
   margin-bottom: 20px;
 }
-table,td{
+.about_me table,td{
   border-style:none;
 }
 .icon_me{
@@ -34,14 +34,14 @@ table,td{
 .about_me aside ul li{
   margin-bottom: 10px;
 }
-.my_info_title{
+.about_me .my_info_title{
   font-size: 20px;
   font-weight: 600;
 }
-.my_info_con{
+.about_me .my_info_con{
   margin-left: 20px;
 }
-h2{
+.about_me h2{
   margin-left: 15px;
   margin-top: 10px;
   color: rgb(10, 97, 71);
@@ -70,7 +70,7 @@ h2{
 .about_me article ul{
   margin: -10px 0px 30px 20px;
 }
-h3{
+.about_me h3{
   margin-top: 10px;
   color: rgb(88, 152, 36);
   border-bottom: 4px solid rgb(171, 201, 146);

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- meta information -->
+<meta charset="utf-8">
+<meta name="description" 
+      content="Welcome to wanglizhen 的主页! - iOS开发 iOS技术探讨 开发中的bug记录 微信小程序开发技术探讨与bug记录 前端 html、js、css 开发  IT技术探讨 共同学习 共同进步" >
+<meta name="author" content="wanglizhen（王立震） && Aigars Dzerviniks">
+
+<!-- Enable responsiveness on mobile devices-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<!-- title -->
+<title>Swift与Objective-C区别简析(一) &middot; wanglizhen 的主页</title>
+
+<!-- icons -->
+<link rel="shortcut icon" href="/assets/images/favicon.ico">
+
+<!-- stylesheets -->
+<link rel="stylesheet" href="/assets/css/responsive.gs.12col.css">
+<link rel="stylesheet" href="/assets/css/animate.min.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/category.css"/>
+<link rel="stylesheet" href="/assets/css/about.css"/>
+
+
+<!-- Google fonts -->
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic&subset=latin-ext">
+
+
+<!-- font Awesome -->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+
+<!-- feed links -->
+<link rel="alternate" href="http://localhost:4000/feed.xml" type="application/rss+xml" title="wanglizhen 的主页">
+
+</head>
+
+<body>
+	<main class="container avocado">
+		
+			<header>
+				
+				<div>
+					<a href="http://localhost:4000" id="logo" title="wanglizhen 的主页" style="background-image: url(/assets/images/logo.png);"></a>
+				</div>
+
+				<nav id="main-navigation">
+  
+  
+  <a href="https://www.wanglizhen.xyz/" title="Home">Home</a>
+  
+  
+  
+  <a href="https://www.wanglizhen.xyz/category/" title="Category">Category</a>
+  
+  
+  
+  <a href="https://www.wanglizhen.xyz/about/" title="about">about</a>
+  
+  
+</nav>
+
+
+			</header>
+
+			
+<div class="well article">
+        <h2><a href="/Swift-OC">Swift与Objective-C区别简析(一)</a></h2>
+        <span class="post-date">
+            
+            November-21-2016
+        </span>
+        <hr style="border-top:0px solid #28323C;"/>
+    
+    <div class="post-content">
+    <h3 id="swift-与-oc">Swift 与 OC</h3>
+<p>作为一个iOS开发人员，不可能不学习Swift，其实任何语言的语法本身，难度并不大，关键是学会了之后要用，只有用，才能够越来越精通，希望以后我们的项目可以用Swift编写。当然，因为 Apple 内部一直在用 Objective-C 来做一些 Framework 的开发，底层也不可能用 Swift 实现，所以短时间内Swift不可能取代OC的。</p>
+
+<p>Swift作为一门语言，如果全部记录，那内容就太多了，这里就简单记录一下它与OC的区别吧。哎，Swift现在版本更新太快了，前一段时间写的代码，现在居然运行不了了，有点不高兴……</p>
+
+<h3 id="swift与oc相互调用">Swift与OC相互调用</h3>
+<p>Swift调用OC：</p>
+
+<p>1、桥接文件，一般是swift工程，在创建一个oc文件时，系统自动添加（不用改名，直接默认即可）</p>
+
+<p>2、将需要引用的oc文件 .h头文件 添加到桥接类中。</p>
+
+<p>OC调用Swift：</p>
+
+<p>1、首先设置一下Packing（进入TARGETS -&gt;Build Settings -&gt; Packaging 中设置Defines Module为YES</p>
+
+<p>2，设置 Product Module Name （这个也可以不设置，直接使用默认就行，比如Product Module Name 为 ABXXXCD）</p>
+
+<p>3、设置完之后，在需要引用的oc文件头部  import一下，格式为： #import “工程名-Swift.h”（比如：#import “ABXXXCD-Swift.h”）</p>
+
+<h3 id="swift中的-和--">Swift中的 ！和  ？</h3>
+<p>这两个符号是用来标记这个变量的值是否可选，！表示可选变量必须保证转换能够成功，否则报错，但定义的变量可以直接使用；？表示可选变量即使转换不成功也不会报错，变量值为nil，如果转换成功，要使用该变量时，后面需要加！进行修饰</p>
+
+<h3 id="swift的访问权限变更">Swift的访问权限变更</h3>
+<p>访问权限 由大到小 依次为：open，public，internal（默认），fileprivate，private</p>
+
+<h2 id="上面都是各种概念还是直接来点代码区别吧">上面都是各种概念，还是直接来点代码区别吧</h2>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+//每一行结束不用再加 ; 了
+
+//首先 import 不用再加"" 或者 <span class="nt">&lt;&gt;</span> 了
+import Foundation
+
+//打印也不用 NSLog 了
+print("asdf")
+
+/<span class="err">*</span>
+类型推断: swift 会根据初始值类型, 推断常量/变量的数据类型
+swift 变量命名比较随意 汉字 表情 都可以（不能以数字开头）
+<span class="err">*</span>/
+//常量
+let a = 10
+//变量
+var b = 20
+//类型安全 : 实际类型和声明类型必须一致
+var c : Int = 40
+
+//字符串不用再加 @ 了
+var str = "Hello"
+//方法调用用点语法
+str = str.stringByAppendingString(" World")<span class="sb">
+
+
+</span></code></pre></div></div>
+
+<h2 id="数组-字典-元组">数组 字典 元组</h2>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+//数组
+var arr = <span class="p">[</span><span class="nv">"1"</span><span class="p">]</span>
+
+//查找元素
+print(arr<span class="p">[</span><span class="nv">0</span><span class="p">]</span>)
+
+//增加元素
+arr.append("345")
+print(arr)
+
+//删除元素
+arr.removeAtIndex(0)
+print(arr,"<span class="se">\n</span>", “----”)  // "<span class="se">\n</span>"可以换行
+
+//修改数组内的元素
+arr<span class="p">[</span><span class="nv">0</span><span class="p">]</span> = "swift 很强大"
+print(arr)<span class="sb">
+
+
+
+
+</span>//字典
+var dictionary = <span class="p">[</span><span class="nv">"name":"张三", "age":18</span><span class="p">]</span>
+//修改元素
+dictionary.updateValue(81, forKey: "age")
+
+//增加元素 updateValue这个方法, 如果 key 存在就更新, 如果 key 不存在就添加
+dictionary.updateValue(168, forKey: "height")
+
+//删除元素
+dictionary.removeValueForKey("height")
+print(dictionary)
+
+//获取元素
+//可选类型: 如果有值, 就是值本身; 如果没有值, 值是 nil
+let value = dictionary<span class="p">[</span><span class="nv">"nam"</span><span class="p">]</span>
+
+//如果确定有值, 可以进行强制解析, 强制解析的方法为 !;
+//print(value!)
+
+//如果不确定有值, 就要使用隐式解析, 隐式解析的方式如下:也可以if (value != nil) {
+if  let v = value  {
+    print(v)
+} else {
+    print("没有值")
+}<span class="sb">
+
+
+</span>//元组, 什么样的数据都可以存
+let tuples = ("404", "网站无法打开")
+//找元组
+print(tuples.0)
+
+let personTuples = (路飞:123, 山治:456, 索隆:789)
+print(personTuples.路飞)<span class="sb">
+
+
+</span></code></pre></div></div>
+
+<h2 id="运算">运算</h2>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+//定义一个可选类型的变量
+var 可选类型的变量 : Int?
+可选类型的变量 = 123;
+print(可选类型的变量!)
+
+// + 除了加法运算 还能字符串拼接
+let a = 2
+let b = 3
+let c = a + b
+let d = "Hello" + " Swift"<span class="sb">
+
+
+</span>//swift可以对小数取余   c语言 不可以
+print(10%3.5)<span class="sb">
+
+
+
+</span></code></pre></div></div>
+
+<h2 id="if--for-while-switch-区间">if  for while switch 区间</h2>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+if sum &gt; 10 {
+    print("sum &gt; 10")
+} else {
+    print("sum &lt;= 10")
+}
+
+//for循环。  <span class="se">\(</span>)  打印真是值
+for var i = 0; i &lt; 10; i++ {
+    //字符串拼接
+    print("i = <span class="se">\(</span>i)")
+}<span class="sb">
+
+
+</span>//while
+var num = 10
+while num &gt; 0 {
+    print("num = <span class="se">\(</span>num)")
+    num--
+}
+
+//repeat while = do while  不管是否满足条件都先执行一次
+var n = 150
+repeat {
+    print("身高<span class="se">\(</span>n) = <span class="se">\(</span>n)cm")
+    n++
+} while (n &lt; 170)<span class="sb">
+
+
+</span>//switch case 可以字符串比较 不再需要加 break, 会自动终止匹配，定义一个新的常量/变量 x 会把 case 内匹配的数据接收, 其他代码不会被执行，但可以用fallthrough穿过。
+let hobby = "扫雷"
+switch hobby {
+    case let x:
+        print("龙神爱玩扫雷")
+        fallthrough
+    case "World of warcraft":
+        print("龙神爱玩魔兽世界")
+    default:
+        print("龙神爱玩其他游戏")
+}
+
+//switch 匹配条件：在 where 后面添加条件，如果满足, 才能走这个语句
+let x = 168
+switch x {
+    case let y where y &gt; 150:
+        print("身高大于150, 实际身高<span class="se">\(</span>y)cm")
+    default:
+        print("不足150cm?!")
+}<span class="sb">
+
+
+</span>//闭区间 <span class="p">[</span><span class="nv">0, 8</span><span class="p">]</span>
+for j in 0...8 {
+    print("j = <span class="se">\(</span>j)")
+}
+
+//开区间 <span class="err">[</span>9, 20)
+for k in 9..&lt;20 {
+    print("k = <span class="se">\(</span>k)")
+}<span class="sb">
+
+
+</span></code></pre></div></div>
+
+<h2 id="函数">函数</h2>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+//定义一个函数, 无参数, 无返回值
+func helloworld(){
+    print("hello world!")
+}
+helloworld()
+
+//有参数, 有返回 （第一个参数名不需要写 name）
+func haiZeiWang(name:String)-&gt;String{<span class="sb">
+
+    return name + "要成为海贼王"
+</span>}
+print(haiZeiWang("路飞"))
+
+//参数默认值
+func multiply(a:Int, b:Int = 10) {
+    print("积为<span class="se">\(</span>a <span class="err">*</span> b)")
+}
+multiply (200)
+
+//外部参数, 脾气
+func iLike(地名 name:String){
+    print("我喜欢<span class="se">\(</span>name)")
+}
+jinhua(地名: "杭州!")<span class="sb">
+
+
+</span>//函数类型 ：初始化一个类型为 (Int)-&gt;Int 类型的函数变量
+func getAge(a:Int)-&gt;Int {
+    return a
+}
+//函数类型包括两部分, (参数类型,...)-&gt;返回值类型.也就是说, 具有相同参数类型和返回值类型的函数是同一个类型的
+
+//对函数类型重命名
+typealias 函数类型 = (Int)-&gt;Int
+var myFun:函数类型 = getAge
+print(myFun(23))
+
+//函数作为函数的参数
+func second(a:Int)-&gt;Int{
+    return a <span class="err">*</span> 100
+}
+
+func secondFunc(f1: (Int)-&gt;Int)-&gt;Int{
+    return f1(20)
+}
+print(secondFunc(second))<span class="sb">
+
+
+
+</span>//函数作为函数的返回值
+typealias functionType = ()-&gt;()  //重定义()-&gt;()类型
+func myFunc(f1:functionType, f2:functionType, b:Bool)-&gt;functionType {
+    return b == true ? f1 : f2
+}
+
+func func1(){
+    print("你不帅")
+}
+func func2(){
+    print("你真帅")
+}
+
+let resultFunc = myFunc(func1, f2: func2, b: false)
+resultFunc();<span class="sb">
+
+
+</span>//函数嵌套定义
+typealias funType = (Int)-&gt;()
+
+func bigFunc(b:Bool)-&gt;funType{
+    func smallFunc1(a:Int)-&gt;(){
+        print("大妈今年<span class="se">\(</span>a)岁")
+    }
+    func smallFunc2(a:Int)-&gt;(){
+        print("大妈明年<span class="se">\(</span>a+1)岁")
+    }
+    return b == true ? smallFunc1 : smallFunc2
+}
+
+let resultFun = bigFunc(false)
+resultFun(17)<span class="sb">
+
+
+
+</span></code></pre></div></div>
+
+<p>明天再写吧……</p>
+
+
+    <hr style="border-top:0px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/categories.html">
+                iOS <span>(14)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    <!--    -->
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    <a class="btn btn-default" href="/server" class="next">上一篇</a>
+    
+    
+    <a class="btn btn-default" href="/About-JS" class="previous">下一篇</a>
+    
+</div>
+
+			<footer>
+				<p>
+					This work is licensed under a
+					<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/deed.en_US">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+				</p>
+				<p>
+					Powered by
+					<a rel="license" target="_blank" href="https://jekyllrb.com">Jekyll</a> ,
+					<a rel="license" target="_blank" href="https://github.com">Github</a> ,
+					<a rel="license" target="_blank" href="https://www.wanglizhen.xyz/">wanglizhen</a>
+				</p>
+			</footer>
+	</main>
+</body>
+
+</html>

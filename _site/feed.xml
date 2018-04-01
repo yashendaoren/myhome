@@ -993,91 +993,308 @@ console.log(&quot;程序执行完毕。&quot;);
 			</item>
 		
 			<item>
-				<title>About JS</title>
-				<description>&lt;h3 id=&quot;变量提升先使用后定义&quot;&gt;变量提升（先使用，后定义）&lt;/h3&gt;
+				<title>Swift与Objective-C区别简析(一)</title>
+				<description>&lt;h3 id=&quot;swift-与-oc&quot;&gt;Swift 与 OC&lt;/h3&gt;
+&lt;p&gt;作为一个iOS开发人员，不可能不学习Swift，其实任何语言的语法本身，难度并不大，关键是学会了之后要用，只有用，才能够越来越精通，希望以后我们的项目可以用Swift编写。当然，因为 Apple 内部一直在用 Objective-C 来做一些 Framework 的开发，底层也不可能用 Swift 实现，所以短时间内Swift不可能取代OC的。&lt;/p&gt;
+
+&lt;p&gt;Swift作为一门语言，如果全部记录，那内容就太多了，这里就简单记录一下它与OC的区别吧。哎，Swift现在版本更新太快了，前一段时间写的代码，现在居然运行不了了，有点不高兴……&lt;/p&gt;
+
+&lt;h3 id=&quot;swift与oc相互调用&quot;&gt;Swift与OC相互调用&lt;/h3&gt;
+&lt;p&gt;Swift调用OC：&lt;/p&gt;
+
+&lt;p&gt;1、桥接文件，一般是swift工程，在创建一个oc文件时，系统自动添加（不用改名，直接默认即可）&lt;/p&gt;
+
+&lt;p&gt;2、将需要引用的oc文件 .h头文件 添加到桥接类中。&lt;/p&gt;
+
+&lt;p&gt;OC调用Swift：&lt;/p&gt;
+
+&lt;p&gt;1、首先设置一下Packing（进入TARGETS -&amp;gt;Build Settings -&amp;gt; Packaging 中设置Defines Module为YES&lt;/p&gt;
+
+&lt;p&gt;2，设置 Product Module Name （这个也可以不设置，直接使用默认就行，比如Product Module Name 为 ABXXXCD）&lt;/p&gt;
+
+&lt;p&gt;3、设置完之后，在需要引用的oc文件头部  import一下，格式为： #import “工程名-Swift.h”（比如：#import “ABXXXCD-Swift.h”）&lt;/p&gt;
+
+&lt;h3 id=&quot;swift中的-和--&quot;&gt;Swift中的 ！和  ？&lt;/h3&gt;
+&lt;p&gt;这两个符号是用来标记这个变量的值是否可选，！表示可选变量必须保证转换能够成功，否则报错，但定义的变量可以直接使用；？表示可选变量即使转换不成功也不会报错，变量值为nil，如果转换成功，要使用该变量时，后面需要加！进行修饰&lt;/p&gt;
+
+&lt;h3 id=&quot;swift的访问权限变更&quot;&gt;Swift的访问权限变更&lt;/h3&gt;
+&lt;p&gt;访问权限 由大到小 依次为：open，public，internal（默认），fileprivate，private&lt;/p&gt;
+
+&lt;h2 id=&quot;上面都是各种概念还是直接来点代码区别吧&quot;&gt;上面都是各种概念，还是直接来点代码区别吧&lt;/h2&gt;
 
 &lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+//每一行结束不用再加 ; 了
 
-console.log(a) // 10
+//首先 import 不用再加&quot;&quot; 或者 &lt;span class=&quot;nt&quot;&gt;&amp;lt;&amp;gt;&lt;/span&gt; 了
+import Foundation
 
-var a = 10;&lt;span class=&quot;sb&quot;&gt;
+//打印也不用 NSLog 了
+print(&quot;asdf&quot;)
 
+/&lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;
+类型推断: swift 会根据初始值类型, 推断常量/变量的数据类型
+swift 变量命名比较随意 汉字 表情 都可以（不能以数字开头）
+&lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;/
+//常量
+let a = 10
+//变量
+var b = 20
+//类型安全 : 实际类型和声明类型必须一致
+var c : Int = 40
 
-
-&lt;/span&gt;run()   //running....20
-
-function run(){
-    var b = 20
-    console.log(&quot;running....&quot; + b)
-}
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;let--es6&quot;&gt;let  （ES6）&lt;/h3&gt;
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-
-const x = 1;
-
-x = 2;   //报错 const 不能再次赋值&lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;console.log(a) //undefine let 不支持变量提升
-
-let a = 10;
-let a = 30;    //报错 let 不支持在次声明&lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;function run(){
-    let b = 20;
-}
-
-console.log(b) //undefine。 let块状作用域
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;-函数--es6箭头函数为匿名函数不能变量提升&quot;&gt;=&amp;gt; 函数  （ES6）箭头函数为匿名函数，不能变量提升&lt;/h3&gt;
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-a = a =&amp;gt; a  //函数名 参数 返回值（没有{}，默认是返回值）
- 
-b = (c,d) =&amp;gt; {&lt;span class=&quot;sb&quot;&gt;
-
-    //箭头函数的 this
-    //默认指向在定义它时,它所处的对象,而不是执行时的对象,
-        定义它的时候,可能环境是window（即继承父级的this）
-        
-    console.log(this)
-&lt;/span&gt;}
-b(1,2)
-
-function eat(){
-    //普通函数的this
-    //1，特指调用当前的函数的对象
-    //2，默认情况下，没找到直接调用者,则this指的是 window
-    //3，在严格模式下,没有直接调用者的函数中的this是 undefined
-    
-    console.log(this)
-}
-eat()&lt;span class=&quot;sb&quot;&gt;
+//字符串不用再加 @ 了
+var str = &quot;Hello&quot;
+//方法调用用点语法
+str = str.stringByAppendingString(&quot; World&quot;)&lt;span class=&quot;sb&quot;&gt;
 
 
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h3 id=&quot;最常用的定时器&quot;&gt;最常用的定时器&lt;/h3&gt;
+&lt;h2 id=&quot;数组-字典-元组&quot;&gt;数组 字典 元组&lt;/h2&gt;
+
 &lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-setTimeout(function() {&lt;span class=&quot;sb&quot;&gt;
+//数组
+var arr = &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
 
-    conconsole.log(&quot;已经过了一秒钟......&quot;)
+//查找元素
+print(arr&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;)
 
-&lt;/span&gt;}, 1000);
+//增加元素
+arr.append(&quot;345&quot;)
+print(arr)
 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+//删除元素
+arr.removeAtIndex(0)
+print(arr,&quot;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&quot;, “----”)  // &quot;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&quot;可以换行
 
-&lt;p&gt;持续更新中……&lt;/p&gt;
+//修改数组内的元素
+arr&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; = &quot;swift 很强大&quot;
+print(arr)&lt;span class=&quot;sb&quot;&gt;
+
+
+
+
+&lt;/span&gt;//字典
+var dictionary = &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;&quot;name&quot;:&quot;张三&quot;, &quot;age&quot;:18&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+//修改元素
+dictionary.updateValue(81, forKey: &quot;age&quot;)
+
+//增加元素 updateValue这个方法, 如果 key 存在就更新, 如果 key 不存在就添加
+dictionary.updateValue(168, forKey: &quot;height&quot;)
+
+//删除元素
+dictionary.removeValueForKey(&quot;height&quot;)
+print(dictionary)
+
+//获取元素
+//可选类型: 如果有值, 就是值本身; 如果没有值, 值是 nil
+let value = dictionary&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;&quot;nam&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+//如果确定有值, 可以进行强制解析, 强制解析的方法为 !;
+//print(value!)
+
+//如果不确定有值, 就要使用隐式解析, 隐式解析的方式如下:也可以if (value != nil) {
+if  let v = value  {
+    print(v)
+} else {
+    print(&quot;没有值&quot;)
+}&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;//元组, 什么样的数据都可以存
+let tuples = (&quot;404&quot;, &quot;网站无法打开&quot;)
+//找元组
+print(tuples.0)
+
+let personTuples = (路飞:123, 山治:456, 索隆:789)
+print(personTuples.路飞)&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;运算&quot;&gt;运算&lt;/h2&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+//定义一个可选类型的变量
+var 可选类型的变量 : Int?
+可选类型的变量 = 123;
+print(可选类型的变量!)
+
+// + 除了加法运算 还能字符串拼接
+let a = 2
+let b = 3
+let c = a + b
+let d = &quot;Hello&quot; + &quot; Swift&quot;&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;//swift可以对小数取余   c语言 不可以
+print(10%3.5)&lt;span class=&quot;sb&quot;&gt;
+
+
+
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;if--for-while-switch-区间&quot;&gt;if  for while switch 区间&lt;/h2&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+if sum &amp;gt; 10 {
+    print(&quot;sum &amp;gt; 10&quot;)
+} else {
+    print(&quot;sum &amp;lt;= 10&quot;)
+}
+
+//for循环。  &lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;)  打印真是值
+for var i = 0; i &amp;lt; 10; i++ {
+    //字符串拼接
+    print(&quot;i = &lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;i)&quot;)
+}&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;//while
+var num = 10
+while num &amp;gt; 0 {
+    print(&quot;num = &lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;num)&quot;)
+    num--
+}
+
+//repeat while = do while  不管是否满足条件都先执行一次
+var n = 150
+repeat {
+    print(&quot;身高&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;n) = &lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;n)cm&quot;)
+    n++
+} while (n &amp;lt; 170)&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;//switch case 可以字符串比较 不再需要加 break, 会自动终止匹配，定义一个新的常量/变量 x 会把 case 内匹配的数据接收, 其他代码不会被执行，但可以用fallthrough穿过。
+let hobby = &quot;扫雷&quot;
+switch hobby {
+    case let x:
+        print(&quot;龙神爱玩扫雷&quot;)
+        fallthrough
+    case &quot;World of warcraft&quot;:
+        print(&quot;龙神爱玩魔兽世界&quot;)
+    default:
+        print(&quot;龙神爱玩其他游戏&quot;)
+}
+
+//switch 匹配条件：在 where 后面添加条件，如果满足, 才能走这个语句
+let x = 168
+switch x {
+    case let y where y &amp;gt; 150:
+        print(&quot;身高大于150, 实际身高&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;y)cm&quot;)
+    default:
+        print(&quot;不足150cm?!&quot;)
+}&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;//闭区间 &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;0, 8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+for j in 0...8 {
+    print(&quot;j = &lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;j)&quot;)
+}
+
+//开区间 &lt;span class=&quot;err&quot;&gt;[&lt;/span&gt;9, 20)
+for k in 9..&amp;lt;20 {
+    print(&quot;k = &lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;k)&quot;)
+}&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;函数&quot;&gt;函数&lt;/h2&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+//定义一个函数, 无参数, 无返回值
+func helloworld(){
+    print(&quot;hello world!&quot;)
+}
+helloworld()
+
+//有参数, 有返回 （第一个参数名不需要写 name）
+func haiZeiWang(name:String)-&amp;gt;String{&lt;span class=&quot;sb&quot;&gt;
+
+    return name + &quot;要成为海贼王&quot;
+&lt;/span&gt;}
+print(haiZeiWang(&quot;路飞&quot;))
+
+//参数默认值
+func multiply(a:Int, b:Int = 10) {
+    print(&quot;积为&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;a &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt; b)&quot;)
+}
+multiply (200)
+
+//外部参数, 脾气
+func iLike(地名 name:String){
+    print(&quot;我喜欢&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;name)&quot;)
+}
+jinhua(地名: &quot;杭州!&quot;)&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;//函数类型 ：初始化一个类型为 (Int)-&amp;gt;Int 类型的函数变量
+func getAge(a:Int)-&amp;gt;Int {
+    return a
+}
+//函数类型包括两部分, (参数类型,...)-&amp;gt;返回值类型.也就是说, 具有相同参数类型和返回值类型的函数是同一个类型的
+
+//对函数类型重命名
+typealias 函数类型 = (Int)-&amp;gt;Int
+var myFun:函数类型 = getAge
+print(myFun(23))
+
+//函数作为函数的参数
+func second(a:Int)-&amp;gt;Int{
+    return a &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt; 100
+}
+
+func secondFunc(f1: (Int)-&amp;gt;Int)-&amp;gt;Int{
+    return f1(20)
+}
+print(secondFunc(second))&lt;span class=&quot;sb&quot;&gt;
+
+
+
+&lt;/span&gt;//函数作为函数的返回值
+typealias functionType = ()-&amp;gt;()  //重定义()-&amp;gt;()类型
+func myFunc(f1:functionType, f2:functionType, b:Bool)-&amp;gt;functionType {
+    return b == true ? f1 : f2
+}
+
+func func1(){
+    print(&quot;你不帅&quot;)
+}
+func func2(){
+    print(&quot;你真帅&quot;)
+}
+
+let resultFunc = myFunc(func1, f2: func2, b: false)
+resultFunc();&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;//函数嵌套定义
+typealias funType = (Int)-&amp;gt;()
+
+func bigFunc(b:Bool)-&amp;gt;funType{
+    func smallFunc1(a:Int)-&amp;gt;(){
+        print(&quot;大妈今年&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;a)岁&quot;)
+    }
+    func smallFunc2(a:Int)-&amp;gt;(){
+        print(&quot;大妈明年&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;a+1)岁&quot;)
+    }
+    return b == true ? smallFunc1 : smallFunc2
+}
+
+let resultFun = bigFunc(false)
+resultFun(17)&lt;span class=&quot;sb&quot;&gt;
+
+
+
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;明天再写吧……&lt;/p&gt;
 
 </description>
-				<pubDate>Mon, 03 Oct 2016 00:00:00 +0800</pubDate>
-				<link>http://localhost:4000/About-JS</link>
-				<guid isPermaLink="true">http://localhost:4000/About-JS</guid>
+				<pubDate>Mon, 21 Nov 2016 00:00:00 +0800</pubDate>
+				<link>http://localhost:4000/Swift-OC</link>
+				<guid isPermaLink="true">http://localhost:4000/Swift-OC</guid>
 			</item>
 		
 	</channel>
