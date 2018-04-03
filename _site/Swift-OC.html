@@ -12,7 +12,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
 <!-- title -->
-<title>Swift与Objective-C区别简析(一) &middot; wanglizhen 的主页</title>
+<title>Swift与Objective-C区别简析(二) &middot; wanglizhen 的主页</title>
 
 <!-- icons -->
 <link rel="shortcut icon" href="/assets/images/favicon.ico">
@@ -69,312 +69,409 @@
 
 			
 <div class="well article">
-        <h2><a href="/Swift-OC">Swift与Objective-C区别简析(一)</a></h2>
+        <h2><a href="/Swift-OC">Swift与Objective-C区别简析(二)</a></h2>
         <span class="post-date">
             
-            November-21-2016
+            November-22-2016
         </span>
         <hr style="border-top:0px solid #28323C;"/>
     
     <div class="post-content">
-    <h3 id="swift-与-oc">Swift 与 OC</h3>
-<p>作为一个iOS开发人员，不可能不学习Swift，其实任何语言的语法本身，难度并不大，关键是学会了之后要用，只有用，才能够越来越精通，希望以后我们的项目可以用Swift编写。当然，因为 Apple 内部一直在用 Objective-C 来做一些 Framework 的开发，底层也不可能用 Swift 实现，所以短时间内Swift不可能取代OC的。</p>
-
-<p>Swift作为一门语言，如果全部记录，那内容就太多了，这里就简单记录一下它与OC的区别吧。哎，Swift现在版本更新太快了，前一段时间写的代码，现在居然运行不了了，有点不高兴……</p>
-
-<h3 id="swift与oc相互调用">Swift与OC相互调用</h3>
-<p>Swift调用OC：</p>
-
-<p>1、桥接文件，一般是swift工程，在创建一个oc文件时，系统自动添加（不用改名，直接默认即可）</p>
-
-<p>2、将需要引用的oc文件 .h头文件 添加到桥接类中。</p>
-
-<p>OC调用Swift：</p>
-
-<p>1、首先设置一下Packing（进入TARGETS -&gt;Build Settings -&gt; Packaging 中设置Defines Module为YES</p>
-
-<p>2，设置 Product Module Name （这个也可以不设置，直接使用默认就行，比如Product Module Name 为 ABXXXCD）</p>
-
-<p>3、设置完之后，在需要引用的oc文件头部  import一下，格式为： #import “工程名-Swift.h”（比如：#import “ABXXXCD-Swift.h”）</p>
-
-<h3 id="swift中的-和--">Swift中的 ！和  ？</h3>
-<p>这两个符号是用来标记这个变量的值是否可选，！表示可选变量必须保证转换能够成功，否则报错，但定义的变量可以直接使用；？表示可选变量即使转换不成功也不会报错，变量值为nil，如果转换成功，要使用该变量时，后面需要加！进行修饰</p>
-
-<h3 id="swift的访问权限变更">Swift的访问权限变更</h3>
-<p>访问权限 由大到小 依次为：open，public，internal（默认），fileprivate，private</p>
-
-<h2 id="上面都是各种概念还是直接来点代码区别吧">上面都是各种概念，还是直接来点代码区别吧</h2>
+    <h2 id="函数重载-和-另一种-for-循环">函数重载 和 另一种 for 循环</h2>
 
 <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-//每一行结束不用再加 ; 了
-
-//首先 import 不用再加"" 或者 <span class="nt">&lt;&gt;</span> 了
-import Foundation
-
-//打印也不用 NSLog 了
-print("asdf")
-
-/<span class="err">*</span>
-类型推断: swift 会根据初始值类型, 推断常量/变量的数据类型
-swift 变量命名比较随意 汉字 表情 都可以（不能以数字开头）
-<span class="err">*</span>/
-//常量
-let a = 10
-//变量
-var b = 20
-//类型安全 : 实际类型和声明类型必须一致
-var c : Int = 40
-
-//字符串不用再加 @ 了
-var str = "Hello"
-//方法调用用点语法
-str = str.stringByAppendingString(" World")<span class="sb">
-
-
-</span></code></pre></div></div>
-
-<h2 id="数组-字典-元组">数组 字典 元组</h2>
-
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-//数组
-var arr = <span class="p">[</span><span class="nv">"1"</span><span class="p">]</span>
-
-//查找元素
-print(arr<span class="p">[</span><span class="nv">0</span><span class="p">]</span>)
-
-//增加元素
-arr.append("345")
-print(arr)
-
-//删除元素
-arr.removeAtIndex(0)
-print(arr,"<span class="se">\n</span>", “----”)  // "<span class="se">\n</span>"可以换行
-
-//修改数组内的元素
-arr<span class="p">[</span><span class="nv">0</span><span class="p">]</span> = "swift 很强大"
-print(arr)<span class="sb">
-
-
-
-
-</span>//字典
-var dictionary = <span class="p">[</span><span class="nv">"name":"张三", "age":18</span><span class="p">]</span>
-//修改元素
-dictionary.updateValue(81, forKey: "age")
-
-//增加元素 updateValue这个方法, 如果 key 存在就更新, 如果 key 不存在就添加
-dictionary.updateValue(168, forKey: "height")
-
-//删除元素
-dictionary.removeValueForKey("height")
-print(dictionary)
-
-//获取元素
-//可选类型: 如果有值, 就是值本身; 如果没有值, 值是 nil
-let value = dictionary<span class="p">[</span><span class="nv">"nam"</span><span class="p">]</span>
-
-//如果确定有值, 可以进行强制解析, 强制解析的方法为 !;
-//print(value!)
-
-//如果不确定有值, 就要使用隐式解析, 隐式解析的方式如下:也可以if (value != nil) {
-if  let v = value  {
-    print(v)
-} else {
-    print("没有值")
-}<span class="sb">
-
-
-</span>//元组, 什么样的数据都可以存
-let tuples = ("404", "网站无法打开")
-//找元组
-print(tuples.0)
-
-let personTuples = (路飞:123, 山治:456, 索隆:789)
-print(personTuples.路飞)<span class="sb">
-
-
-</span></code></pre></div></div>
-
-<h2 id="运算">运算</h2>
-
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-//定义一个可选类型的变量
-var 可选类型的变量 : Int?
-可选类型的变量 = 123;
-print(可选类型的变量!)
-
-// + 除了加法运算 还能字符串拼接
-let a = 2
-let b = 3
-let c = a + b
-let d = "Hello" + " Swift"<span class="sb">
-
-
-</span>//swift可以对小数取余   c语言 不可以
-print(10%3.5)<span class="sb">
-
-
-
-</span></code></pre></div></div>
-
-<h2 id="if--for-while-switch-区间">if  for while switch 区间</h2>
-
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-if sum &gt; 10 {
-    print("sum &gt; 10")
-} else {
-    print("sum &lt;= 10")
-}
-
-//for循环。  <span class="se">\(</span>)  打印真是值
-for var i = 0; i &lt; 10; i++ {
-    //字符串拼接
-    print("i = <span class="se">\(</span>i)")
-}<span class="sb">
-
-
-</span>//while
-var num = 10
-while num &gt; 0 {
-    print("num = <span class="se">\(</span>num)")
-    num--
-}
-
-//repeat while = do while  不管是否满足条件都先执行一次
-var n = 150
-repeat {
-    print("身高<span class="se">\(</span>n) = <span class="se">\(</span>n)cm")
-    n++
-} while (n &lt; 170)<span class="sb">
-
-
-</span>//switch case 可以字符串比较 不再需要加 break, 会自动终止匹配，定义一个新的常量/变量 x
-    会把 case 内匹配的数据接收, 其他代码不会被执行，但可以用fallthrough穿过。
-let hobby = "扫雷"
-switch hobby {
-    case let x:
-        print("龙神爱玩扫雷")
-        fallthrough
-    case "World of warcraft":
-        print("龙神爱玩魔兽世界")
-    default:
-        print("龙神爱玩其他游戏")
-}
-
-//switch 匹配条件：在 where 后面添加条件，如果满足, 才能走这个语句
-let x = 168
-switch x {
-    case let y where y &gt; 150:
-        print("身高大于150, 实际身高<span class="se">\(</span>y)cm")
-    default:
-        print("不足150cm?!")
-}<span class="sb">
-
-
-</span>//闭区间 <span class="p">[</span><span class="nv">0, 8</span><span class="p">]</span>
-for j in 0...8 {
-    print("j = <span class="se">\(</span>j)")
-}
-
-//开区间 <span class="err">[</span>9, 20)
-for k in 9..&lt;20 {
-    print("k = <span class="se">\(</span>k)")
-}<span class="sb">
-
-
-</span></code></pre></div></div>
-
-<h2 id="函数">函数</h2>
-
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-//定义一个函数, 无参数, 无返回值
-func helloworld(){
-    print("hello world!")
-}
-helloworld()
-
-//有参数, 有返回 （第一个参数名不需要写 name）
-func haiZeiWang(name:String)-&gt;String{<span class="sb">
-
-    return name + "要成为海贼王"
-</span>}
-print(haiZeiWang("路飞"))
-
-//参数默认值
-func multiply(a:Int, b:Int = 10) {
-    print("积为<span class="se">\(</span>a <span class="err">*</span> b)")
-}
-multiply (200)
-
-//外部参数, 脾气
-func iLike(地名 name:String){
-    print("我喜欢<span class="se">\(</span>name)")
-}
-jinhua(地名: "杭州!")<span class="sb">
-
-
-</span>//函数类型 ：初始化一个类型为 (Int)-&gt;Int 类型的函数变量
-func getAge(a:Int)-&gt;Int {
-    return a
-}
-//函数类型包括两部分, (参数类型,...)-&gt;返回值类型.也就是说,
-    具有相同参数类型和返回值类型的函数是同一个类型的
-
-//对函数类型重命名
-typealias 函数类型 = (Int)-&gt;Int
-var myFun:函数类型 = getAge
-print(myFun(23))
-
-//函数作为函数的参数
-func second(a:Int)-&gt;Int{
+///重载: 函数名相同, 函数类型不同(参数/返回值不同), 构成重载, 调用的时候,
+    根据参数确定调用哪个函数
+func helloworld(a:Int)-&gt;Int{
     return a <span class="err">*</span> 100
 }
+print(helloworld(5))
 
-func secondFunc(f1: (Int)-&gt;Int)-&gt;Int{
-    return f1(20)
+func helloworld(a:NSString)-&gt;Int{
+    return 100
 }
-print(secondFunc(second))<span class="sb">
+print(helloworld("123"))<span class="sb">
 
 
-
-</span>//函数作为函数的返回值
-typealias functionType = ()-&gt;()  //重定义()-&gt;()类型
-func myFunc(f1:functionType, f2:functionType, b:Bool)-&gt;functionType {
-    return b == true ? f1 : f2
-}
-
-func func1(){
-    print("你不帅")
-}
-func func2(){
-    print("你真帅")
+</span>//区间, 0...10 = <span class="p">[</span><span class="nv">0 10</span><span class="p">]</span>    0..&lt;10 = <span class="err">[</span>0 10)
+for i  in 0..&lt;10{
+    print("i = <span class="se">\(</span>i)")
 }
 
-let resultFunc = myFunc(func1, f2: func2, b: false)
-resultFunc();<span class="sb">
+</code></pre></div></div>
+
+<h2 id="枚举">枚举</h2>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//OC中的枚举值 是int类型, 也就是 0,1,2,3.. swift中的枚举值, 不再是int类型了, 就是枚举值
+enum Direction : String{
+    case East = "东"
+    case west = "西"
+    case south = "南"
+    case North = "北"
+}
+
+var dir = Direction.East;
+print(dir)
+//swift中的快捷语法, 如果给一个变量赋值过一次枚举值, 下次进行赋值就直接使用 . 语法进行赋值
+dir = .south
+print(dir)<span class="sb">
 
 
-</span>//函数嵌套定义
-typealias funType = (Int)-&gt;()
+</span>//枚举值的原始值
+enum Season : Int {
+    case Spring = 100
+    case Summer
+    case Autumn
+    case Winter
+}
+var se = Season.Spring
 
-func bigFunc(b:Bool)-&gt;funType{
-    func smallFunc1(a:Int)-&gt;(){
-        print("大妈今年<span class="se">\(</span>a)岁")
+//rawValue, 原始值
+print(se.rawValue)
+
+//通过枚举值的原始值找到枚举值
+let sea = Season(rawValue: 100)
+print(sea)<span class="sb">
+
+
+</span>//隐士解析
+if let s = sea {
+    print("s = <span class="se">\(</span>s)")
+} else {
+    print("无法找到枚举值")
+}
+
+</code></pre></div></div>
+
+<h2 id="类-和-结构体">类 和 结构体</h2>
+<p>//A = B</p>
+
+<p>值类型 : 赋值完成以后, B修改, A 不变. 枚举值和结构体就是值类型, 类似copy 的过程</p>
+
+<p>引用类型 : 赋值完成以后, B 修改, A随着B修改. 类就是引用类型, 类似 retain 的过程</p>
+
+<h3 id="结构体-值类型">结构体 值类型</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+struct Person{
+    var height = 1.8
+    var weight = 75
+    var age = 25
+}
+//实例化结构体: ()是结构体的一个初始化方法
+var p = Person()
+p.weight = 90
+print("他的体重是 <span class="se">\(</span>p.weight) Kg")
+
+//逐一构造器：swift 中 构造 = alloc..init ，析构 = 释放 = dealloc
+var p1 = Person(height: 1.6, weight: 60, age: 18)
+print("她的身高为<span class="se">\(</span>p1.height), 体重为<span class="se">\(</span>p1.weight), 年龄为<span class="se">\(</span>p1.age)")<span class="sb">
+
+
+</span>var p2 = p1
+p1.height = 180
+print("p2的.height= <span class="se">\(</span>p2.height)")  //1.6
+
+</code></pre></div></div>
+
+<h3 id="类-引用类型">类 引用类型</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+class Student{
+    var num = 78945
+    var name = "路飞"
+    var goodF = "东海"
+}
+//系统没有给类自动添加逐一构造器
+var p = Student()
+p.goodF = "北海"
+print(p.goodF)
+
+var p1 = p
+p.goodF = "西海"
+print("p1的.height= <span class="se">\(</span>p1.goodF)")  //西海。跟struct不一样<span class="sb">
+
+
+
+
+</span>//属性
+//类名属性: static 修饰，（用类名调用）
+//存储属性: 用来 存值 和 取值
+//计算属性: 计算属性的值。 通过get方法, 用于获取其他元素。 set方法一般用来处理事务。
+    只写get , 这个属性是只读的; 不能只写set
+class Animal{<span class="sb">
+
+    //类名属性：是否有腿 
+    static var hasLeg = true
+
+    //存储属性
+    var type = "Elephant"
+    var weight = 1000
+
+    //计算属性
+    var leg  : Int{
+        get{ //get 方法
+            if type == "Elephant"{
+                return 4
+            } else if type == "人" {
+                return 2
+            } else {
+                return 3
+            }
+        }
+        
+        //set 方法需要一个 新值  参数
+        set(newValue){
+            if(newValue &gt;= 4){
+                print("不是人")
+            } else{
+                print("有可能是人")
+            }
+
+        }
     }
-    func smallFunc2(a:Int)-&gt;(){
-        print("大妈明年<span class="se">\(</span>a+1)岁")
-    }
-    return b == true ? smallFunc1 : smallFunc2
-}
+</span>}
 
-let resultFun = bigFunc(false)
-resultFun(17)<span class="sb">
+var per = Animal()
+per.type = "人"
+print("人的腿的个数是<span class="se">\(</span>per.leg)")
+
+per.leg = 10
+print("人的腿的个数是<span class="se">\(</span>per.leg)")
+
+print("人是否有腿: <span class="se">\(</span>Animal.hasLeg)")<span class="sb">
 
 
 
 </span></code></pre></div></div>
 
-<p>明天再写吧……</p>
+<h3 id="例子-计算中心点结构体">例子： 计算中心点（结构体）</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+struct Rect {<span class="sb">
+
+    var x = 100.0
+    var y = 100.0
+    var width = 100.0
+    var height = 100.0
+
+    //属性在类内部使用的时候, 可以省略self.
+        只有设计到参数名字和属性相同的时候, 建议加上 self.以示区分
+    var centerX :Double {
+        get {
+            return x + width / 2
+        }
+        set{
+            width = (newValue - x) * 2
+        }
+
+        }
+        var centerY:Double {
+        get {
+            return y + height / 2
+        }
+        set {
+            height = (newValue - y)*2
+        }
+    }
+</span>}
+
+var rect  = Rect()
+print("centerX = <span class="se">\(</span>rect.centerX)")<span class="sb">
+
+
+</span></code></pre></div></div>
+
+<h3 id="属性观察器">属性观察器</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+//属性观察器
+class Plant{
+    //类型
+    var type = "绿色植物"{
+        willSet(newType){
+            print("新值为 = <span class="se">\(</span>newType), 当前值 = <span class="se">\(</span>type)")
+        }didSet(oldType){
+            print("旧值 = <span class="se">\(</span>oldType)")
+        }
+    }
+    //是否开花
+    var hasFlower : Bool = false {
+        willSet{
+            print("新值为<span class="se">\(</span>newValue), 当前值为<span class="se">\(</span>hasFlower)")
+        } didSet {
+            print("旧值为<span class="se">\(</span>oldValue)")
+        }
+    }
+}
+
+var appleTree = Plant();
+appleTree.type = "苹果树"
+appleTree.hasFlower = true;
+
+</code></pre></div></div>
+<h3 id="方法">方法</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+//结构体方法
+struct Apple {
+    var brand = "apple"
+    var price = 14000
+    func action(name:String){
+        print("<span class="se">\(</span>name)抽奖中了一个<span class="se">\(</span>brand)的, 价值¥<span class="se">\(</span>price)")
+    }
+}
+var app = Apple()
+app.action("王❀")
+
+//方法
+class Computer {
+    var brand = "大船"
+    var price = 6888
+    func des(name:String){
+        print("<span class="se">\(</span>name)造了<span class="se">\(</span>brand), 花了￥<span class="se">\(</span>price)")
+    }
+}
+
+var compu = Computer()
+compu.des("路飞")<span class="sb">
+
+
+</span>//类方法
+class Car {
+    static func speed(){
+        print("速度是71迈")
+    }
+}
+Car.speed()
+
+</code></pre></div></div>
+
+<h3 id="构造方法">构造方法</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+//除了可选类型, 在构造的过程中, 必须给各个各个属性赋初始值
+class Hero{
+    var age : Int?
+    var name = "孙悟空"
+    var equipment = "金箍棒"
+    var saddleHorse :String
+    
+    init(){
+        saddleHorse = "筋斗云"
+    }
+    
+    //自定义一个构造器
+    init(name:String, equipment:String, saddleHorse:String){
+        self.name = name
+        self.equipment = equipment
+        self.saddleHorse = saddleHorse;
+    }
+}
+
+let 孙悟空 = Hero()
+print("孙悟空的坐骑是<span class="se">\(</span>孙悟空.saddleHorse)")
+
+let 大禹 = Hero(name: "大禹", equipment: 孙悟空.equipment, saddleHorse: "11路公交车")
+print(大禹.name, 大禹.equipment, 大禹.saddleHorse)
+
+</code></pre></div></div>
+
+<h3 id="便利构造器必须调用自身的指定的构造器">便利构造器：必须调用自身的指定的构造器</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+//定义属性以及构造器的方法
+class Film {
+    var name = "大闹天空"
+    var type = "myth"
+    var time = "12.31"
+    var price = 20
+    //自定义构造器
+    init(name:String, type:String, time:String, price:Int){
+        self.name = name
+        self.type = type
+        self.time = time
+        self.price = price
+    }<span class="sb">
+
+    func description(){
+        print("电影名: \(self.name), 类型: \(self.type),
+            上映时间: \(self.time), 票价: \(self.price)")
+    }
+
+    //便利构造器：和 OC 的便利构造器不是一类, OC的是类方法
+    //convenience: 在构造器方法前添加convenience代表当前的构造器是便利构造器
+    convenience init(){
+        self.init(name:"恶棍", type:"傲笑", time:"12.28", price:30)
+    }
+</span>}<span class="sb">
+
+
+</span>let film = Film(name: "挪吒脑海", type: "神话", time: "12.30", price: 11)
+film.description()
+
+let 恶棍天使 = Film()
+恶棍天使.description()<span class="sb">
+
+
+
+</span></code></pre></div></div>
+
+<h3 id="继承-与-重写">继承 与 重写</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//定义一个父类
+class Teacher {
+    var academic = "教授"
+    var offer = 8888
+    var num :Int{
+        get{
+            return 100
+        } set{<span class="sb">
+
+        }
+    }
+
+    func teacher (){
+        print("某\(academic)的薪资是\(offer)")
+    }
+    
+    //final 方法禁止被重写
+    final func study(bookName:String){
+        print("某\(academic), 刻苦钻研\(bookName)")
+    }
+</span>}
+
+//定义一个子类 ： 讲师
+class Lecturer : Teacher{
+    var industry = "iOS"
+    //override, 重写父类的方法
+    override func teacher() {
+        super.teacher()
+        print("从事行业是教授<span class="se">\(</span>industry)")
+    }
+
+}
+
+let lec = Lecturer()
+lec.academic = "两院院士"
+lec.offer = 10000
+lec.teacher()
+lec.study("论持久战")
+
+//重写属性：把存储属性重写为计算属性，不能把计算属性改为存储属性
+class ChildrenTeacher:Teacher {
+    override var offer:Int{
+        get{
+            return 9999
+        } set {<span class="sb">
+
+        }
+    }
+</span>}
+let child = ChildrenTeacher()
+child.teacher()
+
+</code></pre></div></div>
 
 
     <hr style="border-top:0px solid #28323C;"/>
@@ -387,7 +484,7 @@ resultFun(17)<span class="sb">
       
          
             <li class="icon-style"><a href="/categories.html">
-                iOS <span>(14)</span>
+                iOS <span>(15)</span>
                 
             </a></li>
         
@@ -405,7 +502,7 @@ resultFun(17)<span class="sb">
     <a class="btn btn-default" href="/server" class="next">上一篇</a>
     
     
-    <a class="btn btn-default" href="/About-JS" class="previous">下一篇</a>
+    <a class="btn btn-default" href="/Swift-OC" class="previous">下一篇</a>
     
 </div>
 
