@@ -529,6 +529,159 @@ var myDate = new Date(date)
 			</item>
 		
 			<item>
+				<title>JS 数组 常用操作</title>
+				<description>&lt;p&gt;JS 数组的常用操作&lt;/p&gt;
+
+&lt;h3 id=&quot;常用方法&quot;&gt;常用方法&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+//属性
+constructor    返回对创建此对象的数组函数的引用。
+length         设置或返回数组中元素的数目。
+prototype      使您有能力向对象添加属性和方法。&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;//方法
+//concat()连接两个或更多的数组，并返回结果。
+arrayObject.concat(arrayX,arrayX,......,arrayX)
+
+//join()把数组的所有元素放入一个字符串。元素通过指定的分隔符进行分隔，separator可以不填。
+arrayObject.join(separator)
+
+//unshift()    向数组的开头添加一个或更多元素，并返回新的长度。
+arrayObject.unshift(newelement1,newelement2,....,newelementX)
+
+//push()向数组的末尾添加一个或更多元素，并返回新的长度。
+arrayObject.push(newelement1,newelement2,....,newelementX)
+
+//shift()删除并返回数组的第一个元素
+arrayObject.shift()
+
+//pop()删除并返回数组的最后一个元素
+arrayObject.pop()
+
+//reverse()颠倒数组中元素的顺序。该方法会改变原来的数组，而不会创建新的数组。
+arrayObject.reverse()
+
+//sort()对数组的元素进行排序
+arrayObject.sort(sortby)
+
+//slice()从某个已有的数组返回选定的元素的新数组，start 必需，end 可选
+arrayObject.slice(start,end)
+
+//splice()删除元素，并向数组添加新元素。
+arrayObject.splice(index,howmany,item1,.....,itemX)
+arr.splice(2,0,&quot;William&quot;)  //从第三个开始，删除0个元素，并从第三个位置添加一个William
+
+//toSource()返回该对象的源代码。
+object.toSource()
+
+//toString()把数组转换为字符串，并返回结果。返回值与没有参数的 join()方法返回的字符串相同。
+arrayObject.toString()&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;不常用方法&quot;&gt;不常用方法&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+//toLocaleString()把数组转换为本地数组，并返回结果。
+arrayObject.toLocaleString()&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;//valueOf()返回数组对象的原始值
+arrayObject.valueOf()&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;实例-数组去重&quot;&gt;实例 数组去重&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+// 方法1
+Array.prototype.unique = function(){ 
+    var arr = &lt;span class=&quot;err&quot;&gt;[&lt;/span&gt;]; 
+    for(var i=0,i=this.length;i&amp;lt;len;i++){ 
+        if(arr.indexOf(this&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;) == -1){ 
+            arr.push(this&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;);
+        } 
+    } 
+    return arr; 
+    
+}; 
+console.log(&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;1,2,3,2,5,6,3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;.unique()); //&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;1, 2, 3, 5, 6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;//方法2
+Array.prototype.unique = function(){ 
+    var n = {}, 
+    r=&lt;span class=&quot;err&quot;&gt;[&lt;/span&gt;]; //n为哈希表，r为临时数组
+    //遍历当前数组 
+    for(var i = 0; i &amp;lt; this.length; i++) { 
+        //如果hash表中没有当前项 
+        if (!n&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;this[i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;]){ 
+            n&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;this[i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;] = true; //存入哈希表 
+            r.push(this&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;); //把当前数组的当前项push到临时数组里面 
+        } 
+    } 
+    return r; 
+} 
+console.log(&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;1,2,3,2,5,6,3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;.unique());//&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;1, 2, 3, 5, 6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;//方法3
+Array.prototype.unique = function(){ 
+    var arr = &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;this[0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;];//结果数组 
+    //从第二项开始遍历
+    for(var i=1;i&amp;lt;this.length;i++){ 
+        if(this.indexOf(this&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;) == i){ 
+            //如果当前数组的第i项在当前数组中第一次出现的位置不是i，
+                那么表示第i项是重复的，忽略掉。否则存入结果数组 
+            arr.push(this&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;); 
+        } 
+    } 
+    return arr; 
+} 
+console.log(&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;1,2,3,4,2,3,4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;.unique());// &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;1, 2, 3, 4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;//方法4
+var arr = &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;4,5,3,2,3,4,5,1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;; 
+function fn(num){ &lt;span class=&quot;sb&quot;&gt;
+
+    var res = num.filter(function(item,index,array){
+        //num.indexOf(item)将会返回元素在数组第一次出现的位置 
+        return num.indexOf(item) === index;
+        //对于多次出现的元素，除第一次外，其他情况都返回false 
+    }); 
+    return res; 
+&lt;/span&gt;} 
+console.log(fn(arr));//&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;4, 5, 3, 2, 1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;//方法5
+function unique(a) { 
+    var obj = {}; 
+    
+    //filter会返回true的项组成的成员 
+    return a.filter(function(item) {
+        return obj.hasOwnProperty(item) ? false : (obj&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; = true); 
+    }); 
+} 
+
+var a = &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;1, 1, 3, 2, 1, 2, 4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;; 
+var res = unique(a); 
+console.log(res); // &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;1, 3, 2, 4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; 
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+				<pubDate>Sun, 22 Oct 2017 00:00:00 +0800</pubDate>
+				<link>http://localhost:4000/array-js</link>
+				<guid isPermaLink="true">http://localhost:4000/array-js</guid>
+			</item>
+		
+			<item>
 				<title>JS 字符串 常用操作</title>
 				<description>&lt;p&gt;我觉得 任何一门编程语言，需要处理最多的，就是字符串和数组，所以这里把字符串和数组的常用操作总结一下，本篇只记录字符串的方法&lt;/p&gt;
 
@@ -1094,140 +1247,6 @@ contextInfo:(void &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)contextInfo
 				<pubDate>Mon, 01 May 2017 00:00:00 +0800</pubDate>
 				<link>http://localhost:4000/iOS_gif</link>
 				<guid isPermaLink="true">http://localhost:4000/iOS_gif</guid>
-			</item>
-		
-			<item>
-				<title>Node.JS学习笔记</title>
-				<description>&lt;h3 id=&quot;node-命令&quot;&gt;Node 命令&lt;/h3&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//查看版本
-node -v
-
-//命令之后 直接在命令行中 编写脚本（基本不用，知道就行）
-$ node
-&lt;span class=&quot;gt&quot;&gt;&amp;gt; console.log('Hello World!');&lt;/span&gt;
-
-//当前目录下运行脚本文件 （.js可以省略）
-node index.js
-
-//npm版本
-npm -v
-
-//命令 安装模块
-npm install &lt;span class=&quot;nt&quot;&gt;&amp;lt;Module&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;开启node服务器&quot;&gt;开启Node服务器&lt;/h3&gt;
-
-&lt;p&gt;相应的数据类型可以参考&lt;a href=&quot;https://www.oschina.net&quot;&gt;开源中国&lt;/a&gt;中的&lt;a href=&quot;http://tool.oschina.net&quot;&gt;在线工具&lt;/a&gt;中的&lt;a href=&quot;http://tool.oschina.net/commons&quot;&gt;Content-Type(Mime-Type)&lt;/a&gt;对照表。比如常用的：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;text/plain字符串  image/jpeg图片 image/png图片 text/css CSS text/html标签&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-var http = require(&quot;http&quot;);
-
-http.createServer(function (request, response) {&lt;span class=&quot;sb&quot;&gt;
-
-    //url仅仅只是一个标示 没有任何意义 从 / 开始，不包含协议和域名
-    var url = request.url;
-    
-    if(url == &quot;/&quot;){
-        //发送HTTP头部 状态值: 200  内容类型: text/plain
-        response.writeHead(200, {'Content-Type': 'text/plain'});
-        
-        // 发送响应数据 &quot;Hello World&quot;
-        response.write(&quot;Hello World&quot;)
-        
-        //结束响应
-        response.end();
-    
-    }else{
-    
-        response.end(&quot;404 Not Found&quot;);
-
-    }
-
-    
-    //响应端口 8888
-&lt;/span&gt;}).listen(8888);&lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;// 终端打印如下信息
-console.log('Server running at http://127.0.0.1:8888/');&lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;css-图片等资源加载&quot;&gt;CSS 图片等资源加载&lt;/h3&gt;
-&lt;p&gt;当浏览器在加载HTML过程中，遇到具有href的link，具有src的script，具有src的img等具有外链的，又需要在内部使用的资源，这个时候，浏览器会对该资源指向的连接自动发起请求。&lt;/p&gt;
-
-&lt;p&gt;utf-8是字符编码，如果是音乐、图片、视频等文件的时候，一定不要指定该编码，直接发送二进制数据就行了&lt;/p&gt;
-
-&lt;h3 id=&quot;node文件操作&quot;&gt;Node文件操作&lt;/h3&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-var fs = require(&quot;fs&quot;);
-
-//文件操作中，路径如果是 / 开始，则会到当前脚本所在的磁盘目录下去寻找，而不是当前目录
-fs.writeFile(&quot;./a.txt&quot;,&quot;Hello Node&quot;,function(err){
-    if(err){
-        throw err  //这样会程序崩溃，只是调试用的，release版本不能这样
-    }&lt;span class=&quot;sb&quot;&gt;
-
-    console.log(&quot;saved&quot;)
-&lt;/span&gt;})
-
-fs.readFile(&quot;./a.txt&quot;,&quot;utf8&quot;,function(err,data){
-    if(err){
-        throw err
-    }
-    
-    console.log(data)
-})
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;node事件驱动&quot;&gt;Node事件驱动&lt;/h3&gt;
-&lt;p&gt;Node.js 使用事件驱动模型，类似于观察者模式。Node.js 是单进程单线程应用程序，但是通过事件和回调支持并发，所以性能非常高。&lt;/p&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-var events = require(&quot;events&quot;)
-
-//创建eventEmitter对象
-var eventEmitter = new events.EventEmitter()
-
-//创建事件处理程序
-var connectHandler = function connect(){
-    console.log(&quot;连接成功&quot;)&lt;span class=&quot;sb&quot;&gt;
-
-    //触发data_received事件
-    eventEmitter.emit(&quot;data_received&quot;)
-&lt;/span&gt;}
-
-//绑定事件
-eventEmitter.on(&quot;connection&quot;,connectHandler)&lt;span class=&quot;sb&quot;&gt;
-
-    // 使用匿名函数绑定 data_received 事件
-    eventEmitter.on('data_received', function(){
-    console.log('数据接收成功。');
-&lt;/span&gt;});
-
-// 触发 connection 事件
-eventEmitter.emit('connection');
-
-console.log(&quot;程序执行完毕。&quot;);
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;持续更新中……&lt;/p&gt;
-
-</description>
-				<pubDate>Mon, 16 Jan 2017 00:00:00 +0800</pubDate>
-				<link>http://localhost:4000/nodejs</link>
-				<guid isPermaLink="true">http://localhost:4000/nodejs</guid>
 			</item>
 		
 	</channel>

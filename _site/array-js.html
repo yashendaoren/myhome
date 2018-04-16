@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- meta information -->
+<meta charset="utf-8">
+<meta name="description" 
+      content="Welcome to wanglizhen 的主页! - iOS开发 iOS技术探讨 开发中的bug记录 微信小程序开发技术探讨与bug记录 前端 html、js、css 开发  IT技术探讨 共同学习 共同进步" >
+<meta name="author" content="wanglizhen（王立震） && Aigars Dzerviniks">
+
+<!-- Enable responsiveness on mobile devices-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<!-- title -->
+<title>JS 数组 常用操作 &middot; wanglizhen 的主页</title>
+
+<!-- icons -->
+<link rel="shortcut icon" href="/assets/images/favicon.ico">
+
+<!-- stylesheets -->
+<link rel="stylesheet" href="/assets/css/responsive.gs.12col.css">
+<link rel="stylesheet" href="/assets/css/animate.min.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/category.css"/>
+<link rel="stylesheet" href="/assets/css/about.css"/>
+
+
+<!-- Google fonts -->
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic&subset=latin-ext">
+
+
+<!-- font Awesome -->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+
+<!-- feed links -->
+<link rel="alternate" href="http://localhost:4000/feed.xml" type="application/rss+xml" title="wanglizhen 的主页">
+
+</head>
+
+<body>
+	<main class="container avocado">
+		
+			<header>
+				
+				<div>
+					<a href="http://localhost:4000" id="logo" title="wanglizhen 的主页" style="background-image: url(/assets/images/logo.png);"></a>
+				</div>
+
+				<nav id="main-navigation">
+  
+  
+  <a href="https://www.wanglizhen.xyz/" title="Home">Home</a>
+  
+  
+  
+  <a href="https://www.wanglizhen.xyz/category/" title="Category">Category</a>
+  
+  
+  
+  <a href="https://www.wanglizhen.xyz/about/" title="about">about</a>
+  
+  
+</nav>
+
+
+			</header>
+
+			
+<div class="well article">
+        <h2><a href="/array-js">JS 数组 常用操作</a></h2>
+        <span class="post-date">
+            
+            October-22-2017
+        </span>
+        <hr style="border-top:0px solid #28323C;"/>
+    
+    <div class="post-content">
+    <p>JS 数组的常用操作</p>
+
+<h3 id="常用方法">常用方法</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+//属性
+constructor    返回对创建此对象的数组函数的引用。
+length         设置或返回数组中元素的数目。
+prototype      使您有能力向对象添加属性和方法。<span class="sb">
+
+
+</span>//方法
+//concat()连接两个或更多的数组，并返回结果。
+arrayObject.concat(arrayX,arrayX,......,arrayX)
+
+//join()把数组的所有元素放入一个字符串。元素通过指定的分隔符进行分隔，separator可以不填。
+arrayObject.join(separator)
+
+//unshift()    向数组的开头添加一个或更多元素，并返回新的长度。
+arrayObject.unshift(newelement1,newelement2,....,newelementX)
+
+//push()向数组的末尾添加一个或更多元素，并返回新的长度。
+arrayObject.push(newelement1,newelement2,....,newelementX)
+
+//shift()删除并返回数组的第一个元素
+arrayObject.shift()
+
+//pop()删除并返回数组的最后一个元素
+arrayObject.pop()
+
+//reverse()颠倒数组中元素的顺序。该方法会改变原来的数组，而不会创建新的数组。
+arrayObject.reverse()
+
+//sort()对数组的元素进行排序
+arrayObject.sort(sortby)
+
+//slice()从某个已有的数组返回选定的元素的新数组，start 必需，end 可选
+arrayObject.slice(start,end)
+
+//splice()删除元素，并向数组添加新元素。
+arrayObject.splice(index,howmany,item1,.....,itemX)
+arr.splice(2,0,"William")  //从第三个开始，删除0个元素，并从第三个位置添加一个William
+
+//toSource()返回该对象的源代码。
+object.toSource()
+
+//toString()把数组转换为字符串，并返回结果。返回值与没有参数的 join()方法返回的字符串相同。
+arrayObject.toString()<span class="sb">
+
+
+</span></code></pre></div></div>
+
+<h3 id="不常用方法">不常用方法</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+//toLocaleString()把数组转换为本地数组，并返回结果。
+arrayObject.toLocaleString()<span class="sb">
+
+
+</span>//valueOf()返回数组对象的原始值
+arrayObject.valueOf()<span class="sb">
+
+
+</span></code></pre></div></div>
+
+<h3 id="实例-数组去重">实例 数组去重</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+// 方法1
+Array.prototype.unique = function(){ 
+    var arr = <span class="err">[</span>]; 
+    for(var i=0,i=this.length;i&lt;len;i++){ 
+        if(arr.indexOf(this<span class="p">[</span><span class="nv">i</span><span class="p">]</span>) == -1){ 
+            arr.push(this<span class="p">[</span><span class="nv">i</span><span class="p">]</span>);
+        } 
+    } 
+    return arr; 
+    
+}; 
+console.log(<span class="p">[</span><span class="nv">1,2,3,2,5,6,3</span><span class="p">]</span>.unique()); //<span class="p">[</span><span class="nv">1, 2, 3, 5, 6</span><span class="p">]</span><span class="sb">
+
+
+</span>//方法2
+Array.prototype.unique = function(){ 
+    var n = {}, 
+    r=<span class="err">[</span>]; //n为哈希表，r为临时数组
+    //遍历当前数组 
+    for(var i = 0; i &lt; this.length; i++) { 
+        //如果hash表中没有当前项 
+        if (!n<span class="p">[</span><span class="nv">this[i</span><span class="p">]</span>]){ 
+            n<span class="p">[</span><span class="nv">this[i</span><span class="p">]</span>] = true; //存入哈希表 
+            r.push(this<span class="p">[</span><span class="nv">i</span><span class="p">]</span>); //把当前数组的当前项push到临时数组里面 
+        } 
+    } 
+    return r; 
+} 
+console.log(<span class="p">[</span><span class="nv">1,2,3,2,5,6,3</span><span class="p">]</span>.unique());//<span class="p">[</span><span class="nv">1, 2, 3, 5, 6</span><span class="p">]</span> <span class="sb">
+
+
+</span>//方法3
+Array.prototype.unique = function(){ 
+    var arr = <span class="p">[</span><span class="nv">this[0</span><span class="p">]</span>];//结果数组 
+    //从第二项开始遍历
+    for(var i=1;i&lt;this.length;i++){ 
+        if(this.indexOf(this<span class="p">[</span><span class="nv">i</span><span class="p">]</span>) == i){ 
+            //如果当前数组的第i项在当前数组中第一次出现的位置不是i，
+                那么表示第i项是重复的，忽略掉。否则存入结果数组 
+            arr.push(this<span class="p">[</span><span class="nv">i</span><span class="p">]</span>); 
+        } 
+    } 
+    return arr; 
+} 
+console.log(<span class="p">[</span><span class="nv">1,2,3,4,2,3,4</span><span class="p">]</span>.unique());// <span class="p">[</span><span class="nv">1, 2, 3, 4</span><span class="p">]</span> <span class="sb">
+
+
+</span>//方法4
+var arr = <span class="p">[</span><span class="nv">4,5,3,2,3,4,5,1</span><span class="p">]</span>; 
+function fn(num){ <span class="sb">
+
+    var res = num.filter(function(item,index,array){
+        //num.indexOf(item)将会返回元素在数组第一次出现的位置 
+        return num.indexOf(item) === index;
+        //对于多次出现的元素，除第一次外，其他情况都返回false 
+    }); 
+    return res; 
+</span>} 
+console.log(fn(arr));//<span class="p">[</span><span class="nv">4, 5, 3, 2, 1</span><span class="p">]</span> <span class="sb">
+
+
+</span>//方法5
+function unique(a) { 
+    var obj = {}; 
+    
+    //filter会返回true的项组成的成员 
+    return a.filter(function(item) {
+        return obj.hasOwnProperty(item) ? false : (obj<span class="p">[</span><span class="nv">item</span><span class="p">]</span> = true); 
+    }); 
+} 
+
+var a = <span class="p">[</span><span class="nv">1, 1, 3, 2, 1, 2, 4</span><span class="p">]</span>; 
+var res = unique(a); 
+console.log(res); // <span class="p">[</span><span class="nv">1, 3, 2, 4</span><span class="p">]</span> 
+
+</code></pre></div></div>
+
+
+    <hr style="border-top:0px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/categories.html">
+                iOS <span>(17)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    <!--    -->
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    <a class="btn btn-default" href="/wx_problem" class="next">上一篇</a>
+    
+    
+    <a class="btn btn-default" href="/str-js" class="previous">下一篇</a>
+    
+</div>
+
+			<footer>
+				<p>
+					This work is licensed under a
+					<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/deed.en_US">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+				</p>
+				<p>
+					Powered by
+					<a rel="license" target="_blank" href="https://jekyllrb.com">Jekyll</a> ,
+					<a rel="license" target="_blank" href="https://github.com">Github</a> ,
+					<a rel="license" target="_blank" href="https://www.wanglizhen.xyz/">wanglizhen</a>
+				</p>
+			</footer>
+	</main>
+</body>
+
+</html>
