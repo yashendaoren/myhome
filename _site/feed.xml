@@ -801,11 +801,6 @@ var res1=str.concat(&quot;nihao&quot;,&quot;!&quot;);
 console.log(res1);              //hello nihao!  concat方法可以接收任意多个参数 &lt;span class=&quot;sb&quot;&gt;
 
 
-
-
-
-
-
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h3 id=&quot;不常用方法&quot;&gt;不常用方法&lt;/h3&gt;
@@ -852,6 +847,42 @@ function unique(msg){
 } 
 
 console.log(unique(str));   //ahgsj &lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;json-和-字符串-相互转换&quot;&gt;json 和 字符串 相互转换&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+//JSON字符串:
+var str1 = '{ &quot;name&quot;: &quot;张三&quot;, &quot;age&quot;: &quot;22&quot; }'; 
+//JSON对象:
+var str2 = { &quot;name&quot;: &quot;张三&quot;, &quot;sex&quot;: &quot;22&quot; };&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;//由JSON字符串转换为JSON对象
+
+var obj = eval('(' + str + ')');
+
+或者
+
+var obj = str.parseJSON();
+
+或者
+
+var obj = JSON.parse(str);&lt;span class=&quot;sb&quot;&gt;
+
+
+
+&lt;/span&gt;//将JSON对象转化为JSON字符
+
+var last=obj.toJSONString(); 
+
+或者
+
+var last=JSON.stringify(obj);&lt;span class=&quot;sb&quot;&gt;
+
+
 
 
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;

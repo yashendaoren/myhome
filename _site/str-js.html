@@ -195,11 +195,6 @@ var res1=str.concat("nihao","!");
 console.log(res1);              //hello nihao!  concat方法可以接收任意多个参数 <span class="sb">
 
 
-
-
-
-
-
 </span></code></pre></div></div>
 
 <h3 id="不常用方法">不常用方法</h3>
@@ -246,6 +241,42 @@ function unique(msg){
 } 
 
 console.log(unique(str));   //ahgsj <span class="sb">
+
+
+</span></code></pre></div></div>
+
+<h3 id="json-和-字符串-相互转换">json 和 字符串 相互转换</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+//JSON字符串:
+var str1 = '{ "name": "张三", "age": "22" }'; 
+//JSON对象:
+var str2 = { "name": "张三", "sex": "22" };<span class="sb">
+
+
+</span>//由JSON字符串转换为JSON对象
+
+var obj = eval('(' + str + ')');
+
+或者
+
+var obj = str.parseJSON();
+
+或者
+
+var obj = JSON.parse(str);<span class="sb">
+
+
+
+</span>//将JSON对象转化为JSON字符
+
+var last=obj.toJSONString(); 
+
+或者
+
+var last=JSON.stringify(obj);<span class="sb">
+
+
 
 
 </span></code></pre></div></div>
