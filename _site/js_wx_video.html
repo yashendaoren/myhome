@@ -12,7 +12,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
 <!-- title -->
-<title>CocoaPods 的安装及使用 &middot; wanglizhen 的主页</title>
+<title>获取手机信息，节点位置，去除button样式 等常用操作 &middot; wanglizhen 的主页</title>
 
 <!-- icons -->
 <link rel="shortcut icon" href="/assets/images/favicon.ico">
@@ -69,92 +69,86 @@
 
 			
 <div class="well article">
-        <h2><a href="/pod">CocoaPods 的安装及使用</a></h2>
+        <h2><a href="/js_wx_video">获取手机信息，节点位置，去除button样式 等常用操作</a></h2>
         <span class="post-date">
             
-            October-4-2015
+            March-14-2018
         </span>
         <hr style="border-top:0px solid #28323C;"/>
     
     <div class="post-content">
-    <h2 id="cocoapods-ios用于管理第三方库用-好处就不多说了-愿意用的应该都知道-此文综合摘自网络-以免以后遗忘">CocoaPods iOS用于管理第三方库用 好处就不多说了 愿意用的应该都知道 此文综合摘自网络 以免以后遗忘</h2>
-
-<h2 id="安装过程">安装过程</h2>
-<h3 id="升级ruby环境">升级Ruby环境</h3>
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-gem update --system
-若无权限
-sudo gem update --system
-
-</code></pre></div></div>
-
-<h3 id="更换ruby镜像">更换Ruby镜像</h3>
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>删除原来的镜像
-gem sources --remove https://rubygems.org/
-添加新镜像
-gem sources -a https://gems.ruby-china.org/
-查看镜像是否替换掉了
-gem sources -l
-
-</code></pre></div></div>
-
-<h3 id="安装cocoapods">安装CocoaPods</h3>
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-sudo gem install cocoapods
-
-若无权限
-sudo gem install -n /usr/local/bin cocoapods
-pod setup
-
-</code></pre></div></div>
-
-<h2 id="cocoapods的使用">CocoaPods的使用</h2>
-<h3 id="搜索三方库">搜索三方库</h3>
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-pod search AFNetworking
-
-</code></pre></div></div>
-
-<h3 id="创建podfile文件">创建Podfile文件</h3>
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-touch Podfile
-
-</code></pre></div></div>
-
-<h3 id="编辑-要下载的库">编辑 要下载的库</h3>
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-platform :ios, '8.0'
-target 'MyTarget' do
-
-//'~&gt; 3.1.0' 不写的话 默认下载最新的
-pod 'AFNetworking', '~&gt; 3.1.0'
-
-end
-
-</code></pre></div></div>
-
-<h3 id="终端下载第三方库库">终端下载第三方库库</h3>
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-pod install
-
-</code></pre></div></div>
-
-<h3 id="更新第三方库">更新第三方库</h3>
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-pod update
-</code></pre></div></div>
-
-<h2 id="常见问题">常见问题</h2>
+    <h3 id="获取手机信息">获取手机信息</h3>
 
 <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-//更新pod版本
-sudo gem install -n /usr/local/bin cocoapods --pre
-
-pod repo update
-
-问题还是特别多的 遇到再说 希望能记得更新
+wx.getSystemInfo({  
+    success: function(res) {  
+    console.log(res.model)  
+    console.log(res.pixelRatio)  
+    console.log(res.windowWidth)  
+    console.log(res.windowHeight)  
+    console.log(res.language)  
+    console.log(res.version)  
+    }  
+})  
 
 </code></pre></div></div>
+
+<h3 id="小程序获取-节点位置信息和滚动">小程序获取 节点位置信息和滚动</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+var bindId = event.currentTarget.dataset.bindid;
+var query = wx.createSelectorQuery()
+    query.select('#scrollView' + bindId).boundingClientRect()
+    query.exec(function (res) {
+        wx.pageScrollTo({ //小程序滚动程序
+        scrollTop: res<span class="p">[</span><span class="nv">0</span><span class="p">]</span>.top //距离现在定位的距离
+    })
+})
+
+</code></pre></div></div>
+<h3 id="button-去除原有样式">button 去除原有样式</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// 改样式
+button{
+    width: 100%;
+    height: 100rpx;
+    color: darkorange;
+    text-align: left;
+    background: #FFF; 
+}
+//　去边框
+button::after{
+    border: none;
+}
+
+</code></pre></div></div>
+<h3 id="image自定义弹窗icon">image自定义弹窗icon</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+wx.showToast({
+    title: '成功',
+    icon: 'success',
+    image: '../image/warn.png',
+    duration: 2000
+})
+
+</code></pre></div></div>
+
+<h3 id="数组去空">数组去空</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+for(var i = 0; i &lt; array.length;i++){
+    var obj = array<span class="p">[</span><span class="nv">i</span><span class="p">]</span>
+    if (obj==null||obj==undefined){
+        array.splice(i, 1)    
+    }
+}
+
+</code></pre></div></div>
+
+<h3 id="其他">其他</h3>
+
+<p>小程序的bug还是有点多的。textarea 下方有布局，弹起之后又可能会被键盘遮挡。placeholder 在键盘收起的时候，可能不会收回，发生错位。video、textarea 层级都是最高，不能通过z-index改变，不能用在scroll-view等视图中使用，video滑动会遮挡所有下面的视图。</p>
 
 
     <hr style="border-top:0px solid #28323C;"/>
@@ -167,7 +161,7 @@ pod repo update
       
          
             <li class="icon-style"><a href="/categories.html">
-                iOS <span>(16)</span>
+                小程序与快应用 <span>(5)</span>
                 
             </a></li>
         
@@ -182,10 +176,10 @@ pod repo update
 </div>
 <div class="pagination">
     
-    <a class="btn btn-default" href="/iOS-block" class="next">上一篇</a>
+    <a class="btn btn-default" href="/iOS-target-action" class="next">上一篇</a>
     
     
-    <a class="btn btn-default" href="/%E8%A1%8C%E4%B8%BA%E5%87%86%E5%88%99" class="previous">下一篇</a>
+    <a class="btn btn-default" href="/my-pod" class="previous">下一篇</a>
     
 </div>
 

@@ -291,6 +291,87 @@ paramters 参数写清楚 必要参数和非必要参数
 			</item>
 		
 			<item>
+				<title>获取手机信息，节点位置，去除button样式 等常用操作</title>
+				<description>&lt;h3 id=&quot;获取手机信息&quot;&gt;获取手机信息&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+wx.getSystemInfo({  
+    success: function(res) {  
+    console.log(res.model)  
+    console.log(res.pixelRatio)  
+    console.log(res.windowWidth)  
+    console.log(res.windowHeight)  
+    console.log(res.language)  
+    console.log(res.version)  
+    }  
+})  
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;小程序获取-节点位置信息和滚动&quot;&gt;小程序获取 节点位置信息和滚动&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+var bindId = event.currentTarget.dataset.bindid;
+var query = wx.createSelectorQuery()
+    query.select('#scrollView' + bindId).boundingClientRect()
+    query.exec(function (res) {
+        wx.pageScrollTo({ //小程序滚动程序
+        scrollTop: res&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;.top //距离现在定位的距离
+    })
+})
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;button-去除原有样式&quot;&gt;button 去除原有样式&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// 改样式
+button{
+    width: 100%;
+    height: 100rpx;
+    color: darkorange;
+    text-align: left;
+    background: #FFF; 
+}
+//　去边框
+button::after{
+    border: none;
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;image自定义弹窗icon&quot;&gt;image自定义弹窗icon&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+wx.showToast({
+    title: '成功',
+    icon: 'success',
+    image: '../image/warn.png',
+    duration: 2000
+})
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;数组去空&quot;&gt;数组去空&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+for(var i = 0; i &amp;lt; array.length;i++){
+    var obj = array&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    if (obj==null||obj==undefined){
+        array.splice(i, 1)    
+    }
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;其他&quot;&gt;其他&lt;/h3&gt;
+
+&lt;p&gt;小程序的bug还是有点多的。textarea 下方有布局，弹起之后又可能会被键盘遮挡。placeholder 在键盘收起的时候，可能不会收回，发生错位。video、textarea 层级都是最高，不能通过z-index改变，不能用在scroll-view等视图中使用，video滑动会遮挡所有下面的视图。&lt;/p&gt;
+
+</description>
+				<pubDate>Wed, 14 Mar 2018 00:00:00 +0800</pubDate>
+				<link>http://localhost:4000/js_wx_video</link>
+				<guid isPermaLink="true">http://localhost:4000/js_wx_video</guid>
+			</item>
+		
+			<item>
 				<title>创建自己的Pods库</title>
 				<description>&lt;p&gt;我们把自己的代码，全部分模块创建为了一个个库，为了模块化开发，后来发现，模块化开发真是好处多多，下一篇讲一下，模块化开发吧，这两片文章均摘自网络。本人怕原博主删掉博客或者因为网站原因找不到，特在此做了一个简单拷贝 &lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MjM5OTM0MzIwMQ==&amp;amp;mid=2652551137&amp;amp;idx=3&amp;amp;sn=5a6a162a41c54be12b51c0390715c063&amp;amp;chksm=bcd2f2ef8ba57bf95f03ee0cec37516c091d80f1adaf875c98613acc34d9972c240d5a159823&amp;amp;mpshare=1&amp;amp;scene=23&amp;amp;srcid=0822HLLoDepjHMsV9bP1R468#rd&quot;&gt;原文出处&lt;/a&gt;&lt;/p&gt;
 
@@ -445,6 +526,187 @@ var myDate = new Date(date)
 				<pubDate>Sun, 05 Nov 2017 00:00:00 +0800</pubDate>
 				<link>http://localhost:4000/wx_problem</link>
 				<guid isPermaLink="true">http://localhost:4000/wx_problem</guid>
+			</item>
+		
+			<item>
+				<title>JS 字符串 常用操作</title>
+				<description>&lt;p&gt;我觉得 任何一门编程语言，需要处理最多的，就是字符串和数组，所以这里把字符串和数组的常用操作总结一下，本篇只记录字符串的方法&lt;/p&gt;
+
+&lt;h3 id=&quot;常用方法&quot;&gt;常用方法&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+
+var str=&quot;hello world&quot;; &lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;//slice方法：第一个参数：子字符串开始位置，第二个参数：子字符串最后一个字符后面的位置 
+console.log(str.slice(3,7));    //lo w  包含头不包含尾 
+console.log(str.slice(3,-4));   //lo w  -4表示从后面向前4个长度的位置
+console.log(str.slice(3));      //lo world 没有第二个参数，默认到字符串结尾
+
+//substring方法：第一个参数：子字符串开始位置，第二个参数：子字符串最后一个字符后面的位置 
+console.log(str.substring(3,7));    //lo w 
+console.log(str.substring(3));      //lo world 
+str.substring(3,0) == str.substring(0,3) //方法会将较小数作为开始位置较大数作为结束位置
+str.substring(3,-4) == str.substring(3,0) == str.substring(0,3)
+
+//substr方法：第一个参数：子字符串开始位置，第二个参数：返回的字符个数
+console.log(str.substr(3,7));       //lo worl 7表示返回7个字符 
+console.log(str.substr(3));         //lo world
+console.log(str.substr(3,-4));      //&quot;&quot;空字符串 
+            
+
+//indexOf方法：是从字符串的开头向后搜索子字符串
+console.log(str.indexOf(&quot;o&quot;,6));    //7  
+console.log(str.indexOf(&quot;o&quot;));      //4 
+
+//lastIndexOf方法：是从字符串的结尾向前搜索子字符串
+console.log(str.lastIndexOf(&quot;o&quot;,6));//4 
+console.log(str.lastIndexOf(&quot;o&quot;));  //7 
+
+indexOf方法和lastIndexOf方法：都是从一个字符串中搜索给定的子字符串，并返回子字符串的位置；
+        如果没有找到，则返回-1。这两个方法都可以接收两个参数：要查找的子字符串和查找的位置&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;//trim方法：方法用来删除字符串前后的空格，并不会修改原字符串
+var str=&quot;   hello world   &quot;; 
+console.log('('+str.trim()+')');    //(hello world) 
+console.log('('+str+')');           //(   hello world   ) &lt;span class=&quot;sb&quot;&gt;
+
+
+
+
+&lt;/span&gt;//match方法：只接受一个参数，由字符串或RegExp对象指定的一个正则表达式 
+var str=&quot;1 plus 2 equal 3&quot;
+document.write(str.match(/&lt;span class=&quot;se&quot;&gt;\d&lt;/span&gt;+/g))  //1，2，3
+
+//search方法：只接受一个参数，由字符串或RegExp对象指定的一个正则表达式 
+        search方法返回字符串中第一个匹配项的索引，如果没有匹配项，返回-1 
+var str=&quot;cat,bat,sat,fat&quot;; 
+var pattern=/.at/; 
+var matches=str.match(pattern); 
+console.log(matches.index);         //0 
+console.log(matches&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;);            //cat 
+console.log(pattern.lastIndex);     //0 lastIndex表示开始搜索下一个匹配项的字符位置
+    从0算起 
+var pos=str.search(/at/); 
+console.log(pos);                   //1 1表示at字符串在原来字符串中第一次出现的位置&lt;span class=&quot;sb&quot;&gt;
+
+
+
+&lt;/span&gt;//replace方法
+var str=&quot;cat,bat,sat,fat&quot;; 
+var res=str.replace(&quot;at&quot;,&quot;one&quot;);    //第一个参数是字符串，所以只会替换第一个子字符串 
+console.log(res);//cone,bat,sat,fat 
+var res1=str.replace(/at/g,&quot;one&quot;);  //第一个参数是正则表达式，所以会替换所有的子字符串 
+console.log(res1);//cone,bone,sone,fone &lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;//split 将字符串分割成字符串数组 
+//如果把空字符串 (&quot;&quot;) 用作分割，那么 string 中的每个字符之间都会被分割。 
+var str=&quot;red,blue,green,yellow&quot;; 
+console.log(str.split(&quot;,&quot;));    //&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;, &quot;yellow&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; 
+console.log(str.split(&quot;,&quot;,2));  //&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;&quot;red&quot;, &quot;blue&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;  第二个参数用来限制数组大小
+
+console.log(str.split(/&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;^\,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;+/));// &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;&quot;&quot;, &quot;,&quot;, &quot;,&quot;, &quot;,&quot;, &quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; 
+//第一项和最后一项为空字符串是因为正则表达式指定的分隔符出现在了子字符串的开头，
+    即&quot;red&quot;和&quot;yellow&quot; 。&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;^...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; 表示不在方括号内的任意字符  只要不是逗号都是分隔符&lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;//localeCompare 这个方法用于比较两个字符串
+/&lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;1.&lt;/span&gt;如果字符串在字母表中应该排在字符串参数之前，则返回一个负数 
+&lt;span class=&quot;p&quot;&gt;1.&lt;/span&gt;如果字符串等于字符串参数，则返回0 
+&lt;span class=&quot;p&quot;&gt;1.&lt;/span&gt;如果字符串在字母表中应该排在字符串参数之后，则返回一个正数 
+&lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;/
+var str=&quot;yellow&quot;; 
+console.log(str.localeCompare(&quot;brick&quot;));//1 
+console.log(str.localeCompare(&quot;yellow&quot;));//0 
+console.log(str.localeCompare(&quot;zoo&quot;));//-1 &lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;//字符串大小写转换方法
+var str=&quot;HELLO world&quot;; 
+console.log(str.toLowerCase());    //hello world 
+console.log(str.toUpperCase());    //HELLO WORLD &lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;//charAt方法是以单字符字符串的形式返回给定位置的那个字符 等同于下标。
+    charCodeAt方法获取到的不是字符而是字符编码 
+var str=&quot;hello&quot; 
+str.charAt(1)       //e 
+str&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;              //e 
+str.charCodeAt(1)   //101 &lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;//concat方法 和 + 操作一样，一般不用
+var str=&quot;hello &quot;; 
+var res=str.concat(&quot;world&quot;); 
+console.log(res);               //hello world 
+console.log(str);               //hello  原字符串的值未改变 
+var res1=str.concat(&quot;nihao&quot;,&quot;!&quot;); 
+console.log(res1);              //hello nihao!  concat方法可以接收任意多个参数 &lt;span class=&quot;sb&quot;&gt;
+
+
+
+
+
+
+
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;不常用方法&quot;&gt;不常用方法&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+//fromCharCode方法 编码转字符串
+/&lt;span class=&quot;err&quot;&gt;*&lt;/span&gt; 
+fromCharCode方法是接收一或多个字符编码，然后将其转换为字符串 
+fromCharCode方法是String构造函数的一个静态方法 
+&lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;/
+console.log(String.fromCharCode(104,101,108,108,111));  //hello &lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;//找到匹配字符串所在的各个位置
+var str=&quot;asadajhjkadaaasdasdasdasd&quot;; 
+var position=&lt;span class=&quot;err&quot;&gt;[&lt;/span&gt;]; 
+var pos=str.indexOf(&quot;d&quot;); 
+while(pos&amp;gt;-1){ 
+    position.push(pos); 
+    pos=str.indexOf(&quot;d&quot;,pos+1); 
+} 
+console.log(position);          //&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;3, 10, 15, 18, 21, 24&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;//字符串去重
+//String.split() 执行的操作与 Array.join 执行的操作是相反的 
+//split() 方法用于把一个字符串分割成字符串数组。 
+//join方法用于将字符串数组连接成一个字符串 
+
+var str=&quot;aahhgggsssjjj&quot;;  //这里字符串没有可以分隔的字符，所以需要使用空字符串作为分隔符 
+function unique(msg){ 
+    var res=&lt;span class=&quot;err&quot;&gt;[&lt;/span&gt;]; 
+    var arr=msg.split(&quot;&quot;); 
+    //console.log(arr); 
+    
+    for(var i=0;i&amp;lt;arr.length;i++){ 
+        if(res.indexOf(arr&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;)==-1){ 
+            res.push(arr&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;); 
+        } 
+    }
+    
+    return res.join(&quot;&quot;); 
+    
+} 
+
+console.log(unique(str));   //ahgsj &lt;span class=&quot;sb&quot;&gt;
+
+
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+				<pubDate>Sat, 21 Oct 2017 00:00:00 +0800</pubDate>
+				<link>http://localhost:4000/str-js</link>
+				<guid isPermaLink="true">http://localhost:4000/str-js</guid>
 			</item>
 		
 			<item>
@@ -966,550 +1228,6 @@ console.log(&quot;程序执行完毕。&quot;);
 				<pubDate>Mon, 16 Jan 2017 00:00:00 +0800</pubDate>
 				<link>http://localhost:4000/nodejs</link>
 				<guid isPermaLink="true">http://localhost:4000/nodejs</guid>
-			</item>
-		
-			<item>
-				<title>关于web后端</title>
-				<description>&lt;p&gt;以前专业写前端，后端技术不够扎实，发现这样对我的限制特别大，不仅在开发阶段，数据基本全是假数据，也很难做动态网页。所以就想学一门后端语言，补一下自己的短板，于是我把目标瞄准了Java，毕竟Java能使用的场景太多了。Java的语言本身倒是不难，但服务端的环境配置真是有点绕啊。于是在我还没看完Java的基础语法的时候，就果断弃了。&lt;/p&gt;
-
-&lt;p&gt;后面开始看PHP，PHP是简单，当然我是说入门简单。毕竟任何一门语言本身，都是深奥而伟大的存在。但是刚开始我就是为了配合前端，简单入门再加上google和度娘，也算勉强够了。而且，PHP有服务端的集成环境，方便入门阶段的学习。在这里推荐一下一个MAC版的集成环境XAMPP，希望对大家能有所帮助。&lt;/p&gt;
-
-&lt;p&gt;早就听说过Node.js环境下，JS也可以写后端了，一直想学习呢，就是没有大块的时间（这个借口只值5分）。最近一段时间了解了一下，发现Node.js真是个好东西，虽然只有CLI没有GUI工具，但是开发还是很方便的。所以我决定要好好看一看Node.js了。不过长时间不用，还是会遗忘，PHP中间隔了两个月就忘的差不多了(笑哭)。这个问题怎么处理呢？很严重。。。。这种事没有特别有效的方法，只能以后多用点了。等有时间，我把PHP和Node.js的常用API整理一下，写个博客吧，也避免遗忘，慢慢加油吧！！&lt;/p&gt;
-
-&lt;p&gt;先简单记录几个Node.js的学习网站&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://nodejs.org&quot;&gt;Node.js官网&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://nodejs.cn&quot;&gt;Node.js中文网&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.runoob.com/nodejs/nodejs-tutorial.html&quot;&gt;Node.js 菜鸟教程&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://cnodejs.org&quot;&gt;Node.js中文论坛&lt;/a&gt;中的新手入门可以看看，挺好的&lt;/p&gt;
-
-</description>
-				<pubDate>Sun, 15 Jan 2017 00:00:00 +0800</pubDate>
-				<link>http://localhost:4000/server</link>
-				<guid isPermaLink="true">http://localhost:4000/server</guid>
-			</item>
-		
-			<item>
-				<title>Swift与Objective-C区别简析(二)</title>
-				<description>&lt;h2 id=&quot;函数重载-和-另一种-for-循环&quot;&gt;函数重载 和 另一种 for 循环&lt;/h2&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-///重载: 函数名相同, 函数类型不同(参数/返回值不同), 构成重载, 调用的时候,
-    根据参数确定调用哪个函数
-func helloworld(a:Int)-&amp;gt;Int{
-    return a &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt; 100
-}
-print(helloworld(5))
-
-func helloworld(a:NSString)-&amp;gt;Int{
-    return 100
-}
-print(helloworld(&quot;123&quot;))&lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;//区间, 0...10 = &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;0 10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;    0..&amp;lt;10 = &lt;span class=&quot;err&quot;&gt;[&lt;/span&gt;0 10)
-for i  in 0..&amp;lt;10{
-    print(&quot;i = &lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;i)&quot;)
-}
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;枚举&quot;&gt;枚举&lt;/h2&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//OC中的枚举值 是int类型, 也就是 0,1,2,3.. swift中的枚举值, 不再是int类型了, 就是枚举值
-enum Direction : String{
-    case East = &quot;东&quot;
-    case west = &quot;西&quot;
-    case south = &quot;南&quot;
-    case North = &quot;北&quot;
-}
-
-var dir = Direction.East;
-print(dir)
-//swift中的快捷语法, 如果给一个变量赋值过一次枚举值, 下次进行赋值就直接使用 . 语法进行赋值
-dir = .south
-print(dir)&lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;//枚举值的原始值
-enum Season : Int {
-    case Spring = 100
-    case Summer
-    case Autumn
-    case Winter
-}
-var se = Season.Spring
-
-//rawValue, 原始值
-print(se.rawValue)
-
-//通过枚举值的原始值找到枚举值
-let sea = Season(rawValue: 100)
-print(sea)&lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;//隐士解析
-if let s = sea {
-    print(&quot;s = &lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;s)&quot;)
-} else {
-    print(&quot;无法找到枚举值&quot;)
-}
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;类-和-结构体&quot;&gt;类 和 结构体&lt;/h2&gt;
-&lt;p&gt;//A = B&lt;/p&gt;
-
-&lt;p&gt;值类型 : 赋值完成以后, B修改, A 不变. 枚举值和结构体就是值类型, 类似copy 的过程&lt;/p&gt;
-
-&lt;p&gt;引用类型 : 赋值完成以后, B 修改, A随着B修改. 类就是引用类型, 类似 retain 的过程&lt;/p&gt;
-
-&lt;h3 id=&quot;结构体-值类型&quot;&gt;结构体 值类型&lt;/h3&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-struct Person{
-    var height = 1.8
-    var weight = 75
-    var age = 25
-}
-//实例化结构体: ()是结构体的一个初始化方法
-var p = Person()
-p.weight = 90
-print(&quot;他的体重是 &lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;p.weight) Kg&quot;)
-
-//逐一构造器：swift 中 构造 = alloc..init ，析构 = 释放 = dealloc
-var p1 = Person(height: 1.6, weight: 60, age: 18)
-print(&quot;她的身高为&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;p1.height), 体重为&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;p1.weight), 年龄为&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;p1.age)&quot;)&lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;var p2 = p1
-p1.height = 180
-print(&quot;p2的.height= &lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;p2.height)&quot;)  //1.6
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;类-引用类型&quot;&gt;类 引用类型&lt;/h3&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-class Student{
-    var num = 78945
-    var name = &quot;路飞&quot;
-    var goodF = &quot;东海&quot;
-}
-//系统没有给类自动添加逐一构造器
-var p = Student()
-p.goodF = &quot;北海&quot;
-print(p.goodF)
-
-var p1 = p
-p.goodF = &quot;西海&quot;
-print(&quot;p1的.height= &lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;p1.goodF)&quot;)  //西海。跟struct不一样&lt;span class=&quot;sb&quot;&gt;
-
-
-
-
-&lt;/span&gt;//属性
-//类名属性: static 修饰，（用类名调用）
-//存储属性: 用来 存值 和 取值
-//计算属性: 计算属性的值。 通过get方法, 用于获取其他元素。 set方法一般用来处理事务。
-    只写get , 这个属性是只读的; 不能只写set
-class Animal{&lt;span class=&quot;sb&quot;&gt;
-
-    //类名属性：是否有腿 
-    static var hasLeg = true
-
-    //存储属性
-    var type = &quot;Elephant&quot;
-    var weight = 1000
-
-    //计算属性
-    var leg  : Int{
-        get{ //get 方法
-            if type == &quot;Elephant&quot;{
-                return 4
-            } else if type == &quot;人&quot; {
-                return 2
-            } else {
-                return 3
-            }
-        }
-        
-        //set 方法需要一个 新值  参数
-        set(newValue){
-            if(newValue &amp;gt;= 4){
-                print(&quot;不是人&quot;)
-            } else{
-                print(&quot;有可能是人&quot;)
-            }
-
-        }
-    }
-&lt;/span&gt;}
-
-var per = Animal()
-per.type = &quot;人&quot;
-print(&quot;人的腿的个数是&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;per.leg)&quot;)
-
-per.leg = 10
-print(&quot;人的腿的个数是&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;per.leg)&quot;)
-
-print(&quot;人是否有腿: &lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;Animal.hasLeg)&quot;)&lt;span class=&quot;sb&quot;&gt;
-
-
-
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;例子-计算中心点结构体&quot;&gt;例子： 计算中心点（结构体）&lt;/h3&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-struct Rect {&lt;span class=&quot;sb&quot;&gt;
-
-    var x = 100.0
-    var y = 100.0
-    var width = 100.0
-    var height = 100.0
-
-    //属性在类内部使用的时候, 可以省略self.
-        只有设计到参数名字和属性相同的时候, 建议加上 self.以示区分
-    var centerX :Double {
-        get {
-            return x + width / 2
-        }
-        set{
-            width = (newValue - x) * 2
-        }
-
-        }
-        var centerY:Double {
-        get {
-            return y + height / 2
-        }
-        set {
-            height = (newValue - y)*2
-        }
-    }
-&lt;/span&gt;}
-
-var rect  = Rect()
-print(&quot;centerX = &lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;rect.centerX)&quot;)&lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;属性观察器&quot;&gt;属性观察器&lt;/h3&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-//属性观察器
-class Plant{
-    //类型
-    var type = &quot;绿色植物&quot;{
-        willSet(newType){
-            print(&quot;新值为 = &lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;newType), 当前值 = &lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;type)&quot;)
-        }didSet(oldType){
-            print(&quot;旧值 = &lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;oldType)&quot;)
-        }
-    }
-    //是否开花
-    var hasFlower : Bool = false {
-        willSet{
-            print(&quot;新值为&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;newValue), 当前值为&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;hasFlower)&quot;)
-        } didSet {
-            print(&quot;旧值为&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;oldValue)&quot;)
-        }
-    }
-}
-
-var appleTree = Plant();
-appleTree.type = &quot;苹果树&quot;
-appleTree.hasFlower = true;
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;h3 id=&quot;方法&quot;&gt;方法&lt;/h3&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-//结构体方法
-struct Apple {
-    var brand = &quot;apple&quot;
-    var price = 14000
-    func action(name:String){
-        print(&quot;&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;name)抽奖中了一个&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;brand)的, 价值¥&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;price)&quot;)
-    }
-}
-var app = Apple()
-app.action(&quot;王❀&quot;)
-
-//方法
-class Computer {
-    var brand = &quot;大船&quot;
-    var price = 6888
-    func des(name:String){
-        print(&quot;&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;name)造了&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;brand), 花了￥&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;price)&quot;)
-    }
-}
-
-var compu = Computer()
-compu.des(&quot;路飞&quot;)&lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;//类方法
-class Car {
-    static func speed(){
-        print(&quot;速度是71迈&quot;)
-    }
-}
-Car.speed()
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;构造方法&quot;&gt;构造方法&lt;/h3&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-//除了可选类型, 在构造的过程中, 必须给各个各个属性赋初始值
-class Hero{
-    var age : Int?
-    var name = &quot;孙悟空&quot;
-    var equipment = &quot;金箍棒&quot;
-    var saddleHorse :String
-    
-    init(){
-        saddleHorse = &quot;筋斗云&quot;
-    }
-    
-    //自定义一个构造器
-    init(name:String, equipment:String, saddleHorse:String){
-        self.name = name
-        self.equipment = equipment
-        self.saddleHorse = saddleHorse;
-    }
-}
-
-let 孙悟空 = Hero()
-print(&quot;孙悟空的坐骑是&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;孙悟空.saddleHorse)&quot;)
-
-let 大禹 = Hero(name: &quot;大禹&quot;, equipment: 孙悟空.equipment, saddleHorse: &quot;11路公交车&quot;)
-print(大禹.name, 大禹.equipment, 大禹.saddleHorse)
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;便利构造器必须调用自身的指定的构造器&quot;&gt;便利构造器：必须调用自身的指定的构造器&lt;/h3&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-//定义属性以及构造器的方法
-class Film {
-    var name = &quot;大闹天空&quot;
-    var type = &quot;myth&quot;
-    var time = &quot;12.31&quot;
-    var price = 20
-    //自定义构造器
-    init(name:String, type:String, time:String, price:Int){
-        self.name = name
-        self.type = type
-        self.time = time
-        self.price = price
-    }&lt;span class=&quot;sb&quot;&gt;
-
-    func description(){
-        print(&quot;电影名: \(self.name), 类型: \(self.type),
-            上映时间: \(self.time), 票价: \(self.price)&quot;)
-    }
-
-    //便利构造器：和 OC 的便利构造器不是一类, OC的是类方法
-    //convenience: 在构造器方法前添加convenience代表当前的构造器是便利构造器
-    convenience init(){
-        self.init(name:&quot;恶棍&quot;, type:&quot;傲笑&quot;, time:&quot;12.28&quot;, price:30)
-    }
-&lt;/span&gt;}&lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;let film = Film(name: &quot;挪吒脑海&quot;, type: &quot;神话&quot;, time: &quot;12.30&quot;, price: 11)
-film.description()
-
-let 恶棍天使 = Film()
-恶棍天使.description()&lt;span class=&quot;sb&quot;&gt;
-
-
-
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;继承-与-重写&quot;&gt;继承 与 重写&lt;/h3&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//定义一个父类
-class Teacher {
-    var academic = &quot;教授&quot;
-    var offer = 8888
-    var num :Int{
-        get{
-            return 100
-        } set{&lt;span class=&quot;sb&quot;&gt;
-
-        }
-    }
-
-    func teacher (){
-        print(&quot;某\(academic)的薪资是\(offer)&quot;)
-    }
-    
-    //final 方法禁止被重写
-    final func study(bookName:String){
-        print(&quot;某\(academic), 刻苦钻研\(bookName)&quot;)
-    }
-&lt;/span&gt;}
-
-//定义一个子类 ： 讲师
-class Lecturer : Teacher{
-    var industry = &quot;iOS&quot;
-    //override, 重写父类的方法
-    override func teacher() {
-        super.teacher()
-        print(&quot;从事行业是教授&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;industry)&quot;)
-    }
-
-}
-
-let lec = Lecturer()
-lec.academic = &quot;两院院士&quot;
-lec.offer = 10000
-lec.teacher()
-lec.study(&quot;论持久战&quot;)
-
-//重写属性：把存储属性重写为计算属性，不能把计算属性改为存储属性
-class ChildrenTeacher:Teacher {
-    override var offer:Int{
-        get{
-            return 9999
-        } set {&lt;span class=&quot;sb&quot;&gt;
-
-        }
-    }
-&lt;/span&gt;}
-let child = ChildrenTeacher()
-child.teacher()
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;写个小例子吧&quot;&gt;写个小例子吧&lt;/h3&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-class Perosn {
-    var name :String
-    var age : Int
-    var gender : Bool&lt;span class=&quot;sb&quot;&gt;
-
-    init(){
-        age = 18
-        name = &quot;路飞&quot;
-        gender = true
-    }
-
-    //指定构造器
-    init(name:String, age:Int, gender:Bool){
-        self.name = name
-        self.age = age
-        self.gender = gender
-    }
-
-    //便利构造器
-    convenience init(name:String){
-        self.init()
-        self.name = name
-    }
-
-    //实例方法
-    func description(){
-        print(&quot;名字是\(name), 年龄是\(age), 性别是\(gender)&quot;)
-    }
-    
-    //类方法
-    static func helloWorld(){
-        print(&quot;hello, World!&quot;)
-    }
-
-    //OC的便利构造器, swift版本
-    //这只是一个类方法, 完成创建对象的功能，其实这不是构造器
-    static func person(name:String, age:Int, gender: Bool)-&amp;gt;(Perosn){
-        
-        return Perosn(name: name, age: age, gender: gender)
-    }
-
-&lt;/span&gt;}
-
-//初始化
-let p1 = Perosn()
-let p2 = Perosn(name: &quot;xxx&quot;)
-let p3 = Perosn(name: &quot;李阳&quot;, age: 20, gender: true)
-
-//调用-号方法（对象方法）
-p1.description()
-p2.description()
-p3.description()
-
-//调用+号方法（类方法）
-Perosn.helloWorld()
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;再一个&quot;&gt;再一个&lt;/h3&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-class Student {
-    var score:Float?
-    var id:Int&lt;span class=&quot;sb&quot;&gt;
-
-    init(){
-        self.id = 12345
-    }
-&lt;/span&gt;}
-
-//继承于Student
-class Pupil : Student{
-    var games:String
-    //指定构造器：自动调用父类的 init() 方法
-    init(games:String) {
-        //给自身的属性赋值
-        self.games = games&lt;span class=&quot;sb&quot;&gt;
-
-    }
-&lt;/span&gt;}
-
-let pu = Pupil(games: &quot;LOL&quot;)
-print(pu.games, pu.id)&lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;//继承于 Pupil
-class Kindergarten:Pupil{
-    var fight:String&lt;span class=&quot;sb&quot;&gt;
-
-    init(fight:String) {
-        self.fight = fight
-        super.init(games: &quot;CF&quot;)
-    }
-
-    //deinit, 析构, 相当于OC中的dealloc
-    deinit{
-        //移除观察值
-        //取消代理, 地图应用
-    }
-
-&lt;/span&gt;}&lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;let kind = Kindergarten(fight: &quot;打架&quot;)
-print(kind.id, kind.fight, kind.games)
-
-//下划线是为了区分数字位数, 没有实际意义
-kind.score = 59_9_1  
-if let s = kind.score
-print(&quot;分数是&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;s)&quot;)
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-</description>
-				<pubDate>Tue, 22 Nov 2016 00:00:00 +0800</pubDate>
-				<link>http://localhost:4000/Swift-OC</link>
-				<guid isPermaLink="true">http://localhost:4000/Swift-OC</guid>
 			</item>
 		
 	</channel>
