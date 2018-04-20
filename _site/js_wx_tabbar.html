@@ -12,7 +12,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
 <!-- title -->
-<title>获取手机信息，节点位置，去除button样式 等常用操作 &middot; wanglizhen 的主页</title>
+<title>tabBar 、 navBarTitle 和常用window配置 &middot; wanglizhen 的主页</title>
 
 <!-- icons -->
 <link rel="shortcut icon" href="/assets/images/favicon.ico">
@@ -69,86 +69,76 @@
 
 			
 <div class="well article">
-        <h2><a href="/js_wx_video">获取手机信息，节点位置，去除button样式 等常用操作</a></h2>
+        <h2><a href="/js_wx_tabbar">tabBar 、 navBarTitle 和常用window配置</a></h2>
         <span class="post-date">
             
-            March-14-2018
+            January-15-2018
         </span>
         <hr style="border-top:0px solid #28323C;"/>
     
     <div class="post-content">
-    <h3 id="获取手机信息">获取手机信息</h3>
+    <h3 id="动态改变navigationbartitle">动态改变NavigationBarTitle(</h3>
 
 <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-wx.getSystemInfo({  
-    success: function(res) {  
-    console.log(res.model)  
-    console.log(res.pixelRatio)  
-    console.log(res.windowWidth)  
-    console.log(res.windowHeight)  
-    console.log(res.language)  
-    console.log(res.version)  
-    }  
-})  
+wx.setNavigationBarTitle({
+    title: "动态title"
+}) 
 
 </code></pre></div></div>
 
-<h3 id="小程序获取-节点位置信息和滚动">小程序获取 节点位置信息和滚动</h3>
+<h3 id="window常用配置">window常用配置</h3>
 
 <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-var bindId = event.currentTarget.dataset.bindid;
-var query = wx.createSelectorQuery()
-    query.select('#scrollView' + bindId).boundingClientRect()
-    query.exec(function (res) {
-        wx.pageScrollTo({ //小程序滚动程序
-        scrollTop: res<span class="p">[</span><span class="nv">0</span><span class="p">]</span>.top //距离现在定位的距离
+"window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#d81e06",
+    "navigationBarTitleText": "demo",
+    "navigationBarTextStyle": "white",
+    "enablePullDownRefresh": true,
+    "disableScroll": true //禁止页面滚动
+
+},
+
+</code></pre></div></div>
+<h3 id="tabbar配置">tabBar配置</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+"tabBar": {
+    "list": <span class="err">[</span>
+        {
+            "pagePath": "pages/send/send",
+            "text": "发红包",     
+            "iconPath": "/style/images/hongbao_h.png",
+            "selectedIconPath": "/style/images/hongbao.png"
+        },
+        {
+            "pagePath": "pages/myhome/myhome",
+            "text": "我的",
+            "iconPath": "/style/images/me_h.png",
+            "selectedIconPath": "/style/images/me.png"
+        }
+    ]
+}
+
+</code></pre></div></div>
+<h3 id="跳转tabbar页面">跳转tabBar页面</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+wx.switchTab({
+    url: '../send/send'
+});
+
+//跳转之后，tabBar的文字默认是绿色的，如果想自定义颜色，可以在该页面onShow方法中修改
+onShow: function () {<span class="sb">
+
+    wx.setTabBarStyle({
+        color: "#000000",
+        selectedColor: "#d81e06",
     })
-})
+
+</span>},
 
 </code></pre></div></div>
-<h3 id="button-去除原有样式">button 去除原有样式</h3>
-
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// 改样式
-button{
-    width: 100%;
-    height: 100rpx;
-    color: darkorange;
-    text-align: left;
-    background: #FFF; 
-}
-//　去边框
-button::after{
-    border: none;
-}
-
-</code></pre></div></div>
-<h3 id="image自定义弹窗icon">image自定义弹窗icon</h3>
-
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-wx.showToast({
-    title: '成功',
-    icon: 'success',
-    image: '../image/warn.png',
-    duration: 2000
-})
-
-</code></pre></div></div>
-
-<h3 id="数组去空">数组去空</h3>
-
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-for(var i = 0; i &lt; array.length;i++){
-    var obj = array<span class="p">[</span><span class="nv">i</span><span class="p">]</span>
-    if (obj==null||obj==undefined){
-        array.splice(i, 1)    
-    }
-}
-
-</code></pre></div></div>
-
-<h3 id="其他">其他</h3>
-
-<p>小程序的bug还是有点多的。textarea 下方有布局，弹起之后又可能会被键盘遮挡。placeholder 在键盘收起的时候，可能不会收回，发生错位。video、textarea 层级都是最高，不能通过z-index改变，不能用在scroll-view等视图中使用，video滑动会遮挡所有下面的视图。</p>
 
 
     <hr style="border-top:0px solid #28323C;"/>
@@ -176,10 +166,10 @@ for(var i = 0; i &lt; array.length;i++){
 </div>
 <div class="pagination">
     
-    <a class="btn btn-default" href="/iOS-target-action" class="next">上一篇</a>
+    <a class="btn btn-default" href="/my-pod" class="next">上一篇</a>
     
     
-    <a class="btn btn-default" href="/my-pod" class="previous">下一篇</a>
+    <a class="btn btn-default" href="/wx_problem" class="previous">下一篇</a>
     
 </div>
 

@@ -507,6 +507,77 @@ pod search Lib&lt;span class=&quot;sb&quot;&gt;
 			</item>
 		
 			<item>
+				<title>tabBar 、 navBarTitle 和常用window配置</title>
+				<description>&lt;h3 id=&quot;动态改变navigationbartitle&quot;&gt;动态改变NavigationBarTitle(&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+wx.setNavigationBarTitle({
+    title: &quot;动态title&quot;
+}) 
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;window常用配置&quot;&gt;window常用配置&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&quot;window&quot;: {
+    &quot;backgroundTextStyle&quot;: &quot;light&quot;,
+    &quot;navigationBarBackgroundColor&quot;: &quot;#d81e06&quot;,
+    &quot;navigationBarTitleText&quot;: &quot;demo&quot;,
+    &quot;navigationBarTextStyle&quot;: &quot;white&quot;,
+    &quot;enablePullDownRefresh&quot;: true,
+    &quot;disableScroll&quot;: true //禁止页面滚动
+
+},
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;tabbar配置&quot;&gt;tabBar配置&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&quot;tabBar&quot;: {
+    &quot;list&quot;: &lt;span class=&quot;err&quot;&gt;[&lt;/span&gt;
+        {
+            &quot;pagePath&quot;: &quot;pages/send/send&quot;,
+            &quot;text&quot;: &quot;发红包&quot;,     
+            &quot;iconPath&quot;: &quot;/style/images/hongbao_h.png&quot;,
+            &quot;selectedIconPath&quot;: &quot;/style/images/hongbao.png&quot;
+        },
+        {
+            &quot;pagePath&quot;: &quot;pages/myhome/myhome&quot;,
+            &quot;text&quot;: &quot;我的&quot;,
+            &quot;iconPath&quot;: &quot;/style/images/me_h.png&quot;,
+            &quot;selectedIconPath&quot;: &quot;/style/images/me.png&quot;
+        }
+    ]
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;跳转tabbar页面&quot;&gt;跳转tabBar页面&lt;/h3&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+wx.switchTab({
+    url: '../send/send'
+});
+
+//跳转之后，tabBar的文字默认是绿色的，如果想自定义颜色，可以在该页面onShow方法中修改
+onShow: function () {&lt;span class=&quot;sb&quot;&gt;
+
+    wx.setTabBarStyle({
+        color: &quot;#000000&quot;,
+        selectedColor: &quot;#d81e06&quot;,
+    })
+
+&lt;/span&gt;},
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+				<pubDate>Mon, 15 Jan 2018 00:00:00 +0800</pubDate>
+				<link>http://localhost:4000/js_wx_tabbar</link>
+				<guid isPermaLink="true">http://localhost:4000/js_wx_tabbar</guid>
+			</item>
+		
+			<item>
 				<title>微信小程序 小问题集结</title>
 				<description>&lt;h3 id=&quot;小程序时间兼容ios版本&quot;&gt;小程序时间兼容iOS版本&lt;/h3&gt;
 &lt;p&gt;我们有个需求，需要将服务器取到的时间再处理，在将字符串时间变为时间的时候，安卓手机是没问题的，但是iOS时间转换错误，原来iOS设备只能识别 ‘2017/02/21 11:23:56’ 这种时间格式，不能识别 ‘2017-02-21 11:23:56’ 这种格式，所以在转时间之前，需要先将时间字符串格式化一下，如有需要，再改回来就行了&lt;/p&gt;
@@ -1175,109 +1246,6 @@ restoreCompletedTransactionsFailedWithError:(NSError &lt;span class=&quot;err&qu
 				<pubDate>Fri, 12 May 2017 00:00:00 +0800</pubDate>
 				<link>http://localhost:4000/apple-pay</link>
 				<guid isPermaLink="true">http://localhost:4000/apple-pay</guid>
-			</item>
-		
-			<item>
-				<title>gif 动图支持</title>
-				<description>&lt;p&gt;iOS 9.0之后照片支持gif的展示了，简介一下保存gif图的方法 和加载gif图的方法&lt;/p&gt;
-
-&lt;h3 id=&quot;保存-gif-图&quot;&gt;保存 gif 图&lt;/h3&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-//保存图片
-&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; (void)saveImageWithData:(NSData &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)imageData{
-    if (&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;UIDevice currentDevice&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;.systemVersion.floatValue &amp;gt;= 9.0f) {
-        &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;[PHPhotoLibrary sharedPhotoLibrary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; performChanges:^{&lt;span class=&quot;sb&quot;&gt;
-
-        PHAssetResourceCreationOptions *options = [[PHAssetResourceCreationOptions 
-        alloc] init];
-        [[PHAssetCreationRequest creationRequestForAsset] 
-        addResourceWithType:PHAssetResourceTypePhoto
-         data:[common getNSDataFromUrl:imageUrl] options:options];
-        } completionHandler:^(BOOL success, NSError * _Nullable error) {
-
-            [self image:nil didFinishSavingWithError:error contextInfo:nil];
-
-        }];
-
-    }else {
-        UIImageWriteToSavedPhotosAlbum([UIImage imageWithData:
-        [common getNSDataFromUrl:imageUrl]], 
-        self, 
-        @selector(image:didFinishSavingWithError:contextInfo:), nil);
-    }
-
-&lt;/span&gt;}
-
-//保存之后的提示方法
-&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; (void)image:(UIImage &lt;span class=&quot;ge&quot;&gt;*)image didFinishSavingWithError:(NSError *&lt;/span&gt;)error
-contextInfo:(void &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;)contextInfo
-{
-    if (error != NULL)
-    {
-    NSString &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;message;
-    if (error.code ==-3310) {
-        message = @&quot;请到设置隐私开启相册权限&quot;;
-    }else{
-        message = @&quot;保存失败&quot;;
-    }
-        &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;NSObject toastMessage:message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
-    }
-    else  // No errors
-    {
-        &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;NSObject toastMessage:@&quot;已保存至手机相册&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
-    }
-}
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;获取gif图片资源的方法&quot;&gt;获取gif图片资源的方法&lt;/h3&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; (void)getImage{
-    PHImageManager &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt; manager =&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PHImageManager defaultManager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;;
-    PHImageRequestOptions &lt;span class=&quot;err&quot;&gt;*&lt;/span&gt; ops =&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;[PHImageRequestOptions alloc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;init];&lt;span class=&quot;sb&quot;&gt;
-
-    PHAsset * asset = [self.dataArray objectAtIndex:indexPath.row];
-    // 下面的回调会返回多次 该属性设置YES 只返回一次，返回的是原图
-    ops.synchronous = YES;
-    ops.resizeMode = PHImageRequestOptionsResizeModeExact;
-
-    [manager requestImageDataForAsset:asset options:ops
-     resultHandler:^(NSData * _Nullable imageData,
-      NSString * _Nullable dataUTI, 
-      UIImageOrientation orientation,
-       NSDictionary * _Nullable info) {
-        if (imageData.length){
-
-        //gif 图片
-        if ([dataUTI isEqualToString:(__bridge NSString *)kUTTypeGIF]) {
-            //这里获取gif图片的NSData数据
-            _gifImageData = imageData;
-        }
-        else {
-            //其他格式的图片
-            returnImage = [UIImage imageWithData:imageData];
-
-        }
-
-    }else{
-        //如果没有获取到imagedata，尝试直接获取图片
-        [manager requestImageForAsset:asset targetSize:AssetGridThumbnailSize 
-        contentMode:PHImageContentModeAspectFill options:ops
-         resultHandler:^(UIImage * result, NSDictionary * info) {
-            if (result) {
-                returnImage = result;
-            }
-        }];
-    }
-&lt;/span&gt;}
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-</description>
-				<pubDate>Mon, 01 May 2017 00:00:00 +0800</pubDate>
-				<link>http://localhost:4000/iOS_gif</link>
-				<guid isPermaLink="true">http://localhost:4000/iOS_gif</guid>
 			</item>
 		
 	</channel>
