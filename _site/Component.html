@@ -12,7 +12,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
 <!-- title -->
-<title>CocoaPods 的安装及使用 &middot; wanglizhen 的主页</title>
+<title>自定义组件、插件 和 wepy框架 &middot; wanglizhen 的主页</title>
 
 <!-- icons -->
 <link rel="shortcut icon" href="/assets/images/favicon.ico">
@@ -69,92 +69,118 @@
 
 			
 <div class="well article">
-        <h2><a href="/pod">CocoaPods 的安装及使用</a></h2>
+        <h2><a href="/Component">自定义组件、插件 和 wepy框架</a></h2>
         <span class="post-date">
             
-            October-4-2015
+            June-6-2018
         </span>
         <hr style="border-top:0px solid #28323C;"/>
     
     <div class="post-content">
-    <h2 id="cocoapods-ios用于管理第三方库用-好处就不多说了-愿意用的应该都知道-此文综合摘自网络-以免以后遗忘">CocoaPods iOS用于管理第三方库用 好处就不多说了 愿意用的应该都知道 此文综合摘自网络 以免以后遗忘</h2>
-
-<h2 id="安装过程">安装过程</h2>
-<h3 id="升级ruby环境">升级Ruby环境</h3>
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-gem update --system
-若无权限
-sudo gem update --system
-
-</code></pre></div></div>
-
-<h3 id="更换ruby镜像">更换Ruby镜像</h3>
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>删除原来的镜像
-gem sources --remove https://rubygems.org/
-添加新镜像
-gem sources -a https://gems.ruby-china.org/
-查看镜像是否替换掉了
-gem sources -l
-
-</code></pre></div></div>
-
-<h3 id="安装cocoapods">安装CocoaPods</h3>
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-sudo gem install cocoapods
-
-若无权限
-sudo gem install -n /usr/local/bin cocoapods
-pod setup
-
-</code></pre></div></div>
-
-<h2 id="cocoapods的使用">CocoaPods的使用</h2>
-<h3 id="搜索三方库">搜索三方库</h3>
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-pod search AFNetworking
-
-</code></pre></div></div>
-
-<h3 id="创建podfile文件">创建Podfile文件</h3>
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-touch Podfile
-
-</code></pre></div></div>
-
-<h3 id="编辑-要下载的库">编辑 要下载的库</h3>
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-platform :ios, '8.0'
-target 'MyTarget' do
-
-//'~&gt; 3.1.0' 不写的话 默认下载最新的
-pod 'AFNetworking', '~&gt; 3.1.0'
-
-end
-
-</code></pre></div></div>
-
-<h3 id="终端下载第三方库库">终端下载第三方库库</h3>
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-pod install
-
-</code></pre></div></div>
-
-<h3 id="更新第三方库">更新第三方库</h3>
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-pod update
-</code></pre></div></div>
-
-<h2 id="常见问题">常见问题</h2>
+    <h3 id="自定义组件-component-注意事项">自定义组件 Component 注意事项</h3>
 
 <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-//更新pod版本
-sudo gem install -n /usr/local/bin cocoapods --pre
+//页面json文件中 添加自己需要用到的自定义组件
+{
+    "usingComponents":{
+        "test": "../../component/test",
+        "login":"../../component/login/login"
+    }
+}
 
-pod repo update
+//页面wxml中使用 myevent自定义的监听事件的key值，triggerEvent中使用
+<span class="nt">&lt;login</span> <span class="na">canshu=</span><span class="s">"canshu"</span> <span class="na">title=</span><span class="s">"我的标题"</span> <span class="na">bind:myevent=</span><span class="s">"onMyEvent"</span>  <span class="na">text=</span><span class="s">""</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;button</span> <span class="na">slot=</span><span class="s">"cancel"</span><span class="nt">&gt;</span>取消<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;/login&gt;</span>
 
-问题还是特别多的 遇到再说 希望能记得更新
+//组件中
+options: {
+    multipleSlots: true // 在组件定义时的选项中启用多slot支持
+},
+properties: {
+    title:{
+        type:String,
+        value:"标题",
+        observer: function (newVal, oldVal, changedPath){
+            console.log(newVal+","+oldVal+","+changedPath)<span class="sb">
+
+        }
+    },
+    canshu: String,
+</span>},
+
+methods: {
+    loginClick:function(){
+    
+        console.log("loginClick" + " " + this.properties.canshu)
+        //用于回传事件给页面
+        this.triggerEvent('myevent', { text:"111"})
+    },
+},<span class="sb">
+
+
+</span></code></pre></div></div>
+
+<h3 id="插件">插件</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//plugin.json中 列出所有插件 index.js中暴露插件接口
+{
+    "publicComponents": {
+        "list": "components/list/list"
+    },
+    "main": "index.js"
+}
+
+//app.json中 写明版本号和插件的appid
+"plugins": {
+    "myPlugin": {
+        "version": "dev",
+        "provider": "wxd322cd2139b1914d"
+    }
+}
+
+//page的json文件中
+{
+    {
+        "usingComponents": {
+        "list": "plugin://myPlugin/list"
+    }
+}
 
 </code></pre></div></div>
+
+<h3 id="wepy注意事项">wepy注意事项</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+//编辑器中改完代码，需要重新运行wepy build 命令
+
+//wxss
+<span class="nt">&lt;style </span><span class="na">lang=</span><span class="s">"less"</span><span class="nt">&gt;&lt;/style&gt;</span>
+//js
+<span class="nt">&lt;script&gt;&lt;/script&gt;</span>
+//wxml
+<span class="nt">&lt;template&gt;&lt;/template&gt;</span>
+//json 是script 里面的 config
+config = {
+    navigationBarTitleText: 'test'
+}
+
+//手动创建页面，app.wpy中不会自己添加，需要手动添加 page/one
+config = {
+    pages: <span class="err">[</span>
+        'pages/index',
+        'pages/one',
+    ],
+    window: {
+        backgroundTextStyle: 'light',
+    }
+}
+
+wepy刚刚开始看，持续更新中。。。。也可能以后就忘了更新了。。。。<span class="sb">
+
+
+
+</span></code></pre></div></div>
 
 
     <hr style="border-top:0px solid #28323C;"/>
@@ -167,7 +193,7 @@ pod repo update
       
          
             <li class="icon-style"><a href="/categories.html">
-                iOS <span>(16)</span>
+                小程序与快应用 <span>(7)</span>
                 
             </a></li>
         
@@ -182,10 +208,8 @@ pod repo update
 </div>
 <div class="pagination">
     
-    <a class="btn btn-default" href="/iOS-block" class="next">上一篇</a>
     
-    
-    <a class="btn btn-default" href="/%E8%A1%8C%E4%B8%BA%E5%87%86%E5%88%99" class="previous">下一篇</a>
+    <a class="btn btn-default" href="/Swift-use" class="previous">下一篇</a>
     
 </div>
 
