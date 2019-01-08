@@ -19,7 +19,7 @@ date_format:
 # Language
 lan: "en" 
 
-paginate: 20
+paginate: 30
 
 highlighter: rouge
 markdown: kramdown

@@ -141,14 +141,24 @@ blockView?.bibao = {
 <h2 id="单利">单利</h2>
 
 <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-//属性单利
+//创建单利属性
 static let danli = DanLi()
 private override init(){}
 
-//类方法单利
+//类方法返回单利
 class func shared() -&gt; DanLi {
-    return DanLi()
+    return danli
 }
+
+//官方推荐写法
+static let sharedInstence:DanLi = {
+    let danli = DanLi()<span class="sb">
+
+    //danli.xxxxxx=xxxx
+    //danli.function()
+
+    return danli
+</span>}()
 
 //属性
 var name:String?
