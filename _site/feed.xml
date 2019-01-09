@@ -7,6 +7,204 @@
 		<atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>FreeMarker</title>
+				<description>&lt;h3 id=&quot;总体结构&quot;&gt;总体结构&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Welcome!&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;--&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Greet&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;his&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;her&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&amp;gt;&lt;/span&gt;Welcome ${user}!&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;We have these animals:
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;ul&amp;gt;&lt;/span&gt;[BR]
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;list&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;animals&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;animal&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;${animal.name} for ${animal.price} Euros
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;list&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;引入&quot;&gt;引入&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;一个重要的规则就是路径不应该包含大写字母，
+为了分隔词语， 使用下划线 _，就像 wml_form (而不是 wmlForm )。
+
+&amp;lt;#import &quot;../../../include/layout_wap.ftl&quot; as layout /&amp;gt;
+&amp;lt;@layout.standard title=&quot;大点&quot; cssMap={&quot;app&quot;:&quot;course/course_wap&quot;}&amp;gt;
+
+    &amp;lt;style&amp;gt;
+    // css
+    &amp;lt;/style&amp;gt;
+    &amp;lt;script&amp;gt;
+    // js
+    &amp;lt;/script&amp;gt;
+
+&amp;lt;/@layout.standard&amp;gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;公用样式&quot;&gt;公用样式&lt;/h3&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;#include &quot;../include/position.ftl&quot; /&amp;gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;定义变量&quot;&gt;定义变量&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;#assign dk_list=[
+    {&quot;uid&quot;:&quot;1&quot;,&quot;name&quot;:&quot;曹雁飞&quot;,&quot;des&quot;:&quot;曹雁飞，女，教育学原&quot;},
+    {&quot;uid&quot;:&quot;2&quot;,&quot;name&quot;:&quot;曹雁飞&quot;,&quot;des&quot;:&quot;曹雁飞，女，教育学原&quot;},
+    {&quot;uid&quot;:&quot;3&quot;,&quot;name&quot;:&quot;曹雁飞&quot;,&quot;des&quot;:&quot;曹雁飞，女，教育学原&quot;},
+] /&amp;gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;列表&quot;&gt;列表&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;#list dk_list as item&amp;gt;
+
+    &amp;lt;div class=&quot;celebrity-item&quot;&amp;gt;
+
+        ${item_index}
+
+        &amp;lt;div class=&quot;celebrity-info&quot;&amp;gt;
+            &amp;lt;div onclick=&quot;gotoUserForJson(${item.title},${item.uid})&quot;&amp;gt;
+                &amp;lt;img src=&quot;https://avatar2.citysbs.com/m.gif&quot;&amp;gt;
+            &amp;lt;/div&amp;gt;
+            &amp;lt;div class=&quot;celebrity-name&quot;&amp;gt;${item.name}&amp;lt;/div&amp;gt;
+            &amp;lt;div class=&quot;celebrity-introduce&quot;&amp;gt;${item.title}&amp;lt;/div&amp;gt;
+        &amp;lt;/div&amp;gt;
+        &amp;lt;div class=&quot;celebrity-desc&quot;&amp;gt;
+            &amp;lt;div class=&quot;desc&quot;&amp;gt;
+            ${item.des}
+            &amp;lt;/div&amp;gt;
+        &amp;lt;/div&amp;gt;
+    &amp;lt;/div&amp;gt;
+
+&amp;lt;/#list&amp;gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;判断&quot;&gt;判断&lt;/h3&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;#if centerHotText?? &amp;amp;&amp;amp; boardList?exists &amp;amp;&amp;amp; boardList?size gt 0 &amp;gt;
+
+&amp;lt;#elseif board_index == 1 &amp;gt;
+
+&amp;lt;#else&amp;gt;
+
+&amp;lt;/#if&amp;gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;内建函数&quot;&gt;内建函数&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;#function createUrl url params={}&amp;gt;
+    &amp;lt;#assign tUrl = urlCollect.forumFrontDomainNoHttps+ url &amp;gt;
+    &amp;lt;#if (params?size&amp;gt;0)&amp;gt;
+        &amp;lt;#assign tUrl = tUrl+&quot;?&quot;&amp;gt;
+        &amp;lt;#assign keys = params?keys&amp;gt;
+        &amp;lt;#list keys as key&amp;gt;
+            &amp;lt;#assign tUrl = tUrl + key + &quot;=&quot; + params[key] + &quot;&amp;amp;&quot;&amp;gt;
+        &amp;lt;/#list&amp;gt;
+        &amp;lt;#assign tUrl = tUrl?substring(0, tUrl?length-1)&amp;gt;
+    &amp;lt;/#if&amp;gt;
+    &amp;lt;#return tUrl&amp;gt;
+&amp;lt;/#function&amp;gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;表达式&quot;&gt;表达式&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;字符串切分： 包含结尾： name[0..4]，
+           不包含结尾： name[0..&amp;lt;5]，
+           基于长度(宽容处理)： name[0..*5]，
+           去除开头： name[5..]
+
+序列切分：包含结尾： products[20..29]， 
+        不包含结尾： products[20..&amp;lt;30]，
+        基于长度(宽容处理)： products[20..*10]，
+        去除开头： products[20..]
+        
+&amp;lt;#list seq[1..3] as i&amp;gt;${i}&amp;lt;/#list&amp;gt;
+
+连接： passwords + { &quot;joe&quot;: &quot;secret42&quot; }
+&amp;lt;#list [&quot;Joe&quot;, &quot;Fred&quot;] + [&quot;Julia&quot;, &quot;Kate&quot;] as user&amp;gt;${user}&amp;lt;/#list&amp;gt;
+&amp;lt;#assign ages = {&quot;Joe&quot;:23, &quot;Fred&quot;:25} + {&quot;Joe&quot;:30, &quot;Julia&quot;:18}&amp;gt;
+
+内建函数： name?upper_case, path?ensure_starts_with('/')
+方法调用： repeat(&quot;What&quot;, 3) 如：${repeat(&quot;Foo&quot;, 3)}
+
+
+处理不存在的值：
+默认值： name!&quot;unknown&quot; 或者 (user.name)!&quot;unknown&quot; 或者 name! 或者 (user.name)!
+检测不存在的值： name?? 或者 (user.name)??
+赋值操作： =, +=, -=, *=, /=, %=, ++, --
+
+使用 &amp;gt;= 和 &amp;gt; 的时候有一点小问题。FreeMarker解释 &amp;gt; 的时候可以把它当作FTL标签的结束符。
+为了避免这种问题，可以使用 lt 代替 &amp;lt;， lte 代替 &amp;lt;=， gt 代替 &amp;gt; 还有 gte 代替 &amp;gt;=， 
+例如 &amp;lt;#if x gt y&amp;gt;。
+另外一个技巧是将表达式放到 圆括号 中， 尽管这么写并不优雅，
+例如 &amp;lt;#if (x &amp;gt; y)&amp;gt;。
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;自定义指令&quot;&gt;自定义指令&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;#macro greet person color&amp;gt;
+    &amp;lt;font size=&quot;+2&quot; color=&quot;${color}&quot;&amp;gt;Hello ${person}!&amp;lt;/font&amp;gt;
+&amp;lt;/#macro&amp;gt;
+
+&amp;lt;@greet&amp;gt;&amp;lt;/@greet&amp;gt;
+
+&amp;lt;@greet color=&quot;black&quot; person=&quot;Fred&quot;/&amp;gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;嵌套内容&quot;&gt;嵌套内容&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//&amp;lt;#nested&amp;gt; 可以多次被调用
+
+&amp;lt;#macro do_thrice&amp;gt;
+    &amp;lt;#nested&amp;gt;
+    &amp;lt;#nested&amp;gt;
+    &amp;lt;#nested&amp;gt;
+&amp;lt;/#macro&amp;gt;
+
+&amp;lt;@do_thrice&amp;gt;
+    Anything.
+&amp;lt;/@do_thrice&amp;gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;空间命名&quot;&gt;空间命名&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;#macro copyright date&amp;gt;
+    &amp;lt;p&amp;gt;Copyright (C) ${date} Julia Smith. All rights reserved.
+    &amp;lt;br&amp;gt;Email: ${mail}&amp;lt;/p&amp;gt;
+&amp;lt;/#macro&amp;gt;
+&amp;lt;#assign mail = &quot;jsmith@acme.com&quot;&amp;gt;
+
+
+&amp;lt;#import &quot;/lib/my_test.ftl&quot; as my&amp;gt;
+&amp;lt;#assign mail=&quot;fred@acme.com&quot;&amp;gt;
+&amp;lt;@my.copyright date=&quot;1999-2002&quot;/&amp;gt;
+
+不一样
+${my.mail} jsmith@acme.com
+${mail} fred@acme.com
+
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+				<pubDate>Thu, 03 Jan 2019 00:00:00 +0800</pubDate>
+				<link>http://localhost:4000/FreeMarker</link>
+				<guid isPermaLink="true">http://localhost:4000/FreeMarker</guid>
+			</item>
+		
+			<item>
 				<title>canvas简单学习</title>
 				<description>&lt;h3 id=&quot;基础&quot;&gt;基础&lt;/h3&gt;
 
@@ -1799,77 +1997,6 @@ pod search Lib&lt;span class=&quot;sb&quot;&gt;
 				<pubDate>Fri, 23 Feb 2018 00:00:00 +0800</pubDate>
 				<link>http://localhost:4000/my-pod</link>
 				<guid isPermaLink="true">http://localhost:4000/my-pod</guid>
-			</item>
-		
-			<item>
-				<title>tabBar 、 navBarTitle 和常用window配置</title>
-				<description>&lt;h3 id=&quot;动态改变navigationbartitle&quot;&gt;动态改变NavigationBarTitle(&lt;/h3&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-wx.setNavigationBarTitle({
-    title: &quot;动态title&quot;
-}) 
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;window常用配置&quot;&gt;window常用配置&lt;/h3&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-&quot;window&quot;: {
-    &quot;backgroundTextStyle&quot;: &quot;light&quot;,
-    &quot;navigationBarBackgroundColor&quot;: &quot;#d81e06&quot;,
-    &quot;navigationBarTitleText&quot;: &quot;demo&quot;,
-    &quot;navigationBarTextStyle&quot;: &quot;white&quot;,
-    &quot;enablePullDownRefresh&quot;: true,
-    &quot;disableScroll&quot;: true //禁止页面滚动
-
-},
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;h3 id=&quot;tabbar配置&quot;&gt;tabBar配置&lt;/h3&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-&quot;tabBar&quot;: {
-    &quot;list&quot;: &lt;span class=&quot;err&quot;&gt;[&lt;/span&gt;
-        {
-            &quot;pagePath&quot;: &quot;pages/send/send&quot;,
-            &quot;text&quot;: &quot;发红包&quot;,     
-            &quot;iconPath&quot;: &quot;/style/images/hongbao_h.png&quot;,
-            &quot;selectedIconPath&quot;: &quot;/style/images/hongbao.png&quot;
-        },
-        {
-            &quot;pagePath&quot;: &quot;pages/myhome/myhome&quot;,
-            &quot;text&quot;: &quot;我的&quot;,
-            &quot;iconPath&quot;: &quot;/style/images/me_h.png&quot;,
-            &quot;selectedIconPath&quot;: &quot;/style/images/me.png&quot;
-        }
-    ]
-}
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;h3 id=&quot;跳转tabbar页面&quot;&gt;跳转tabBar页面&lt;/h3&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-wx.switchTab({
-    url: '../send/send'
-});
-
-//跳转之后，tabBar的文字默认是绿色的，如果想自定义颜色，可以在该页面onShow方法中修改
-onShow: function () {&lt;span class=&quot;sb&quot;&gt;
-
-    wx.setTabBarStyle({
-        color: &quot;#000000&quot;,
-        selectedColor: &quot;#d81e06&quot;,
-    })
-
-&lt;/span&gt;},
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-</description>
-				<pubDate>Mon, 15 Jan 2018 00:00:00 +0800</pubDate>
-				<link>http://localhost:4000/js_wx_tabbar</link>
-				<guid isPermaLink="true">http://localhost:4000/js_wx_tabbar</guid>
 			</item>
 		
 	</channel>
