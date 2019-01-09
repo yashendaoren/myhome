@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- meta information -->
+<meta charset="utf-8">
+<meta name="description" 
+      content="Welcome to wanglizhen 的主页! - iOS开发 iOS技术探讨 开发中的bug记录 微信小程序开发技术探讨与bug记录 前端 html、js、css 开发  IT技术探讨 共同学习 共同进步" >
+<meta name="author" content="wanglizhen（王立震） && Aigars Dzerviniks">
+
+<!-- Enable responsiveness on mobile devices-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<!-- title -->
+<title>jquery常用方法 &middot; wanglizhen 的主页</title>
+
+<!-- icons -->
+<link rel="shortcut icon" href="/assets/images/favicon.ico">
+
+<!-- stylesheets -->
+<link rel="stylesheet" href="/assets/css/responsive.gs.12col.css">
+<link rel="stylesheet" href="/assets/css/animate.min.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/category.css"/>
+<link rel="stylesheet" href="/assets/css/about.css"/>
+
+
+<!-- Google fonts -->
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic&subset=latin-ext">
+
+
+<!-- font Awesome -->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+
+<!-- feed links -->
+<link rel="alternate" href="http://localhost:4000/feed.xml" type="application/rss+xml" title="wanglizhen 的主页">
+
+</head>
+
+<body>
+	<main class="container avocado">
+		
+			<header>
+				
+				<div>
+					<a href="http://localhost:4000" id="logo" title="wanglizhen 的主页" style="background-image: url(/assets/images/logo.png);"></a>
+				</div>
+
+				<nav id="main-navigation">
+  
+  
+  <a href="https://www.wanglizhen.xyz/" title="Home">Home</a>
+  
+  
+  
+  <a href="https://www.wanglizhen.xyz/category/" title="Category">Category</a>
+  
+  
+  
+  <a href="https://www.wanglizhen.xyz/about/" title="about">about</a>
+  
+  
+</nav>
+
+
+			</header>
+
+			
+<div class="well article">
+        <h2><a href="/jquery">jquery常用方法</a></h2>
+        <span class="post-date">
+            
+            July-19-2018
+        </span>
+        <hr style="border-top:0px solid #28323C;"/>
+    
+    <div class="post-content">
+    <h3 id="使用--或者-jquery-牛人强哥版">使用 $() 或者 jQuery() ：牛人强哥版</h3>
+<h3 id="1-初见">1. 初见</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>toggle(1000)：切换隐藏和显示，可以加时间
+
+$(img).hover(function(){
+    this.src = “a.png”
+})
+
+$(this).animate(function(){
+    ‘margin-left’:’0px’;
+},1000)
+
+
+$(img):大部分已经内涵遍历了，会加在每个标签下面了
+$(this).next() 下一个标签
+$(“#id1 option:selected”).clone().appendTo(“#id2”)
+clone()克隆一个标签
+appendTo 添加到 / append添加
+//点击
+$(‘#btn’).click(function(){
+
+})
+
+js对象和jquery对象 的方法不能共用
+
+</code></pre></div></div>
+<h3 id="2-js对象和jquery的区别">2. js对象和jquery的区别</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//jquery就是js 中new的一个最基本的object对象,对象链式开发
+function $(){
+    Obj = new Object()
+    Obj.say = function(){
+        return this
+    }
+    Obj.run = function(){
+        return this
+    }
+
+    return Obj
+}
+
+//使用
+$().say().run()
+
+</code></pre></div></div>
+
+<h3 id="3-js和jquery转化">3. js和jQuery转化</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>js对象可以和jquery对象可以相互转换
+
+var imgObj = document.getEle..
+$(imgObj).click(function(){
+    this.src = ‘x.png’
+    $(this).next().attr({‘src’:’x.png’})
+    //方法体里面的this还是dom对象 这的this和onclick事件里面的this一样的,谁简单用谁
+}) 
+$(‘img’).html(). //innerHtml相同
+// jquery没有outHtml, $(‘img’)[0].outHtml() 或者 $(‘img’)get(0).outHtml() 
+//get()就是jquery对象转化的js对象 get的参数可以不写
+
+
+</code></pre></div></div>
+
+<h3 id="4-核心方法">4. 核心方法</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//属性 获取dom对象的个数
+size() /.length 
+get()
+each()
+$(‘h1’).each(function(i){
+    //遍历
+    $(‘h1’).get()[i].setAttribute(‘num’:i)
+    //或者
+    $(this).attr({‘num’:i})
+})
+$(‘h1’).click(function(i){
+    this.innerHtml = this.getAttribute(‘num’)
+    //或者
+    $(this).html($(this).attr(‘num’))
+})
+
+//index()搜索匹配的元素 并返回索引值
+let idx = $(“.menu li’).index(‘.menu li’)
+$(“.info p’)eq(idx).show()
+$(“.info p’).not($(“.info p’).eq(idx)).hide()
+$(‘#aaa’).css({‘background’:”#fefefe”})
+
+//往jquery对象身上赋值，比动标签好，最好不要用attr,用data() 
+$(this).data({‘num’:i})
+$(this).data(‘num’)
+
+
+</code></pre></div></div>
+
+<h3 id="5-选择器">5. 选择器</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1，基础
+#id /.class / ele /  sel1,sel2（sel1和sel2）*所有
+2，层级 
+ancestor descendant  空格后代关系
+parent  &gt; child   &gt;父子关系
+prev + next   +同等级别后面的
+prev ~ siblings   ~同等级别后面的所有标签
+3，基本
+h1:first
+h1:last
+h1:not(:first)
+h1:even 偶数
+h1:odd 奇数
+h1:eq(2)
+h1:gt(3) 大于
+h1:lt(3) 小于
+4，内容
+div:has(p) 找到含有p的div
+h1:empty 体内为空的标签
+h1:parent 匹配有孩子（空格也算）的父亲
+5，属性
+h1[name][age] 都可以连用
+h1[name] 有name属性
+h1[name=user1] 等于 这里不是两个等号
+h1[name!=user1] 不等于user1
+[name^=user1] user1开头
+[name$=user1] user1结尾
+[name*=er] [name*=er] 包含er的
+6，子元素
+nth-child（从1开始）
+first-child。
+所有符合条件的第一个 $(‘.divs h1:first’)
+所有符合条件的每一个 $(‘.divs h1:first-child’)
+last-child
+only-child 只含有一个子元素的子元素
+7，表单
+:input  加冒号一次找到搜有表单元素
+:text
+:radio
+...
+8，表单属性
+:checked
+:selected
+...
+
+</code></pre></div></div>
+
+<h3 id="6筛选">6.筛选</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//跟选择器很像，都是为了找到元素，但是当有$(this) 的时候，用筛选就比较方便了
+1，过滤
+eq()
+first()
+last()
+not()
+slice(1,4)  //1,2,3 不包括最后一个
+
+2，查找
+children()
+parent()
+find()  //找到后代里面所有的
+next()
+nextAll()
+prev()
+prevAll()
+siblings()  //前后所有的兄弟
+
+3，串联
+add()  //$(‘h1’).add(‘p’)找h1的时候 顺便把p也找到
+andSelf()
+
+</code></pre></div></div>
+
+<h3 id="7属性选择器">7.属性选择器</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1，属性
+attr()
+attr({})
+$(this).attr({‘src’:’a.png’})
+
+2，CSS类
+addClass()
+removeClass()
+toggleClass()  //加/减
+
+3，HTML代码
+html()
+html(val)
+
+4，文本(标签里面的文本)
+text()
+text(val)
+
+5，值(表单)
+val()
+val(val)
+
+</code></pre></div></div>
+
+<h3 id="8文档处理">8.文档处理</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1，内部插入 （内部）
+append() //标签直接位置移动，原来的位置就没了。 html拷贝全部，然后黏贴，原来的位置还是有的
+appendTo()
+prepend() //前插入
+prependTo()
+
+2，外部插入（兄弟）
+after() //（最后面）
+instertAfter() //（本元素紧挨着的后面）
+before()
+instertBefore()
+
+3，包围
+wrap() //$(‘p’).wrap(‘&lt;a&gt;&lt;/a&gt;’) 外包围 &lt;a&gt;&lt;p&gt;&lt;/p&gt;&lt;/a&gt; 每一个都包围
+wrapInner() //内包围
+wrapAll()  //查到所有的，总的包围一下 
+
+4，替换
+replaceWith()  //$(‘p’).replaceWith(‘&lt;h1&gt;&lt;/h1&gt;’)//每个都替换掉
+replaceAll()   //$(‘&lt;h1&gt;&lt;/h1&gt;’).replaceWith(‘p’)
+
+5，删除（用的不多）
+empty()  //内容清空
+remove() //标签移除 标签对象返回保留，还是可以用的，但是他的事件方法、属性都移除干净了
+detach() //事件 属性 还有保留
+
+6，复制
+clone()  //只能克隆标签本身 不能克隆事件
+clone(ture)  //事件也克隆了
+
+</code></pre></div></div>
+
+<h3 id="9css处理">9.css处理</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>offset() //偏移 获取坐标
+position() //获取相对定位的标签的坐标
+scrollTop(val) //判断已经移动的高度
+
+$(window).width //可视区域宽高
+$(document).width //文档总宽度高
+$(window).scrollTop //屏幕已经滚动的高
+
+
+尺寸
+height() //等于clientHeight 如果需要下载 一般在 img.onload(){ 里面获取 }
+width()
+innerHeight() //包含padding
+innerWidth()
+outerHeight() //再加边框
+outerWidth()
+
+</code></pre></div></div>
+
+<h3 id="10事件">10.事件</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1，原on开头的方法，去掉on之后的事件，jQuery都支持。
+
+2，页面载入 ，js加载时机
+a，dom加载完毕，js直接放在body之后就好了
+b，静态资源加载完毕 onload 当中 $(window).load(function(){ })
+c，$(fn)  jQuery中 $(function(){ });之中使用
+d，$(document).ready(fn) //基本已经废弃 使用上面的方法
+
+
+3，事件处理
+bind()  //$(‘h1’).bind(‘click’,function(){})
+unbind(‘click’) //如不传参数，则解除所有事件
+one() //执行一次 立刻解除
+
+事件委派
+live() //动态添加的标签 添加事件绑定，此处不能用bind()
+die()
+
+事件切换
+hover() //鼠标移入移出 两个函数循环调用
+toggle() //点击的时候 两个函数 循环调用
+
+</code></pre></div></div>
+
+<h3 id="11效果">11.效果</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mousedown等等，会区分鼠标的哪个按键，并且把右键菜单拦截掉，原生事件return false 会禁止掉默认事件
+
+show(1000)
+hide()
+slideUp(1000) //向上滑出
+slideDown(5000)
+slideToggle() //上出/下入
+fadeOut(1000) //淡出
+fadeIn(800) //淡入
+fadeTo(800,0.5) //淡出到0.5的透明度
+animate({},1000). //自定义动画
+
+</code></pre></div></div>
+
+<h3 id="12ajax">12.Ajax</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$.get(url,data,function(res){})
+$.post(url,data,function(res){})
+
+</code></pre></div></div>
+
+<h3 id="13工具">13.工具</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$.isArray()
+$.isFunction()
+$.isEmptyObject()
+$.trim() //左右去空格
+$.param() //把json对象转化成url的字符串
+$(‘form’).serialize() //把表单的字符串转成json请求的字符串
+
+</code></pre></div></div>
+
+
+    <hr style="border-top:0px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/categories.html">
+                webk开发 <span>(2)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    <!--    -->
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    
+    <a class="btn btn-default" href="/promise" class="previous">下一篇</a>
+    
+</div>
+
+			<footer>
+				<p>
+					This work is licensed under a
+					<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/deed.en_US">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+				</p>
+				<p>
+					Powered by
+					<a rel="license" target="_blank" href="https://jekyllrb.com">Jekyll</a> ,
+					<a rel="license" target="_blank" href="https://github.com">Github</a> ,
+					<a rel="license" target="_blank" href="https://www.wanglizhen.xyz/">wanglizhen</a>
+				</p>
+			</footer>
+	</main>
+</body>
+
+</html>
