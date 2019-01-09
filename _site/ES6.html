@@ -12,7 +12,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
 <!-- title -->
-<title>About JS &middot; wanglizhen 的主页</title>
+<title>ES6 &middot; wanglizhen 的主页</title>
 
 <!-- icons -->
 <link rel="shortcut icon" href="/assets/images/favicon.ico">
@@ -69,93 +69,64 @@
 
 			
 <div class="well article">
-        <h2><a href="/About-JS">About JS</a></h2>
+        <h2><a href="/ES6">ES6</a></h2>
         <span class="post-date">
             
-            October-3-2016
+            September-18-2017
         </span>
         <hr style="border-top:0px solid #28323C;"/>
     
     <div class="post-content">
-    <h3 id="变量提升先使用后定义">变量提升（先使用，后定义）</h3>
+    <h3 id="import引入与">import引入与{}</h3>
 
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//A.js
 
-console.log(a) // 10
-
-var a = 10;<span class="sb">
-
-
-
-</span>run()   //running....20
-
-function run(){
-    var b = 20
-    console.log("running...." + b)
+module.exports = {
+    a:aa,
+    b:bb
 }
+
+//B.js 引入，以下方式都对
+import A from './A'
+import myA from './A'
+
+//以下方式都错
+import {A} from './A'
+import {myA} from './A'
+
+</code></pre></div></div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//A.js
+
+export const a_config = {
+    a:aa,
+    b:bb
+}
+export const other_config = {
+    c:cc,
+    d:dd
+}
+
+module.exports = {
+    abc:a_config,
+    other_config:other_config
+}
+
+//B.js 引入，以下方式都对
+import {abc} from './A'
+import {other_config} from './A'
+import config from './A' //默认第一个
+
 
 </code></pre></div></div>
 
-<h3 id="let--es6">let  （ES6）</h3>
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<h3 id="箭头函数">箭头函数</h3>
 
-const x = 1;
-
-x = 2;   //报错 const 不能再次赋值<span class="sb">
-
-
-</span>console.log(a) //undefine let 不支持变量提升
-
-let a = 10;
-let a = 30;    //报错 let 不支持在次声明<span class="sb">
-
-
-</span>function run(){
-    let b = 20;
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(a,b)=&gt;{
+    let c = 'hello'
+    return c + a + b
 }
 
-console.log(b) //undefine。 let块状作用域
-
 </code></pre></div></div>
-
-<h3 id="-函数--es6箭头函数为匿名函数不能变量提升">=&gt; 函数  （ES6）箭头函数为匿名函数，不能变量提升</h3>
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-a = a =&gt; a  //函数名 参数 返回值（没有{}，默认是返回值）
- 
-b = (c,d) =&gt; {<span class="sb">
-
-    //箭头函数的 this
-    //默认指向在定义它时,它所处的对象,而不是执行时的对象,
-        定义它的时候,可能环境是window（即继承父级的this）
-        
-    console.log(this)
-</span>}
-b(1,2)
-
-function eat(){
-    //普通函数的this
-    //1，特指调用当前的函数的对象
-    //2，默认情况下，没找到直接调用者,则this指的是 window
-    //3，在严格模式下,没有直接调用者的函数中的this是 undefined
-    
-    console.log(this)
-}
-eat()<span class="sb">
-
-
-</span></code></pre></div></div>
-
-<h3 id="最常用的定时器">最常用的定时器</h3>
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-setTimeout(function() {<span class="sb">
-
-    conconsole.log("已经过了一秒钟......")
-
-</span>}, 1000);
-
-</code></pre></div></div>
-
-<p>持续更新中……</p>
 
 
     <hr style="border-top:0px solid #28323C;"/>
@@ -183,10 +154,10 @@ setTimeout(function() {<span class="sb">
 </div>
 <div class="pagination">
     
-    <a class="btn btn-default" href="/Swift-OC" class="next">上一篇</a>
+    <a class="btn btn-default" href="/str-js" class="next">上一篇</a>
     
     
-    <a class="btn btn-default" href="/iOS" class="previous">下一篇</a>
+    <a class="btn btn-default" href="/js_wx" class="previous">下一篇</a>
     
 </div>
 

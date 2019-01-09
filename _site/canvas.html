@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- meta information -->
+<meta charset="utf-8">
+<meta name="description" 
+      content="Welcome to wanglizhen 的主页! - iOS开发 iOS技术探讨 开发中的bug记录 微信小程序开发技术探讨与bug记录 前端 html、js、css 开发  IT技术探讨 共同学习 共同进步" >
+<meta name="author" content="wanglizhen（王立震） && Aigars Dzerviniks">
+
+<!-- Enable responsiveness on mobile devices-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<!-- title -->
+<title>canvas简单学习 &middot; wanglizhen 的主页</title>
+
+<!-- icons -->
+<link rel="shortcut icon" href="/assets/images/favicon.ico">
+
+<!-- stylesheets -->
+<link rel="stylesheet" href="/assets/css/responsive.gs.12col.css">
+<link rel="stylesheet" href="/assets/css/animate.min.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/category.css"/>
+<link rel="stylesheet" href="/assets/css/about.css"/>
+
+
+<!-- Google fonts -->
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic&subset=latin-ext">
+
+
+<!-- font Awesome -->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+
+<!-- feed links -->
+<link rel="alternate" href="http://localhost:4000/feed.xml" type="application/rss+xml" title="wanglizhen 的主页">
+
+</head>
+
+<body>
+	<main class="container avocado">
+		
+			<header>
+				
+				<div>
+					<a href="http://localhost:4000" id="logo" title="wanglizhen 的主页" style="background-image: url(/assets/images/logo.png);"></a>
+				</div>
+
+				<nav id="main-navigation">
+  
+  
+  <a href="https://www.wanglizhen.xyz/" title="Home">Home</a>
+  
+  
+  
+  <a href="https://www.wanglizhen.xyz/category/" title="Category">Category</a>
+  
+  
+  
+  <a href="https://www.wanglizhen.xyz/about/" title="about">about</a>
+  
+  
+</nav>
+
+
+			</header>
+
+			
+<div class="well article">
+        <h2><a href="/canvas">canvas简单学习</a></h2>
+        <span class="post-date">
+            
+            September-11-2018
+        </span>
+        <hr style="border-top:0px solid #28323C;"/>
+    
+    <div class="post-content">
+    <h3 id="基础">基础</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//初识canvas：不同的canvas需要不同的id，不要循环创建 宽高写在标签里面 绘图 有先后有顺序
+
+&lt;canvas id="canvasId"&gt;&lt;span&gt;不支持canvas的浏览器&lt;/span&gt;&lt;/canvas&gt;
+
+var oC = document.getElementById('canvasId')
+var oGc = oC.getContext('2d')
+//0，基本属性
+oGc.fillStyle = 'red';//填充颜色
+oGc.strokeStyle = 'red';//边框颜色
+oGc.lineJoin = 'bevel'//方形的四个角 bevel斜角 round圆角
+oGc.lineCap = 'round'//画线的两端 round圆角 square（会变长，长度多出为宽一半的值）
+
+//1，画方形 fill填充 起点 宽高  oGc.rect() oGc.fill() == fillRect()
+oGc.fillRect(10,10,50,50)
+oGc.strokeRect(70.5,10.5,60,60)
+
+
+//2，清除画布 坐标 和 宽高。如果需要绘制动画，则需要在每次绘制之前清空上一次的绘画
+oGc.clearRect(20,20,10,20) 
+
+//3，画线 或者 三角
+oGc.beginPath()
+oGc.moveTo(180,10)
+oGc.lineTo(220,10)
+oGc.lineTo(150,50)
+// oGc.closePath() //闭合  如果开始和闭合联合使用，可以避免属性影响多个绘图
+oGc.stroke()
+
+//4，画圆 save restore
+oGc.save()
+oGc.strokeStyle = 'blue'; // save restore 闭合使用，使得fillStyle只在其中起作用
+oGc.moveTo(350,50)
+oGc.arc(350,50,50,-90*Math.PI/180,30*Math.PI/180,false) //坐标 半径 起始弧度：默认3点钟方向 结束弧度 旋转方向：默认false顺时针
+// oGc.closePath() //可选
+oGc.stroke()
+oGc.restore()
+
+//5，曲线
+oGc.moveTo(10,180) //起点
+oGc.strokeStyle = 'blue';
+oGc.arcTo(10,100,100,100,20) //两个点  20为半径内切圆切掉
+oGc.stroke()
+
+//6，贝塞尔曲线
+// quadraticCurveTo(dx,dy,x1,y1) //加起点 控制点拉伸 终点
+// bezierCurveTo(dx1,dy1,dx2,dy2,x1,y1)//加起点 控制点拉伸  控制点拉伸 终点
+
+
+</code></pre></div></div>
+<h3 id="动态绘图-变换">动态绘图 变换</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//动态绘制
+num = 0
+oGc.fillRect(0,100,50,50)
+setInterval(function(){
+    num++;
+    oGc.clearRect(0,100,400,300) //清空上次的绘制
+    oGc.fillRect(0+num,100+num,50,50)
+},50)
+
+//变换 save restore clearRect setInterval 配合使用 完成动画
+// translate(x,y) //变换起点
+// rotate(45*Math.PI/180) //旋转
+// scale(2,3) //宽2倍 高3倍
+
+</code></pre></div></div>
+<h3 id="绘制图片-和-图片背景">绘制图片 和 图片背景</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var myImg = new Image()
+myImg.src = 'a.png'
+myImg.onload = function(){
+    // draw1(this)
+    draw2(this)
+}
+function draw1(obj){
+    //宽高不写 会自适应
+    oGc.drawImage(obj,10,10,200,100)
+}
+function draw2(obj){
+    //repeat repeat-x repeat-y no-repeat
+    var bg = oGc.createPattern(obj,'repeat-x')
+    oGc.fillStyle = bg
+    oGc.fillRect(0,0,400,400)
+}
+
+</code></pre></div></div>
+
+<h3 id="渐变">渐变</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//线性 两个点
+// var obj  = oGc.createLinearGradient(100,100,200,200)
+//放射性渐变的 圆坐标，圆半径  圆坐标，圆半径
+var obj  = oGc.createRadialGradient(200,200,100,200,200,50)
+
+obj.addColorStop(0,"#f00")
+obj.addColorStop(1,"#0f0")
+oGc.fillStyle = obj
+oGc.fillRect(100,100,200,200)
+
+</code></pre></div></div>
+
+<h3 id="绘制文本">绘制文本</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//第二个参数可以随便写 但是一定要写
+oGc.font = '50px impact'
+//左右 默认居左 end right center
+oGc.textAlign = 'left'
+//默认alphabetuc 不是最上边的，一般会改掉 top middle bottom
+oGc.textBaseline = 'top'
+//空心文本 开始绘制的点，与textAlign  textBaseline 相关
+oGc.strokeText('文本绘制',0,0)   
+
+// 阴影 
+oGc.shadowOffsetX = 10;
+oGc.shadowOffsetY = 10;
+//默认颜色 （0，0，0，0）
+oGc.shadowColor = "#00f";
+//模糊值
+oGc.shadowBlur = 3;
+
+// 获取文本的宽，不能获取高 高就是文字的大小 可以做一些居中
+var w = oGc.measureText('文本绘制').width
+oGc.fillText('文本绘制',(400-w)/2,(400-60)/2)
+
+
+</code></pre></div></div>
+
+<h3 id="像素">像素</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//像素data 是一个数组，四位表示一个像素(r,g,b,a)，因此100x100的宽高，数组长度应该是40000
+oGc.getImageData(x,y,w,h)
+oGc.putImageData(x,y,w,h)
+//创建一个新的 像素区域
+var newImg = oGc.createImageData(w,h)
+oGc.putImageData(newImg,x,y)
+
+可以做马赛克 倒影 反转等
+
+</code></pre></div></div>
+
+<h3 id="合成">合成</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//导出图片
+let imgSrc = oC.toDataURL
+//全局 globalAlpha
+//oGc.globalCompositeOperation = 'xor'
+
+//事件操作 判断是否在canvas绘制区域
+oGc.isPointInPath(x,y)
+
+</code></pre></div></div>
+
+
+    <hr style="border-top:0px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/categories.html">
+                web开发 <span>(12)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    <!--    -->
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    
+    <a class="btn btn-default" href="/jquery" class="previous">下一篇</a>
+    
+</div>
+
+			<footer>
+				<p>
+					This work is licensed under a
+					<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/deed.en_US">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+				</p>
+				<p>
+					Powered by
+					<a rel="license" target="_blank" href="https://jekyllrb.com">Jekyll</a> ,
+					<a rel="license" target="_blank" href="https://github.com">Github</a> ,
+					<a rel="license" target="_blank" href="https://www.wanglizhen.xyz/">wanglizhen</a>
+				</p>
+			</footer>
+	</main>
+</body>
+
+</html>

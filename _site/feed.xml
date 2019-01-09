@@ -7,6 +7,168 @@
 		<atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>canvas简单学习</title>
+				<description>&lt;h3 id=&quot;基础&quot;&gt;基础&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//初识canvas：不同的canvas需要不同的id，不要循环创建 宽高写在标签里面 绘图 有先后有顺序
+
+&amp;lt;canvas id=&quot;canvasId&quot;&amp;gt;&amp;lt;span&amp;gt;不支持canvas的浏览器&amp;lt;/span&amp;gt;&amp;lt;/canvas&amp;gt;
+
+var oC = document.getElementById('canvasId')
+var oGc = oC.getContext('2d')
+//0，基本属性
+oGc.fillStyle = 'red';//填充颜色
+oGc.strokeStyle = 'red';//边框颜色
+oGc.lineJoin = 'bevel'//方形的四个角 bevel斜角 round圆角
+oGc.lineCap = 'round'//画线的两端 round圆角 square（会变长，长度多出为宽一半的值）
+
+//1，画方形 fill填充 起点 宽高  oGc.rect() oGc.fill() == fillRect()
+oGc.fillRect(10,10,50,50)
+oGc.strokeRect(70.5,10.5,60,60)
+
+
+//2，清除画布 坐标 和 宽高。如果需要绘制动画，则需要在每次绘制之前清空上一次的绘画
+oGc.clearRect(20,20,10,20) 
+
+//3，画线 或者 三角
+oGc.beginPath()
+oGc.moveTo(180,10)
+oGc.lineTo(220,10)
+oGc.lineTo(150,50)
+// oGc.closePath() //闭合  如果开始和闭合联合使用，可以避免属性影响多个绘图
+oGc.stroke()
+
+//4，画圆 save restore
+oGc.save()
+oGc.strokeStyle = 'blue'; // save restore 闭合使用，使得fillStyle只在其中起作用
+oGc.moveTo(350,50)
+oGc.arc(350,50,50,-90*Math.PI/180,30*Math.PI/180,false) //坐标 半径 起始弧度：默认3点钟方向 结束弧度 旋转方向：默认false顺时针
+// oGc.closePath() //可选
+oGc.stroke()
+oGc.restore()
+
+//5，曲线
+oGc.moveTo(10,180) //起点
+oGc.strokeStyle = 'blue';
+oGc.arcTo(10,100,100,100,20) //两个点  20为半径内切圆切掉
+oGc.stroke()
+
+//6，贝塞尔曲线
+// quadraticCurveTo(dx,dy,x1,y1) //加起点 控制点拉伸 终点
+// bezierCurveTo(dx1,dy1,dx2,dy2,x1,y1)//加起点 控制点拉伸  控制点拉伸 终点
+
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;动态绘图-变换&quot;&gt;动态绘图 变换&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//动态绘制
+num = 0
+oGc.fillRect(0,100,50,50)
+setInterval(function(){
+    num++;
+    oGc.clearRect(0,100,400,300) //清空上次的绘制
+    oGc.fillRect(0+num,100+num,50,50)
+},50)
+
+//变换 save restore clearRect setInterval 配合使用 完成动画
+// translate(x,y) //变换起点
+// rotate(45*Math.PI/180) //旋转
+// scale(2,3) //宽2倍 高3倍
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;绘制图片-和-图片背景&quot;&gt;绘制图片 和 图片背景&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var myImg = new Image()
+myImg.src = 'a.png'
+myImg.onload = function(){
+    // draw1(this)
+    draw2(this)
+}
+function draw1(obj){
+    //宽高不写 会自适应
+    oGc.drawImage(obj,10,10,200,100)
+}
+function draw2(obj){
+    //repeat repeat-x repeat-y no-repeat
+    var bg = oGc.createPattern(obj,'repeat-x')
+    oGc.fillStyle = bg
+    oGc.fillRect(0,0,400,400)
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;渐变&quot;&gt;渐变&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//线性 两个点
+// var obj  = oGc.createLinearGradient(100,100,200,200)
+//放射性渐变的 圆坐标，圆半径  圆坐标，圆半径
+var obj  = oGc.createRadialGradient(200,200,100,200,200,50)
+
+obj.addColorStop(0,&quot;#f00&quot;)
+obj.addColorStop(1,&quot;#0f0&quot;)
+oGc.fillStyle = obj
+oGc.fillRect(100,100,200,200)
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;绘制文本&quot;&gt;绘制文本&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//第二个参数可以随便写 但是一定要写
+oGc.font = '50px impact'
+//左右 默认居左 end right center
+oGc.textAlign = 'left'
+//默认alphabetuc 不是最上边的，一般会改掉 top middle bottom
+oGc.textBaseline = 'top'
+//空心文本 开始绘制的点，与textAlign  textBaseline 相关
+oGc.strokeText('文本绘制',0,0)   
+
+// 阴影 
+oGc.shadowOffsetX = 10;
+oGc.shadowOffsetY = 10;
+//默认颜色 （0，0，0，0）
+oGc.shadowColor = &quot;#00f&quot;;
+//模糊值
+oGc.shadowBlur = 3;
+
+// 获取文本的宽，不能获取高 高就是文字的大小 可以做一些居中
+var w = oGc.measureText('文本绘制').width
+oGc.fillText('文本绘制',(400-w)/2,(400-60)/2)
+
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;像素&quot;&gt;像素&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//像素data 是一个数组，四位表示一个像素(r,g,b,a)，因此100x100的宽高，数组长度应该是40000
+oGc.getImageData(x,y,w,h)
+oGc.putImageData(x,y,w,h)
+//创建一个新的 像素区域
+var newImg = oGc.createImageData(w,h)
+oGc.putImageData(newImg,x,y)
+
+可以做马赛克 倒影 反转等
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;合成&quot;&gt;合成&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//导出图片
+let imgSrc = oC.toDataURL
+//全局 globalAlpha
+//oGc.globalCompositeOperation = 'xor'
+
+//事件操作 判断是否在canvas绘制区域
+oGc.isPointInPath(x,y)
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+				<pubDate>Tue, 11 Sep 2018 00:00:00 +0800</pubDate>
+				<link>http://localhost:4000/canvas</link>
+				<guid isPermaLink="true">http://localhost:4000/canvas</guid>
+			</item>
+		
+			<item>
 				<title>jquery常用方法</title>
 				<description>&lt;h3 id=&quot;使用--或者-jquery-牛人强哥版&quot;&gt;使用 $() 或者 jQuery() ：牛人强哥版&lt;/h3&gt;
 &lt;h3 id=&quot;1-初见&quot;&gt;1. 初见&lt;/h3&gt;
@@ -690,13 +852,223 @@ config = {
     window: {
         backgroundTextStyle: 'light',
     }
-}
-
-wepy刚刚开始看，持续更新中。。。。也可能以后就忘了更新了。。。。&lt;span class=&quot;sb&quot;&gt;
-
+}&lt;span class=&quot;sb&quot;&gt;
 
 
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;wepy初见&quot;&gt;wepy初见&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import wepy from 'wepy';
+//Index 命名首字母一定要大写
+export default class Index extends wepy.page{ }
+
+//默认setData await使用
+this.userInfo = await wepy.getUserInfo();
+//异步执行的时候调用
+this.$apply();
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;基础必记&quot;&gt;基础必记&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import wepy from 'wepy';
+
+export default class MyPage extends wepy.page {
+    // export default class MyComponent extends wepy.component {
+    customData = {}  // 自定义数据
+
+    customFunction ()　{}  //自定义方法
+
+    onLoad () {}  // 在Page和Component共用的生命周期函数
+
+    onShow () {}  // 只在Page中存在的页面生命周期函数
+
+    config = {};  // 只在Page实例中存在的配置数据，对应于原生的page.json文件
+
+    data = {};  // 页面所需数据均需在这里声明，可用于模板数据绑定
+
+    components = {};  // 声明页面中所引用的组件，或声明组件中所引用的子组件
+
+    mixins = [];  // 声明页面所引用的Mixin实例
+
+    computed = {};  // 声明计算属性（详见后文介绍）
+
+    watch = {};  // 声明数据watcher（详见后文介绍）
+
+    methods = {};  
+    /*
+        声明页面wxml中标签的事件处理函数。
+        注意，此处只用于声明页面wxml中标签的bind、catch事件
+        自定义方法需以自定义方法的方式声明
+    */
+
+    events = {};  // 声明组件之间的事件处理函数
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;组件引用&quot;&gt;组件引用&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+import Child from '../components/child';
+components = {
+    //为两个相同组件的不同实例分配不同的组件ID，从而避免数据同步变化的问题
+    child: Child,
+    anotherchild: Child
+};
+
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;循环&quot;&gt;循环&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;!-- 注意，使用for属性，而不是使用wx:for属性 --&amp;gt;
+&amp;lt;repeat for=&quot;&quot; key=&quot;index&quot; index=&quot;index&quot; item=&quot;item&quot;&amp;gt;
+    &amp;lt;!-- 插入&amp;lt;script&amp;gt;脚本部分所声明的child组件，同时传入item --&amp;gt;
+    &amp;lt;child :item=&quot;item&quot;&amp;gt;&amp;lt;/child&amp;gt;
+&amp;lt;/repeat&amp;gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;计算属性-监听器-传值&quot;&gt;计算属性 监听器 传值&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// 计算属性aPlus，在脚本中可通过this.aPlus来引用，在模板中可通过来插值
+computed = {
+    aPlus () {
+        return this.a + 1
+    }
+}
+
+
+// 监听器函数名必须跟需要被监听的data对象中的属性num同名，
+data = {
+    num: 1
+}
+// 其参数中的newValue为属性改变后的新值，oldValue为改变前的旧值
+watch = {
+    num (newValue, oldValue) {
+        console.log(`num value: ${oldValue} -&amp;gt; ${newValue}`)
+    }
+}
+
+//传值
+props = {
+    // 静态传值
+    title: String,
+
+    // 父向子单向动态传值
+    syncTitle: {
+        type: String,
+        default: 'null'
+    },
+
+    twoWayTitle: {
+        type: String,
+        default: 'nothing',
+        twoWay: true
+    }
+};
+
+onLoad () {
+    console.log(this.title); // p-title
+    console.log(this.syncTitle); // p-title
+    console.log(this.twoWayTitle); // p-title
+
+    this.title = 'c-title';
+    console.log(this.$parent.parentTitle); // p-title.
+    this.twoWayTitle = 'two-way-title';
+    this.$apply();
+    
+    // two-way-title. 
+        twoWay为true时，子组件props中的属性值改变时，会同时改变父组件对应的值
+    console.log(this.$parent.parentTitle); 
+    
+    this.$parent.parentTitle = 'p-title-changed';
+    this.$parent.$apply();
+    
+    // 'c-title';
+    console.log(this.title); 
+    
+    // 'p-title-changed' 
+        有.sync修饰符的props属性值，当在父组件中改变时，会同时改变子组件对应的值。
+    console.log(this.syncTitle); 
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;组件通信与交互&quot;&gt;组件通信与交互&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//$broadcast事件是由父组件发起，所有子组件都会收到
+//父
+this.$broadcast('fuviewclick','aaaaaaaa')
+//子
+events = {
+    fuviewclick(e){
+        console.log(e);
+    }
+};
+
+
+//$emit 子组件发起 父组件收到
+//子
+test1click() {
+    this.$emit('test1func', 'hehe');
+},
+//父
+events = {
+    test1func(){
+        console.log(`other events func`);
+    }
+};
+
+//$invoke 一个页面调用另一个页面的方法 或者 一个组件调用另一个组件的方法。
+     此方法用的最多，因为页面和组件都能交互
+//子一
+testclick() {
+    this.$invoke(&quot;../test2&quot;, 'test1click', 'haha');
+}
+//子二
+methods = {
+    //或者直接写在最外面 不能写在events中，不知道为什么
+    test1click(e) {
+        console.log(e);
+    }
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;组件自定义事件处理函数&quot;&gt;组件自定义事件处理函数&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.default: 绑定小程序冒泡型事件，如bindtap，.default后缀可省略不写；
+.stop: 绑定小程序捕获型事件，如catchtap；
+.user: 绑定用户自定义组件事件通过$emit触发。
+//注意，如果用了自定义事件，则events中对应的监听函数不会再执行。
+
+//定义
+@customEvent.user=&quot;myFn&quot;
+//触发
+this.$emit('customEvent', 100) 
+//实现
+methods = {
+    myFn (num, evt) {
+        console.log('myFn received emit event, number is: ' + num)
+    }
+}
+
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;参数传递&quot;&gt;参数传递&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// WePY 1.1.8以后的版本，只允许传string。
+&amp;lt;view @tap=&quot;tapName(, 'wepy', 'otherparams')&quot;&amp;gt; Click me! &amp;lt;/view&amp;gt;
+
+methods: {
+    tapName (id, title, other, event) {
+        console.log(id, title, other)// output: 1, wepy, otherparams
+    }
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 </description>
 				<pubDate>Wed, 06 Jun 2018 00:00:00 +0800</pubDate>
@@ -1498,28 +1870,6 @@ onShow: function () {&lt;span class=&quot;sb&quot;&gt;
 				<pubDate>Mon, 15 Jan 2018 00:00:00 +0800</pubDate>
 				<link>http://localhost:4000/js_wx_tabbar</link>
 				<guid isPermaLink="true">http://localhost:4000/js_wx_tabbar</guid>
-			</item>
-		
-			<item>
-				<title>微信小程序 小问题集结</title>
-				<description>&lt;h3 id=&quot;小程序时间兼容ios版本&quot;&gt;小程序时间兼容iOS版本&lt;/h3&gt;
-&lt;p&gt;我们有个需求，需要将服务器取到的时间再处理，在将字符串时间变为时间的时候，安卓手机是没问题的，但是iOS时间转换错误，原来iOS设备只能识别 ‘2017/02/21 11:23:56’ 这种时间格式，不能识别 ‘2017-02-21 11:23:56’ 这种格式，所以在转时间之前，需要先将时间字符串格式化一下，如有需要，再改回来就行了&lt;/p&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-//改之前
-var myDate = new Date(date)
-
-//改之后
-date = date.replace(/-/g, '/');
-var myDate = new Date(date)
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;持续更新中…….&lt;/p&gt;
-</description>
-				<pubDate>Sun, 05 Nov 2017 00:00:00 +0800</pubDate>
-				<link>http://localhost:4000/wx_problem</link>
-				<guid isPermaLink="true">http://localhost:4000/wx_problem</guid>
 			</item>
 		
 	</channel>
