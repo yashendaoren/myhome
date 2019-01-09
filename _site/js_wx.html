@@ -210,6 +210,89 @@ function confirmEnding(str, target) {
 }
 </code></pre></div></div>
 
+<h3 id="padding-不会增加区域">padding 不会增加区域</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>box-sizing: border-box;
+
+</code></pre></div></div>
+<h3 id="nth-child是从1开始的">nth-child是从1开始的</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ul li:nth-child(1)
+
+</code></pre></div></div>
+
+<h3 id="背景图片铺满-css3">背景图片铺满 css3</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>background:url('a.png') no-repeat;
+background-size:cover;
+</code></pre></div></div>
+
+<h3 id="定义手机端整体宽度750rem-代码需要放在body当中">定义手机端整体宽度750rem 代码需要放在body当中</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+
+    var _winWidth=document.body.clientWidth ||
+        document.documentElement.clientWidth,
+        _style=document.getElementsByTagName("html")[0].style;
+        
+    _winWidth &gt;=750 ? 
+        _style.fontSize = "100px" : _style.fontSize = _winWidth/7.5 + "px";
+        
+&lt;/script&gt;
+
+</code></pre></div></div>
+
+<h3 id="鼠标箭头-css-cursor">鼠标箭头 css cursor:</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+auto                    ：标准光标  
+default                 ：标准箭头  
+pointer, hand           ：手形光标  
+wait                    ：等待光标  
+text                    ：I形光标  
+vertical-text           ：水平I形光标  
+no-drop                 ：不可拖动光标  
+not-allowed             ：无效光标  
+help                    ：帮助光标  
+all-scroll              ：三角方向标  
+move                    ：移动标  
+crosshair               ：十字标  
+e-resize                ：east 向右拉动窗口大小的光标，一下都是
+n-resize  
+nw-resize  
+w-resize  
+s-resize  
+se-resize  
+sw-resize
+
+</code></pre></div></div>
+
+<h3 id="textarea">textarea</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>resize:none
+
+</code></pre></div></div>
+<h3 id="阴影">阴影</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/* 水平偏移 垂直偏移 模糊度 阴影扩展 阴影颜色 内外阴影（默认是外阴影,inset内阴影） */
+box-shadow: 10px 20px 5px 40px black inset;
+/* 阴影颜色如果不写 会默认盒子文字的颜色 */
+box-shadow: 10px 20px 5px;
+
+/* 文字的阴影 参数比较少 */
+/* 水平偏移 垂直偏移 模糊度 阴影颜色（也是可以省略的） */
+text-shadow:  10px 20px 5px green;
+
+</code></pre></div></div>
+<h3 id="ul去除小点">ul去除小点</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ul{list-style: none;}
+</code></pre></div></div>
+<h3 id="li横向排列">li横向排列</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>li{float: left;}
+</code></pre></div></div>
+<h3 id="margin">margin</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>竖直方向会按重叠 水平方向不会重叠
+</code></pre></div></div>
+
     <hr style="border-top:0px solid #28323C;"/>
 
     <!-- tags and categories under post -->
