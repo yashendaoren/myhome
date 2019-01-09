@@ -147,7 +147,7 @@ arrayObject.valueOf()<span class="sb">
 <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 // 方法1
 Array.prototype.unique = function(){ 
-    var arr = <span class="err">[</span>]; 
+    var arr = <span class="p">[]</span>; 
     for(var i=0,i=this.length;i&lt;len;i++){ 
         if(arr.indexOf(this<span class="p">[</span><span class="nv">i</span><span class="p">]</span>) == -1){ 
             arr.push(this<span class="p">[</span><span class="nv">i</span><span class="p">]</span>);
@@ -162,7 +162,7 @@ console.log(<span class="p">[</span><span class="nv">1,2,3,2,5,6,3</span><span c
 </span>//方法2
 Array.prototype.unique = function(){ 
     var n = {}, 
-    r=<span class="err">[</span>]; //n为哈希表，r为临时数组
+    r=<span class="p">[]</span>; //n为哈希表，r为临时数组
     //遍历当前数组 
     for(var i = 0; i &lt; this.length; i++) { 
         //如果hash表中没有当前项 

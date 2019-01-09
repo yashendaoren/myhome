@@ -7,6 +7,272 @@
 		<atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>promise初见</title>
+				<description>&lt;h3 id=&quot;基本用法&quot;&gt;基本用法&lt;/h3&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function fetch() {
+    return new Promise((resolve, reject) =&amp;gt; {
+        setTimeout(() =&amp;gt; {
+            reject('请求失败');
+        }, 1000)
+    })
+}
+
+fetch()
+    .then(
+        function (data) {
+            //成功的处理
+            console.log('请求处理-0');
+            console.log(data + &quot;-0&quot;);
+        },
+        function (reason, data) {
+            //失败的处理
+            console.log('触发异常-2');
+            console.log(reason + &quot;-2&quot;);
+        }
+    )
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;常用写法-resolve&quot;&gt;常用写法 resolve()&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//做饭
+function cook() {
+    console.log('开始做饭。');
+    var p = new Promise(function (resolve, reject) {        //做一些异步操作
+        setTimeout(function () {
+            console.log('做饭完毕！');
+            resolve('鸡蛋炒饭');
+        }, 1000);
+    });
+    return p;
+}
+
+//吃饭
+function eat(data) {
+    console.log('开始吃饭：' + data);
+    var p = new Promise(function (resolve, reject) {        //做一些异步操作
+        setTimeout(function () {
+            console.log('吃饭完毕!');
+            resolve('一块碗和一双筷子');
+        }, 2000);
+    });
+    return p;
+}
+
+function wash(data) {
+    console.log('开始洗碗：' + data);
+    var p = new Promise(function (resolve, reject) {        //做一些异步操作
+        setTimeout(function () {
+            console.log('洗碗完毕!');
+            resolve('干净的碗筷');
+        }, 2000);
+    });
+    return p;
+}
+
+//正常写法
+// cook()
+//   .then(function (data) {
+//     return eat(data);
+//   })
+//   .then(function (data) {
+//     return wash(data);
+//   })
+//   .then(function (data) {
+//     console.log(data);
+//   });
+
+//简化写法
+cook()
+.then(eat)
+.then(wash)
+.then(function (data) {
+    console.log(data);
+});
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;常用写法-reject&quot;&gt;常用写法 reject()&lt;/h3&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//做饭
+function cook() {
+    console.log('开始做饭。');
+    var p = new Promise(function (resolve, reject) {        //做一些异步操作
+        setTimeout(function () {
+            console.log('做饭失败！');
+            reject('烧焦的米饭');
+        }, 1000);
+    });
+    return p;
+}
+
+//吃饭
+function eat(data) {
+    console.log('开始吃饭：' + data);
+    var p = new Promise(function (resolve, reject) {        //做一些异步操作
+        setTimeout(function () {
+            console.log('吃饭完毕!');
+            resolve('一块碗和一双筷子');
+        }, 2000);
+    });
+    return p;
+}
+
+cook()
+.then(eat, function (data) {
+    console.log(data + '没法吃!');
+})
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;catch-用法&quot;&gt;catch() 用法&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//做饭
+function cook() {
+    console.log('开始做饭。');
+    var p = new Promise(function (resolve, reject) {        //做一些异步操作
+        setTimeout(function () {
+            console.log('做饭失败！');
+            reject('烧焦的米饭');
+        }, 1000);
+    });
+    return p;
+}
+//吃饭
+function eat(data) {
+    console.log('开始吃饭：' + data);
+    var p = new Promise(function (resolve, reject) {        //做一些异步操作
+        setTimeout(function () {
+            console.log('吃饭完毕!');
+            resolve('一块碗和一双筷子');
+        }, 2000);
+    });
+    return p;
+}
+cook()
+.then(eat)
+.catch(function (data) {
+    console.log(data + '没法吃!');
+});
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;all-彼此异步-同时完成才会进行下一步&quot;&gt;all() 彼此异步 同时完成才会进行下一步&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//切菜
+function cutUp() {
+    console.log('开始切菜。');
+    var p = new Promise(function (resolve, reject) {        //做一些异步操作
+        setTimeout(function () {
+            console.log('切菜完毕！');
+            resolve('切好的菜');
+        }, 1000);
+    });
+    return p;
+}
+
+//烧水
+function boil() {
+    console.log('开始烧水。');
+    var p = new Promise(function (resolve, reject) {        //做一些异步操作
+        setTimeout(function () {
+            console.log('烧水完毕！');
+            resolve('烧好的水');
+        }, 1000);
+    });
+    return p;
+}
+
+Promise
+.all([cutUp(), boil()])
+.then(function (results) {
+    console.log(&quot;准备工作完毕：&quot;);
+    console.log(results);
+});
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;race-彼此异步-只要有一个完成-就会进行下一步&quot;&gt;race() 彼此异步 只要有一个完成 就会进行下一步&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//切菜
+function cutUp() {
+    console.log('开始切菜。');
+    var p = new Promise(function (resolve, reject) {        //做一些异步操作
+        setTimeout(function () {
+            console.log('切菜完毕！');
+            resolve('切好的菜');
+        }, 1000);
+    });
+    return p;
+}
+
+//烧水
+function boil() {
+    console.log('开始烧水。');
+    var p = new Promise(function (resolve, reject) {        //做一些异步操作
+        setTimeout(function () {
+            console.log('烧水完毕！');
+            resolve('烧好的水');
+        }, 1000);
+    });
+    return p;
+}
+
+Promise
+.race([cutUp(), boil()])
+.then(function (results) {
+    console.log(&quot;准备工作完毕：&quot;);
+    console.log(results);
+});
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;racey应用&quot;&gt;racey应用：&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+/**
+* racey应用：
+* 上面代码 requestImg 函数异步请求一张图片，timeout 函数是一个延时 5 秒的异步操作。我们将它们一起放在 race 中赛跑。
+* 如果 5 秒内图片请求成功那么便进入 then 方法，执行正常的流程。
+* 如果 5 秒钟图片还未成功返回，那么则进入 catch，报“图片请求超时”的信息。
+*/
+&amp;lt;!--function useRace(){--&amp;gt;
+function requestImg() {
+    var p = new Promise(function (resolve, reject) {
+        var img = new Image();
+        img.onload = function () {
+            resolve(img);
+        }
+        img.src = 'xxxxxx';
+    });
+    return p;
+}
+
+//延时函数，用于给请求计时
+function timeout() {
+    var p = new Promise(function (resolve, reject) {
+        setTimeout(function () {
+            reject('图片请求超时');
+        }, 5000);
+    });
+    return p;
+}
+
+Promise
+.race([requestImg(), timeout()])
+.then(function (results) {
+    console.log(results);
+})
+.catch(function (reason) {
+    console.log(reason);
+});
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+				<pubDate>Fri, 29 Jun 2018 00:00:00 +0800</pubDate>
+				<link>http://localhost:4000/promise</link>
+				<guid isPermaLink="true">http://localhost:4000/promise</guid>
+			</item>
+		
+			<item>
 				<title>自定义组件、插件 和 wepy框架</title>
 				<description>&lt;h3 id=&quot;自定义组件-component-注意事项&quot;&gt;自定义组件 Component 注意事项&lt;/h3&gt;
 
@@ -1009,7 +1275,7 @@ arrayObject.valueOf()&lt;span class=&quot;sb&quot;&gt;
 &lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
 // 方法1
 Array.prototype.unique = function(){ 
-    var arr = &lt;span class=&quot;err&quot;&gt;[&lt;/span&gt;]; 
+    var arr = &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;; 
     for(var i=0,i=this.length;i&amp;lt;len;i++){ 
         if(arr.indexOf(this&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;) == -1){ 
             arr.push(this&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;);
@@ -1024,7 +1290,7 @@ console.log(&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n
 &lt;/span&gt;//方法2
 Array.prototype.unique = function(){ 
     var n = {}, 
-    r=&lt;span class=&quot;err&quot;&gt;[&lt;/span&gt;]; //n为哈希表，r为临时数组
+    r=&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;; //n为哈希表，r为临时数组
     //遍历当前数组 
     for(var i = 0; i &amp;lt; this.length; i++) { 
         //如果hash表中没有当前项 
@@ -1088,218 +1354,6 @@ console.log(res); // &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span clas
 				<pubDate>Sun, 22 Oct 2017 00:00:00 +0800</pubDate>
 				<link>http://localhost:4000/array-js</link>
 				<guid isPermaLink="true">http://localhost:4000/array-js</guid>
-			</item>
-		
-			<item>
-				<title>JS 字符串 常用操作</title>
-				<description>&lt;p&gt;我觉得 任何一门编程语言，需要处理最多的，就是字符串和数组，所以这里把字符串和数组的常用操作总结一下，本篇只记录字符串的方法&lt;/p&gt;
-
-&lt;h3 id=&quot;常用方法&quot;&gt;常用方法&lt;/h3&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-
-var str=&quot;hello world&quot;; &lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;//slice方法：第一个参数：子字符串开始位置，第二个参数：子字符串最后一个字符后面的位置 
-console.log(str.slice(3,7));    //lo w  包含头不包含尾 
-console.log(str.slice(3,-4));   //lo w  -4表示从后面向前4个长度的位置
-console.log(str.slice(3));      //lo world 没有第二个参数，默认到字符串结尾
-
-//substring方法：第一个参数：子字符串开始位置，第二个参数：子字符串最后一个字符后面的位置 
-console.log(str.substring(3,7));    //lo w 
-console.log(str.substring(3));      //lo world 
-str.substring(3,0) == str.substring(0,3) //方法会将较小数作为开始位置较大数作为结束位置
-str.substring(3,-4) == str.substring(3,0) == str.substring(0,3)
-
-//substr方法：第一个参数：子字符串开始位置，第二个参数：返回的字符个数
-console.log(str.substr(3,7));       //lo worl 7表示返回7个字符 
-console.log(str.substr(3));         //lo world
-console.log(str.substr(3,-4));      //&quot;&quot;空字符串 
-            
-
-//indexOf方法：是从字符串的开头向后搜索子字符串
-console.log(str.indexOf(&quot;o&quot;,6));    //7  
-console.log(str.indexOf(&quot;o&quot;));      //4 
-
-//lastIndexOf方法：是从字符串的结尾向前搜索子字符串
-console.log(str.lastIndexOf(&quot;o&quot;,6));//4 
-console.log(str.lastIndexOf(&quot;o&quot;));  //7 
-
-indexOf方法和lastIndexOf方法：都是从一个字符串中搜索给定的子字符串，并返回子字符串的位置；
-        如果没有找到，则返回-1。这两个方法都可以接收两个参数：要查找的子字符串和查找的位置&lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;//trim方法：方法用来删除字符串前后的空格，并不会修改原字符串
-var str=&quot;   hello world   &quot;; 
-console.log('('+str.trim()+')');    //(hello world) 
-console.log('('+str+')');           //(   hello world   ) &lt;span class=&quot;sb&quot;&gt;
-
-
-
-
-&lt;/span&gt;//match方法：只接受一个参数，由字符串或RegExp对象指定的一个正则表达式 
-var str=&quot;1 plus 2 equal 3&quot;
-document.write(str.match(/&lt;span class=&quot;se&quot;&gt;\d&lt;/span&gt;+/g))  //1，2，3
-
-//search方法：只接受一个参数，由字符串或RegExp对象指定的一个正则表达式 
-        search方法返回字符串中第一个匹配项的索引，如果没有匹配项，返回-1 
-var str=&quot;cat,bat,sat,fat&quot;; 
-var pattern=/.at/; 
-var matches=str.match(pattern); 
-console.log(matches.index);         //0 
-console.log(matches&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;);            //cat 
-console.log(pattern.lastIndex);     //0 lastIndex表示开始搜索下一个匹配项的字符位置
-    从0算起 
-var pos=str.search(/at/); 
-console.log(pos);                   //1 1表示at字符串在原来字符串中第一次出现的位置&lt;span class=&quot;sb&quot;&gt;
-
-
-
-&lt;/span&gt;//replace方法
-var str=&quot;cat,bat,sat,fat&quot;; 
-var res=str.replace(&quot;at&quot;,&quot;one&quot;);    //第一个参数是字符串，所以只会替换第一个子字符串 
-console.log(res);//cone,bat,sat,fat 
-var res1=str.replace(/at/g,&quot;one&quot;);  //第一个参数是正则表达式，所以会替换所有的子字符串 
-console.log(res1);//cone,bone,sone,fone &lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;//split 将字符串分割成字符串数组 
-//如果把空字符串 (&quot;&quot;) 用作分割，那么 string 中的每个字符之间都会被分割。 
-var str=&quot;red,blue,green,yellow&quot;; 
-console.log(str.split(&quot;,&quot;));    //&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;, &quot;yellow&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; 
-console.log(str.split(&quot;,&quot;,2));  //&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;&quot;red&quot;, &quot;blue&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;  第二个参数用来限制数组大小
-
-console.log(str.split(/&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;^\,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;+/));// &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;&quot;&quot;, &quot;,&quot;, &quot;,&quot;, &quot;,&quot;, &quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; 
-//第一项和最后一项为空字符串是因为正则表达式指定的分隔符出现在了子字符串的开头，
-    即&quot;red&quot;和&quot;yellow&quot; 。&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;^...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; 表示不在方括号内的任意字符  只要不是逗号都是分隔符&lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;//localeCompare 这个方法用于比较两个字符串
-/&lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;1.&lt;/span&gt;如果字符串在字母表中应该排在字符串参数之前，则返回一个负数 
-&lt;span class=&quot;p&quot;&gt;1.&lt;/span&gt;如果字符串等于字符串参数，则返回0 
-&lt;span class=&quot;p&quot;&gt;1.&lt;/span&gt;如果字符串在字母表中应该排在字符串参数之后，则返回一个正数 
-&lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;/
-var str=&quot;yellow&quot;; 
-console.log(str.localeCompare(&quot;brick&quot;));//1 
-console.log(str.localeCompare(&quot;yellow&quot;));//0 
-console.log(str.localeCompare(&quot;zoo&quot;));//-1 &lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;//字符串大小写转换方法
-var str=&quot;HELLO world&quot;; 
-console.log(str.toLowerCase());    //hello world 
-console.log(str.toUpperCase());    //HELLO WORLD &lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;//charAt方法是以单字符字符串的形式返回给定位置的那个字符 等同于下标。
-    charCodeAt方法获取到的不是字符而是字符编码 
-var str=&quot;hello&quot; 
-str.charAt(1)       //e 
-str&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;              //e 
-str.charCodeAt(1)   //101 &lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;//concat方法 和 + 操作一样，一般不用
-var str=&quot;hello &quot;; 
-var res=str.concat(&quot;world&quot;); 
-console.log(res);               //hello world 
-console.log(str);               //hello  原字符串的值未改变 
-var res1=str.concat(&quot;nihao&quot;,&quot;!&quot;); 
-console.log(res1);              //hello nihao!  concat方法可以接收任意多个参数 &lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;不常用方法&quot;&gt;不常用方法&lt;/h3&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-//fromCharCode方法 编码转字符串
-/&lt;span class=&quot;err&quot;&gt;*&lt;/span&gt; 
-fromCharCode方法是接收一或多个字符编码，然后将其转换为字符串 
-fromCharCode方法是String构造函数的一个静态方法 
-&lt;span class=&quot;err&quot;&gt;*&lt;/span&gt;/
-console.log(String.fromCharCode(104,101,108,108,111));  //hello &lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;//找到匹配字符串所在的各个位置
-var str=&quot;asadajhjkadaaasdasdasdasd&quot;; 
-var position=&lt;span class=&quot;err&quot;&gt;[&lt;/span&gt;]; 
-var pos=str.indexOf(&quot;d&quot;); 
-while(pos&amp;gt;-1){ 
-    position.push(pos); 
-    pos=str.indexOf(&quot;d&quot;,pos+1); 
-} 
-console.log(position);          //&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;3, 10, 15, 18, 21, 24&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;//字符串去重
-//String.split() 执行的操作与 Array.join 执行的操作是相反的 
-//split() 方法用于把一个字符串分割成字符串数组。 
-//join方法用于将字符串数组连接成一个字符串 
-
-var str=&quot;aahhgggsssjjj&quot;;  //这里字符串没有可以分隔的字符，所以需要使用空字符串作为分隔符 
-function unique(msg){ 
-    var res=&lt;span class=&quot;err&quot;&gt;[&lt;/span&gt;]; 
-    var arr=msg.split(&quot;&quot;); 
-    //console.log(arr); 
-    
-    for(var i=0;i&amp;lt;arr.length;i++){ 
-        if(res.indexOf(arr&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;)==-1){ 
-            res.push(arr&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;); 
-        } 
-    }
-    
-    return res.join(&quot;&quot;); 
-    
-} 
-
-console.log(unique(str));   //ahgsj &lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;json-和-字符串-相互转换&quot;&gt;json 和 字符串 相互转换&lt;/h3&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-//JSON字符串:
-var str1 = '{ &quot;name&quot;: &quot;张三&quot;, &quot;age&quot;: &quot;22&quot; }'; 
-//JSON对象:
-var str2 = { &quot;name&quot;: &quot;张三&quot;, &quot;sex&quot;: &quot;22&quot; };&lt;span class=&quot;sb&quot;&gt;
-
-
-&lt;/span&gt;//由JSON字符串转换为JSON对象
-
-var obj = eval('(' + str + ')');
-
-或者
-
-var obj = str.parseJSON();
-
-或者
-
-var obj = JSON.parse(str);&lt;span class=&quot;sb&quot;&gt;
-
-
-
-&lt;/span&gt;//将JSON对象转化为JSON字符
-
-var last=obj.toJSONString(); 
-
-或者
-
-var last=JSON.stringify(obj);&lt;span class=&quot;sb&quot;&gt;
-
-
-
-
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-</description>
-				<pubDate>Sat, 21 Oct 2017 00:00:00 +0800</pubDate>
-				<link>http://localhost:4000/str-js</link>
-				<guid isPermaLink="true">http://localhost:4000/str-js</guid>
 			</item>
 		
 	</channel>

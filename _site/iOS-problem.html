@@ -84,7 +84,7 @@
 <p>如同任何基于C的应用程序，程序启动的主入口点都应该是main函数。虽然我们很少动它，但是应该懂它，它的主要工作是控制UIKit framework的。</p>
 
 <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-int main(int argc, char <span class="err">*</span> argv<span class="err">[</span>])
+int main(int argc, char <span class="err">*</span> argv<span class="p">[]</span>)
 {
     @autoreleasepool {
         return UIApplicationMain(argc, argv, nil,
