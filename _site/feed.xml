@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
-		<title>wanglizhen</title>
-		<description>Welcome to wanglizhen 的主页! - iOS开发 iOS技术探讨 开发中的bug记录 微信小程序开发技术探讨与bug记录 前端 html、js、css 开发  IT技术探讨 共同学习 共同进步</description>
+		<title>yashendaoren</title>
+		<description>Welcome to yashendaoren 的主页! - iOS开发 微信小程序开发 前端开发</description>
 		<link>http://localhost:4000</link>
 		<atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
 		
@@ -1530,7 +1530,7 @@ npm run build
 &lt;p&gt;错误提示&lt;/p&gt;
 
 &lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gt&quot;&gt;
-&amp;gt; Hello@1.0.0 build /Users/wanglizhen/Desktop/19Lou/qkapp/Hello&lt;/span&gt;
+&amp;gt; Hello@1.0.0 build /Users/yashendaoren/Desktop/19Lou/qkapp/Hello&lt;/span&gt;
 &lt;span class=&quot;gt&quot;&gt;&amp;gt; cross-env NODE_PLATFORM=na NODE_PHASE=dv webpack&lt;/span&gt;
     --config ./node_modules/hap-tools/webpack.config.js
 
@@ -1538,15 +1538,15 @@ module.js:545
 throw err;
 ^
 
-Error: Cannot find module '/Users/wanglizhen/Desktop/19Lou/qkapp/
+Error: Cannot find module '/Users/yashendaoren/Desktop/19Lou/qkapp/
     Hello/node_modules/hap-tools/webpack.config.js'
 at Function.Module._resolveFilename (module.js:543:15)
 at Function.Module._load (module.js:470:25)
 at Module.require (module.js:593:17)
 at require (internal/module.js:11:18)
-at module.exports (/Users/wanglizhen/Desktop/19Lou/qkapp/
+at module.exports (/Users/yashendaoren/Desktop/19Lou/qkapp/
     Hello/node_modules/webpack/bin/convert-argv.js:80:13)
-at Object.&lt;span class=&quot;nt&quot;&gt;&amp;lt;anonymous&amp;gt;&lt;/span&gt; (/Users/wanglizhen/Desktop/19Lou/qkapp/
+at Object.&lt;span class=&quot;nt&quot;&gt;&amp;lt;anonymous&amp;gt;&lt;/span&gt; (/Users/yashendaoren/Desktop/19Lou/qkapp/
     Hello/node_modules/webpack/bin/webpack.js:39:40)
 at Module._compile (module.js:649:30)
 at Object.Module._extensions..js (module.js:660:10)
@@ -1563,7 +1563,7 @@ npm ERR! This is probably not a problem with npm.
     There is likely additional logging output above.
 
 npm ERR! A complete log of this run can be found in:
-npm ERR!     /Users/wanglizhen/.npm/_logs/2018-03-26T02_43_53_924Z-debug.log&lt;span class=&quot;sb&quot;&gt;
+npm ERR!     /Users/yashendaoren/.npm/_logs/2018-03-26T02_43_53_924Z-debug.log&lt;span class=&quot;sb&quot;&gt;
 
 
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -1583,7 +1583,7 @@ npm run build
 
 &lt;p&gt;//通过&lt;/p&gt;
 &lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gt&quot;&gt;
-&amp;gt; hello@1.0.0 build /Users/wanglizhen/Desktop/19Lou/qkapp/hello&lt;/span&gt;
+&amp;gt; hello@1.0.0 build /Users/yashendaoren/Desktop/19Lou/qkapp/hello&lt;/span&gt;
 &lt;span class=&quot;gt&quot;&gt;&amp;gt; cross-env NODE_PLATFORM=na NODE_PHASE=dv webpack&lt;/span&gt;
     --config ./node_modules/hap-tools/webpack.config.js
 
@@ -1595,7 +1595,7 @@ Time: 1437ms
 &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOG&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; ### App Loader ### 编译完成, 生成压缩包
 &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOG&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; ### App Loader ### 压缩包加签名
 &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOG&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; ### App Loader ### 自动刷新执行build :
-&lt;span class=&quot;gt&quot;&gt;&amp;gt; hello@1.0.0 notify /Users/wanglizhen/Desktop/19Lou/qkapp/hello&lt;/span&gt;
+&lt;span class=&quot;gt&quot;&gt;&amp;gt; hello@1.0.0 notify /Users/yashendaoren/Desktop/19Lou/qkapp/hello&lt;/span&gt;
 &lt;span class=&quot;gt&quot;&gt;&amp;gt; node ./node_modules/hap-tools/debugger/command/notify.js&lt;/span&gt;
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -1608,7 +1608,7 @@ npm run server
 
 &lt;p&gt;//搞定了&lt;/p&gt;
 &lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gt&quot;&gt;
-&amp;gt; hello@1.0.0 server /Users/wanglizhen/Desktop/19Lou/qkapp/hello&lt;/span&gt;
+&amp;gt; hello@1.0.0 server /Users/yashendaoren/Desktop/19Lou/qkapp/hello&lt;/span&gt;
 &lt;span class=&quot;gt&quot;&gt;&amp;gt; cross-env NODE_MOUNTED_ROUTER=&quot;debug bundle&quot;&lt;/span&gt;
 node ./node_modules/hap-tools/debugger/server/index.js
 

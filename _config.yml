@@ -1,9 +1,9 @@
 # Jekyll configuration
 
-name: wanglizhen
-title: wanglizhen 的主页
-author: wanglizhen（王立震） && Aigars Dzerviniks
-description: Welcome to wanglizhen 的主页! - iOS开发 iOS技术探讨 开发中的bug记录 微信小程序开发技术探讨与bug记录 前端 html、js、css 开发  IT技术探讨 共同学习 共同进步
+name: yashendaoren
+title: yashendaoren 的主页
+author: yashendaoren && Aigars Dzerviniks
+description: Welcome to yashendaoren 的主页! - iOS开发 微信小程序开发 前端开发
 
 highlighter: null
 permalink: /:title
