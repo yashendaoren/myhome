@@ -9,8 +9,8 @@ title: Home
   </div>
   </div>
   {% endunless %}
-  <h2>{{ post.date | date: '%Y' }}</h2>
   <div class="archive-item fadeInDown animated">
+    <h2>{{ post.date | date: '%Y' }}</h2>
     <div>
 
       {% else %} {% capture year %}{{ post.date | date: '%Y' }}{% endcapture %} {% capture next_year %}{{ post.next.date | date:
@@ -18,8 +18,8 @@ title: Home
     </div>
   </div>
   {% endunless %}
-  <h2>{{ post.date | date: '%Y' }}</h2>
   <div class="archive-item fadeInDown animated">
+    <h2>{{ post.date | date: '%Y' }}</h2>
     <div>
 
       {% endif %} {% endunless %}
@@ -38,7 +38,7 @@ title: Home
   {% endfor %}
 </section>
 
-<div class="pagination">
+<!-- <div class="pagination">
   {% if paginator.previous_page %} {% if paginator.previous_page == 1 %}
   <a class="btn btn-default" href="{{ site.baseurl}}/index.html" class="previous">Page Up</a>
   {% else %}
@@ -47,4 +47,4 @@ title: Home
   <span class="page_number ">{{ trans.page }}: {{ paginator.page }} of {{ paginator.total_pages }}</span> {% if paginator.next_page %}
   <a class="btn btn-default" href="{{ site.baseurl}}/page{{ paginator.next_page }}" class="next">Page Down</a>
   {% endif %}
-</div>
+</div> -->
